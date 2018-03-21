@@ -4,6 +4,10 @@ Oksman Hannu, Paananen Ville, Tarvainen Antti
 v0.1 21.3.2018
 
 1. Johdanto
+Ohjelmiston tavoitteena on virtuaalisten monopolipelien hallinnointi, tallennus ja käsittely tietokannassa. 
+Ohjelmassa täytyy pystyä käsittelemään vanhoja pelejä ja hallinnoida käynnissä olevia pelejä.
+
+
 <Mihin käyttöön ohjelmisto tehdään, kenelle se on tarkoitettu, mitkä ovat järjestelmän tavoitteet?>
 <Vieraiden määritelmien, termien yms. esittely sekä viitteet asiaan liittyviin dokumentteihin.>
 
