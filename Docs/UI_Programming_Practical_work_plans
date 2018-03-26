@@ -1,0 +1,21 @@
+Sisällysluettelo joka olkoon wikin etusivu
+
+🔖 Tietoa tekijöistä
+
+antti ja hannu
+
+🔖 Sovelluksen yleiskuvaus
+
+Monopoli peli virtuaalisena, pelitila tallentuu reaaliaikaisesti sql tietokantaan
+
+🔖 Kenelle sovellus on suunnattu, kohdeyleisö
+
+🔖 Käyttöympäristö ja käytetyt teknologiat
+
+🔖 Lista toteutettavista toiminnoista (käyttäjän näkökulmasta), tästä kannattaa pirtää UML:n Käyttötapaus-kaavio
+
+🔖  Käsitemalli, sovelluksen keskeisemmit käsitteet ja niiden väliset suhteet; tästä jalostetaan sitten luokkamalli sovelluksesta, mitä luokkia sovelluksessa on ja niiden tärkeimmät tehtävät ja ominaisuudet sekä luokkien väliset suhteet UML:tä käyttäen. Suunnitelmassa alustava ajatus, loppuraportissa lopullinen rakenne ja perustelut muutoksille PS Muista kertoa ajatuksista, pelkkä kaaviokuvio ei ole riittävä.
+
+🔖 Työnjako, kuinka työnjako aiotaan hoitaa eli vastuut eri tehtäville
+
+🔖 Työaikasuunnitelma (mitä aiotaan tehdään ja minä päivänä/viikkona, suunnitellut resurssit), kerää toteuma päivittäin/viikottain, esitä suunnitelmassa muutama tuleva viikko. Pohdi kuitenkin kokonaisuutta.
