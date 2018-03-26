@@ -1,0 +1,14 @@
+D:\L4623\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe.config
+D:\L4623\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe
+D:\L4623\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.pdb
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csprojResolveAssemblyReference.cache
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\MainWindow.g.cs
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\App.g.cs
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration_MarkupCompile.cache
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration_MarkupCompile.lref
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\MainWindow.baml
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.g.resources
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.Properties.Resources.resources
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csproj.GenerateResource.Cache
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.exe
+D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb
