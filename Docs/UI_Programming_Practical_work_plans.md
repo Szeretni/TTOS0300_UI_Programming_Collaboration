@@ -16,7 +16,7 @@ Windows. C# ja MySQL-palvelin.
 
 🔖 Lista toteutettavista toiminnoista (käyttäjän näkökulmasta), tästä kannattaa pirtää UML:n Käyttötapaus-kaavio
 
-![use case](Images/ttos0300_use_case.png)
+![use case](/Images/ttos0300_use_case.png)
 
 🔖  Käsitemalli, sovelluksen keskeisemmit käsitteet ja niiden väliset suhteet; tästä jalostetaan sitten luokkamalli sovelluksesta, mitä luokkia sovelluksessa on ja niiden tärkeimmät tehtävät ja ominaisuudet sekä luokkien väliset suhteet UML:tä käyttäen. Suunnitelmassa alustava ajatus, loppuraportissa lopullinen rakenne ja perustelut muutoksille PS Muista kertoa ajatuksista, pelkkä kaaviokuvio ei ole riittävä.
 
