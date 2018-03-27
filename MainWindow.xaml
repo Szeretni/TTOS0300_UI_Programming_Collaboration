@@ -5,6 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TTOS0300_UI_Programming_Collaboration"
         mc:Ignorable="d"
-        Title="MainWindow" Height="750" Width="730" Background="{x:Null}">
-    <Canvas HorizontalAlignment="Left" Height="717" VerticalAlignment="Top" Width="720"/>
+        Title="MainWindow" Height="750" Width="735" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged">
+    <Grid x:Name="gridObj">
+        <Grid.Background>
+            <ImageBrush ImageSource="monopoli.png"/>
+        </Grid.Background>
+    </Grid>
+
 </Window>

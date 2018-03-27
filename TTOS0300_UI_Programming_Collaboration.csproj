@@ -97,5 +97,8 @@
   <ItemGroup>
     <Resource Include="monopoly.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="monopoli.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
