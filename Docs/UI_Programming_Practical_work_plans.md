@@ -1,6 +1,6 @@
 🔖 Tietoa tekijöistä
 
-Antti ja Hannu.
+Antti Tarvainen L4623 ja Hannu Oksman K1234.
 
 🔖 Sovelluksen yleiskuvaus
 
