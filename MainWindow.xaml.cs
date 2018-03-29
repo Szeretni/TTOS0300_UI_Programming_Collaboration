@@ -26,6 +26,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         public static int windowHeight = 0;
         List<string> streets = new List<string>();
         Color b = Color.FromRgb(0, 0, 0);
+        Color bg = Color.FromRgb(10, 255, 10);
 
         public MainWindow()
         {
@@ -54,13 +55,17 @@ namespace TTOS0300_UI_Programming_Collaboration
             PrintText(streets,b);
         }
 
-        private void Text(double x, double y, string text, Color color)
+        private void Text(double x, double y, string text, Color color, Color bg)
         {
             TextBlock textBlock = new TextBlock();
             textBlock.Text = text;
             textBlock.Foreground = new SolidColorBrush(color);
+            textBlock.Background = new SolidColorBrush(bg);
+            textBlock.Height = 100;
+            textBlock.Width = 100;
             Canvas.SetLeft(textBlock, x);
             Canvas.SetTop(textBlock, y);
+            canvasObj.Children.Add(new UIElement() { Uid = "Line1" });
             canvasObj.Children.Add(textBlock);
         }
 
@@ -68,53 +73,12 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             for (int i = 0; i < 10; i++)
             {
-                Text((windowWidth / 10) * (1 + i), windowHeight / 10, streets[i], b);
+                Text((windowWidth / 10) * (i), 0, streets[i], b, bg);
             }
             for (int i = 0; i < 10; i++)
             {
-                Text(windowWidth / 10, (windowHeight / 10) * (1 + i), streets[i], b);
+                Text(0, (windowHeight / 10) * (i), streets[i], b, bg);
             }
-            /*
-            for (int i = 0, j = -65; i < 10; i++, j += 65)
-            {
-                if (i == 0)
-                {
-                    Text(100 / 2, 50, streets[i], b);
-                }
-                else if (i == 1)
-                {
-                    Text(100 + 65 / 2, 50, streets[i], b);
-                }
-                else if (i == 9)
-                {
-                    Text(720 - 50, 50, streets[i], b);
-                }
-                else
-                {
-                    Text(100 + (65 / 2 + j), 50, streets[i], b);
-                }
-            }
-
-            for (int i = 0, j = -65; i < 10; i++, j += 65)
-            {
-                if (i == 0)
-                {
-
-                }
-                else if (i == 1)
-                {
-                    Text(50, 100 + 65 / 2, streets[i], b);
-                }
-                else if (i == 9)
-                {
-
-                }
-                else
-                {
-                    Text(50, 100 + (65 / 2 + j), streets[i], b);
-                }
-            }
-            */
         }
     }
 }
