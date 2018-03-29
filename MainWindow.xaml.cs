@@ -71,13 +71,17 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void PrintText(List<string> streets, Color b)
         {
             int j = 1;
-            double height = 0;
-            double width = 0;
+            int height = 0;
+            int width = 0;
+            double temph = 0;
+            double tempw = 0;
             for (int i = 0; i < 36; i++)
             {
                 if (i<10)
                 {
-                    Text(0, windowHeight - ((windowHeight / 10)*j), streets[i], b, bg);
+                    temph = (windowHeight - ((windowHeight / 10) * j));
+                    height = (int)Math.Round(temph,0);
+                    Text(0, height, streets[i], b, bg);
                     j++;
                     if (j == 11)
                     {
@@ -86,7 +90,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (i<19)
                 {
-                    Text((windowWidth /10*j), 0, streets[i], b, bg);
+                    tempw = ((windowWidth / 10 * j));
+                    width = (int)Math.Round(tempw, 0);
+                    Text(width, 0, streets[i], b, bg);
                     j++;
                     if (j == 10)
                     {
@@ -95,7 +101,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (i<28)
                 {
-                    Text((windowWidth *0.9), ((windowHeight / 10) * j), streets[i], b, bg);
+                    tempw = (windowWidth * 0.9);
+                    width = (int)Math.Round(tempw, 0);
+                    temph = ((windowHeight / 10) * j);
+                    height = (int)Math.Round(temph, 0);
+                    Text(tempw, temph, streets[i], b, bg);
                     j++;
                     if (j == 10)
                     {
@@ -104,7 +114,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else
                 {
-                    Text((windowWidth - windowWidth / 10 * j), (windowHeight *0.9), streets[i], b, bg);
+                    tempw = (windowWidth - windowWidth / 10 * j);
+                    width = (int)Math.Round(tempw, 0);
+                    temph = (windowHeight * 0.9);
+                    height = (int)Math.Round(temph, 0);
+                    Text(width, height, streets[i], b, bg);
                     j++;
                     if (j == 10)
                     {
