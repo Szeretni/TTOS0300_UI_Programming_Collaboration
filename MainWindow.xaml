@@ -10,6 +10,7 @@
         <Grid.Background>
             <ImageBrush ImageSource="monopoli.png"/>
         </Grid.Background>
+        <Canvas x:Name="canvasObj" HorizontalAlignment="Left" Height="720" VerticalAlignment="Top" Width="720"/>
     </Grid>
 
 </Window>
