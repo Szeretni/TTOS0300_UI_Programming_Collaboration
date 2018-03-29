@@ -61,23 +61,56 @@ namespace TTOS0300_UI_Programming_Collaboration
             textBlock.Text = text;
             textBlock.Foreground = new SolidColorBrush(color);
             textBlock.Background = new SolidColorBrush(bg);
-            textBlock.Height = 100;
-            textBlock.Width = 100;
+            textBlock.Height = (double)windowHeight/10;
+            textBlock.Width = (double)windowWidth /10;
             Canvas.SetLeft(textBlock, x);
             Canvas.SetTop(textBlock, y);
-            canvasObj.Children.Add(new UIElement() { Uid = "Line1" });
             canvasObj.Children.Add(textBlock);
         }
 
         private void PrintText(List<string> streets, Color b)
         {
-            for (int i = 0; i < 10; i++)
+            int j = 1;
+            double height = 0;
+            double width = 0;
+            for (int i = 0; i < 36; i++)
             {
-                Text((windowWidth / 10) * (i), 0, streets[i], b, bg);
-            }
-            for (int i = 0; i < 10; i++)
-            {
-                Text(0, (windowHeight / 10) * (i), streets[i], b, bg);
+                if (i<10)
+                {
+                    Text(0, windowHeight - ((windowHeight / 10)*j), streets[i], b, bg);
+                    j++;
+                    if (j == 11)
+                    {
+                        j = 1;
+                    }
+                }
+                else if (i<19)
+                {
+                    Text((windowWidth /10*j), 0, streets[i], b, bg);
+                    j++;
+                    if (j == 10)
+                    {
+                        j = 1;
+                    }
+                }
+                else if (i<28)
+                {
+                    Text((windowWidth *0.9), ((windowHeight / 10) * j), streets[i], b, bg);
+                    j++;
+                    if (j == 10)
+                    {
+                        j = 2;
+                    }
+                }
+                else
+                {
+                    Text((windowWidth - windowWidth / 10 * j), (windowHeight *0.9), streets[i], b, bg);
+                    j++;
+                    if (j == 10)
+                    {
+                        j = 1;
+                    }
+                }
             }
         }
     }
