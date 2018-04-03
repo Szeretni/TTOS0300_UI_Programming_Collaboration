@@ -59,12 +59,25 @@ namespace TTOS0300_UI_Programming_Collaboration
             canvasObj.Children.Clear();
             PrintGrid();
 
-            PlayerTest();
+            /*
+            Color pc1 = Color.FromRgb(127, 2, 44);
+            Color pc2 = Color.FromRgb(28, 24, 25);
+            Color pc3 = Color.FromRgb(58, 255, 88);
+            Color pc4 = Color.FromRgb(241, 255, 57);
+
+            int position = 4;
+
+            PlayerTest(pc1, position);
+            PlayerTest(pc2, position);
+            PlayerTest(pc3, position);
+            PlayerTest(pc4, position);
+            */
 
             foreach (Grid g in grids)
             {
                 canvasObj.Children.Add(g);
             }
+
             /*
             foreach (TextBlock t in textBlocks)
             {
@@ -73,29 +86,33 @@ namespace TTOS0300_UI_Programming_Collaboration
             */
         }
 
-        private void PlayerTest()
+        private void PlayerTest(Color c, int pos)
         {
             Rectangle r = new Rectangle();
 
-            r.Fill = Brushes.Chocolate;
+            r.Fill = new SolidColorBrush(c);
 
             r.Width = 15;
             r.Height = 15;
             Grid.SetRow(r, 3);
             Grid.SetColumn(r, 0);
-
-            grids[15].Children.Add(r);
         }
 
         private void AddGrid(double x, double y, Color color, Color bg)
         {
             Grid g = new Grid();
 
+            Border myBorder1 = new Border();
+            myBorder1.BorderBrush = Brushes.Black;
+            myBorder1.BorderThickness = new Thickness(5, 5, 5, 5);
+            myBorder1.Background = new SolidColorBrush(bg);
+            myBorder1.Padding = new Thickness(5);
+            myBorder1.CornerRadius = new CornerRadius(15);
+
             g.Height = (double)windowHeight / 10;
             g.Width = (double)windowWidth / 10;
 
-            g.Background = new SolidColorBrush(bg);
-            g.ShowGridLines = true;
+            //g.ShowGridLines = true;
             // Define the Columns
             ColumnDefinition colDef1 = new ColumnDefinition();
             g.ColumnDefinitions.Add(colDef1);
@@ -121,6 +138,25 @@ namespace TTOS0300_UI_Programming_Collaboration
             Grid.SetRow(txt1, 1);
             Grid.SetColumn(txt1, 0);
 
+            StackPanel stack = new StackPanel();
+            Grid.SetRow(stack, 2);
+            Grid.SetColumn(stack, 0);
+            stack.Orientation = Orientation.Horizontal;
+
+            Rectangle r2 = new Rectangle();
+            r2.Fill = Brushes.Brown;
+            r2.Width = 15;
+            r2.Height = 15;
+            stack.Children.Add(r2);
+            r2.Margin = new Thickness(5, 0, 5, 0);
+
+            Rectangle r3 = new Rectangle();
+            r3.Fill = Brushes.BlueViolet;
+            r3.Width = 15;
+            r3.Height = 15;
+            stack.Children.Add(r3);
+
+            g.Children.Add(stack);
             g.Children.Add(r);
             g.Children.Add(txt1);
 
@@ -138,7 +174,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             g.Width = (double)windowWidth / 10;
 
             g.Background = new SolidColorBrush(bg);
-            g.ShowGridLines = true;
+            //g.ShowGridLines = true;
             // Define the Columns
             ColumnDefinition colDef1 = new ColumnDefinition();
             ColumnDefinition colDef2 = new ColumnDefinition();
@@ -248,6 +284,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
             }
         }
+
+        /*
         private void PrintText(List<string> streets, Color b)
         {
             int j = 1;
@@ -307,5 +345,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
             }
         }
+        */
     }
 }
