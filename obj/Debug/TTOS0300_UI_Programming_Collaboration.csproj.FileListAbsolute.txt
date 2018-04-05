@@ -12,16 +12,3 @@ D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming
 D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csproj.GenerateResource.Cache
 D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.exe
 D:\L4623\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\MainWindow.g.cs
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\App.g.cs
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration_MarkupCompile.cache
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration_MarkupCompile.lref
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe.config
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\bin\Debug\TTOS0300_UI_Programming_Collaboration.pdb
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\MainWindow.baml
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.g.resources
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.Properties.Resources.resources
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csproj.GenerateResource.Cache
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.exe
-C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb

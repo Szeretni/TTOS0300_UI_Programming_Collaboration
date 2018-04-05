@@ -72,12 +72,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             PlayerTest(pc3, position);
             PlayerTest(pc4, position);
             */
-
+            /*
             foreach (Grid g in grids)
             {
                 canvasObj.Children.Add(g);
             }
-
+            */
+            
             /*
             foreach (TextBlock t in textBlocks)
             {
@@ -163,7 +164,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             Canvas.SetLeft(g, x);
             Canvas.SetTop(g, y);
 
-            grids.Add(g);
+            canvasObj.Children.Add(g);
         }
 
         private void AddVerticalGrid(double x, double y, Color color, Color bg)
@@ -206,7 +207,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             Canvas.SetLeft(g, x);
             Canvas.SetTop(g, y);
 
-            grids.Add(g);
+            canvasObj.Children.Add(g);
         }
 
         private void Text(double x, double y, string text, Color color, Color bg)
@@ -262,7 +263,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     width = (int)Math.Round(tempw, 0);
                     temph = ((windowHeight / 10) * j);
                     height = (int)Math.Round(temph, 0);
-                    AddVerticalGrid(tempw, temph, b, bg);
+                    AddVerticalGrid(width, height, b, bg);
                     j++;
                     if (j == 10)
                     {
