@@ -1,3 +1,7 @@
+2018-04-07
+alter table Cell modify column CellId int auto_increment;
+
+older
 lähtö
 tontti missä ei rakennus
 tonni missä rakennus
