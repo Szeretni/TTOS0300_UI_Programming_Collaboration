@@ -107,15 +107,18 @@ INSERT INTO Token (Name) VALUES ("Battleship"),("Cannon"),("Cat"),("Iron"),("Pen
 -- tokens to players
 INSERT INTO Player_has_Token (PlayerId,TokenId,GameSessionId) VALUES (1,1,1),(2,2,1);
 
--- one more player
+-- added one more player to gamesession 1 with token 3
 INSERT INTO Player(PlayerName)
 VALUES
 ("Ville");
 
--- added new player to gamesession 1
 INSERT INTO GameSession_has_player(PlayerId, GameSessionId, CellId)
 VALUES
 (3,1,1);
+
+INSERT INTO Player_has_Token(PlayerId, TokenId, GameSessionId)
+VALUES
+(3, 3, 1);
 
 -- added 20, 10, 5 and 1 value cash
 INSERT INTO Cash(Value)
