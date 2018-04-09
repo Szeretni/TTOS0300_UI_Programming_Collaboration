@@ -66,6 +66,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BLLayer.cs" />
+    <Compile Include="Cell.cs" />
+    <Compile Include="DBLayer.cs" />
+    <Compile Include="IGameObject.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Text.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

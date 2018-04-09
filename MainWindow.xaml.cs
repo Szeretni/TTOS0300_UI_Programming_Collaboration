@@ -23,12 +23,9 @@ namespace TTOS0300_UI_Programming_Collaboration
     /// </summary>
     public partial class MainWindow : Window
     {
-        //SqlConnection con = new SqlConnection(@"server=91.154.199.251;user id=user;persistsecurityinfo=True;port=4321;database=SQL_CSHARP_UI;allowuservariables=True");
-        static string pw = "12345";
-        static string connStr = string.Format("Data source=91.154.199.251;Port=4321;Initial catalog=SQL_CSHARP_UI;user=user;password={0}", pw);
-        MySqlConnection con = new MySqlConnection(connStr);
         List<Grid> grids = new List<Grid>();
         List<TextBlock> textBlocks = new List<TextBlock>();
+        List<Player> players = new List<Player>();
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -39,21 +36,26 @@ namespace TTOS0300_UI_Programming_Collaboration
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0;i<36;i++)
+            for (int i = 0; i < 36; i++)
             {
                 streets.Add(i.ToString());
             }
-            databaseTest();
+            LoadPlayers();
         }
 
-        private void databaseTest()
+        private void LoadPlayers()
         {
-            con.Open();
-            MySqlCommand cmd = con.CreateCommand();
-            cmd.CommandType = System.Data.CommandType.Text;
-            cmd.CommandText = "select * from Cash";
-            cmd.ExecuteNonQuery();
-            con.Close();
+            try
+            {
+                //why doesnt work?
+                //players = BLLayer.GetAllPlayersFromDt();
+                players = BLLayer.GetPlayerList();
+                dgDbTest.ItemsSource = players;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
