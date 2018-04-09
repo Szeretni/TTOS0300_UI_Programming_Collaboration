@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Drawing;
+using System.Data.SqlClient;
+using MySql.Data.MySqlClient;
 
 namespace TTOS0300_UI_Programming_Collaboration
 {
@@ -22,6 +23,10 @@ namespace TTOS0300_UI_Programming_Collaboration
     /// </summary>
     public partial class MainWindow : Window
     {
+        //SqlConnection con = new SqlConnection(@"server=91.154.199.251;user id=user;persistsecurityinfo=True;port=4321;database=SQL_CSHARP_UI;allowuservariables=True");
+        static string pw = "12345";
+        static string connStr = string.Format("Data source=91.154.199.251;Port=4321;Initial catalog=SQL_CSHARP_UI;user=user;password={0}", pw);
+        MySqlConnection con = new MySqlConnection(connStr);
         List<Grid> grids = new List<Grid>();
         List<TextBlock> textBlocks = new List<TextBlock>();
 
@@ -38,6 +43,17 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 streets.Add(i.ToString());
             }
+            databaseTest();
+        }
+
+        private void databaseTest()
+        {
+            con.Open();
+            MySqlCommand cmd = con.CreateCommand();
+            cmd.CommandType = System.Data.CommandType.Text;
+            cmd.CommandText = "select * from Cash";
+            cmd.ExecuteNonQuery();
+            con.Close();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
