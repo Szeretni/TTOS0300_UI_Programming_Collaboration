@@ -47,9 +47,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                //why doesnt work?
-                //players = BLLayer.GetAllPlayersFromDt();
-                players = BLLayer.GetPlayerList();
+                players = BLLayer.GetAllPlayersFromDt();
+                //players = BLLayer.GetPlayerList(); above is better
                 dgDbTest.ItemsSource = players;
             }
             catch (Exception ex)

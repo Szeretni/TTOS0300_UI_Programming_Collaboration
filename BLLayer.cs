@@ -22,6 +22,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                         Id = int.Parse(dr[0].ToString()),
                         Name = dr[1].ToString()
                     };
+                    players.Add(player);
                 }
                 return players;
             }
