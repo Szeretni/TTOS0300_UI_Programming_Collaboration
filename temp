@@ -1,6 +1,3 @@
-2018-04-09
-server=91.154.199.251;user id=user;persistsecurityinfo=True;port=4321;database=SQL_CSHARP_UI;allowuservariables=True
-
 2018-04-07
 alter table Cell modify column CellId int auto_increment;
 
