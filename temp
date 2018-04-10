@@ -1,3 +1,6 @@
+2018-04-10
+alter table Cell modify column Name varchar(256);
+
 2018-04-07
 alter table Cell modify column CellId int auto_increment;
 
