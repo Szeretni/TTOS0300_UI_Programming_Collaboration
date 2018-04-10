@@ -4,7 +4,7 @@
 
 ### Vaatimusmäärittely
 
-[Vaatimusmäärittely](Vaatimusmäärittely)
+[Vaatimusmäärittely](/Vaatimusmäärittely)
 
 
 ### 
