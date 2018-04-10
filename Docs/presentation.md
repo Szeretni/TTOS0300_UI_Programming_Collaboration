@@ -7,4 +7,6 @@
 [Vaatimusmäärittely](/Vaatimusmäärittely)
 
 
-### 
+### ER-Kaavio
+
+![ER-kaavio](../Images/monopolifinal.PNG)
