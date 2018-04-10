@@ -1,10 +1,11 @@
-# TODO
-# POISTA LOPULLISESTA VERSIOSTA
+
+# TODO. POISTA LOPULLISESTA VERSIOSTA
 * ON DELETE ON UPDATE
 * queries
 * mysql-palvelimen luonnista ja käytöstä raportointi
 * view
 * Lisää jokaiseen tauluun tietoa ja tee tarvittavat kyselyt (mieluiten kaksi, joista toinen on monen taulun kysely ja toinen jokin summakysely).
+* if jos type 0 ei voi omistaa
 # END OF TODO
 
 # Peliklooni
