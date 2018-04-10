@@ -53,6 +53,7 @@
 * ![PK](../Images/phc_pk.PNG)
 * Uniikki indeksi pelille ja ei-pelaajalle. Estää esim. saman rahan olemassaolon usealla pelaajalla samassa pelissä.
 * ![UQ](../Images/phc_i.PNG)
+* ![same cash same game](../Images/same_cash_same_game_error.PNG)
 
 ### DDL ja DML
 
@@ -61,3 +62,7 @@
 ### Datan lisäys
 
 [insert into](../SQLmaterials/insert_into.sql)
+
+### CASCADE
+
+![same cash same game](../Images/on_update_toimii.png)
