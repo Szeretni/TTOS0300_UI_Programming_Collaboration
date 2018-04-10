@@ -1,43 +1,48 @@
 Monopoli
 Oksman Hannu, Paananen Ville, Tarvainen Antti
 
-v1.1 10.4.2018
+v1.2 11.4.2018
 
 1. Johdanto
-Ohjelmisto tehdään IT-instituutin opettajalle, Ari Rantalalle, opintojakson harjoitustietokantana, jonka tavoitteena on 
+Ohjelmisto tehdään IT-instituutin opettajalle, Ari Rantalalle, opintojakson harjoitustietokantana jonka tavoitteena on 
 virtuaalisten monopolipelien hallinnointi, käsittely ja tallennus. Tietokannan tarkoituksena on pystyä 
-käsittelemään useaa eri peliä samaan aikaan, ja tallentamaan kaikkien pelien tiedot tietokantaan.
+käsittelemään useaa eri peliä samaan aikaan, tallentamaan pelien tiedot tietokantaan, ja hallinnoimaan kaikkien pelien
+tietoja kyseisessä tietokannassa.
 
 2. Yleiskuvaus
 Tietokanta asennettu RaspBerry Pi:lle.
 Tietokannalle tehdään käyttöliittymäkurssin harjoitustyöksi visuaalinen C# käyttöliittymä, jolla monopolin pelaaminen tapahtuu.
-Tietokannan hallinnointia varten tehty Microsoft Access käyttöliittymä.
+Kyseinen c# ohjelma tallentaa tietoa pelin edetessä, ja lopuksi tallentaa loppuneen pelin tiedot tietokantaan.
+Tietokantaa varten on tehty Microsoft Access käyttöliittymä, jonka avulla tietokantaa voidaan käyttää ja hallinnoida.
 
 3. Toiminnot
 Pakollisia toimintoja ovat:
   1. Usean käynnissä olevan pelien tallentaminen ja hallinnointi tietokannassa
-  2. Pelin voittajien hallinnointi
+  2. Päättyneiden pelien tilastot
   3. Pelaajien hallinnointi (Tunnus/nimi)
-  4. Pelissä käytettävän datan hallinnointi
+  4. Pelissä käytettävän datan hallinnointi (Valuutta, tontit, rakennukset..)
 
 Mahdolliset toiminnot:
   1. Random-kortit
   2. Useat tietokantakäyttäjät (vain luku/kirjoitusoikeus)
 
 4. Ulkoiset liittymät
-  1. Monopoli peli, c# käyttöliittymä (valmistuu 26.4.2018 mennessä)
+  1. Monopoli, c# peli/käyttöliittymä (valmistuu 26.4.2018 mennessä)
+     Yksi peli pelataan yhdellä ohjelman instanssilla (yhdellä tietokoneella) ohjelman käyttöliittymää käyttäen.
+     Ohjelma tallentaa kaikki pelissä olevat dynaamiset tiedot (Pelaajat, tontit, rahatilanne jne.) pelin instanssiin,
+     ja pelin loputtua tallentaa pelin tilastot kokonaisuutena tulosten yhteydessä.
+     Ohjelmassa voi myös katsoa pelaajien/vanhojen pelien tilastoja (Henkilö X on voittanut Y peliä..)
+     
   2. Tietokannan hallintatyökalu, Microsoft Access
-
-<Tässä voidaan täsmentää luvussa 2 yleisellä tasolla esitettyä kuvausta järjestelmän liitynnöistä. 
-Esimerkiksi käyttöliittymän tarkempi kuvaus sekä liitynnät muihin järjestelmiin, oheislaitteisiin ja tietoliikenneyhteyksiin.>
+     Vaikka itse peliohjelma lukee ja kirjoittaa dataa tietokantaan, sitä ei ole tehty tietokannan käsittelyä varten, vaan
+     siihen on tehty oma työkalu. Microsoft Accesilla tehty tietokannan hallintatyökalulla pääsee käsiksi itse tietokantaan, ja
+     näkee helposti kaiken tarvittavan datan.
+     
 
 5. Muut ominaisuudet
 Suorituskyky: perus-PC (Koulun kone, 8GB RAM, 3.5GHz:n prosessori, n. 10 000 rivin tietomäärällä) alle 1 sekunti.
 Tietoturva: Eristyneitä transaktioita käyttämällä estetään päivitysten välisiä häiriöitä ja sekaantumisia.
-Käyettävyys: "5/5" -Ville Paananen
-
-<Kuvataan järjestelmältä vaadittavat ei-toiminnalliset ominaisuudet: suorituskyky, käytettävyys, toipuminen virhetilanteista, 
-turvallisuus, ylläpidettävyys, siirrettävyys jne. Esitä vaatimus siten, että se on testattavissa ja mitattavissa.>
+Käytettävyys: Dataan pääsee helposti käsiksi, hyvä käyttöliittymä.
 
 /* LISÄOHJE */
 1. Tarkoitus
