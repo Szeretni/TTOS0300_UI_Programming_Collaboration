@@ -1,4 +1,12 @@
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+
 Transaktioita tarvitaan ongelmatilanteiden korjaamiseen:
+
 | ------------- |:-------------:| -----:|
 | 1 hukatun päivityksen ongelma      |  Aina estettävä | Estetty luomalla transaktio |
 | 2a keskeneräinen luku      |       |   Estetty eristävyystasolla |
