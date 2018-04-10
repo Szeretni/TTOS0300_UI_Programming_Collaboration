@@ -7,7 +7,7 @@
 
 Transaktioita tarvitaan ongelmatilanteiden korjaamiseen:
 
-| Ongelma | | Tärkeys | Ratkaisu |
+| Ongelma | Tärkeys | Ratkaisu |
 | ------------- |:-------------:| -----:|
 | 1 hukatun päivityksen ongelma      |  Aina estettävä | Estetty luomalla transaktio |
 | 2a keskeneräinen luku      |       |   Estetty eristävyystasolla |
