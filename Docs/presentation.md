@@ -1,6 +1,6 @@
 
 # TODO. POISTA LOPULLISESTA VERSIOSTA
-* ON DELETE ON UPDATE
+* DONE SCHEMA10, ei vielä sql_csharp_ui: ON DELETE ON UPDATE
 * queries
 * mysql-palvelimen luonnista ja käytöstä raportointi
 * view
@@ -14,7 +14,7 @@
 
 ### Vaatimusmäärittely
 
-[Vaatimusmäärittely](/Vaatimusmäärittely)
+[Vaatimusmäärittely-dokumentti](/Vaatimusmäärittely)
 
 ### Käyttötapauskaavio
 
@@ -57,11 +57,11 @@
 
 ### DDL ja DML
 
-[schema](../SQLmaterials/schema.sql)
+[schema.sql](../SQLmaterials/schema.sql)
 
 ### Datan lisäys
 
-[insert into](../SQLmaterials/insert_into.sql)
+[insert_into.sql](../SQLmaterials/insert_into.sql)
 
 ### CASCADE
 
