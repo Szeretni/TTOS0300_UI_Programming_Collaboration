@@ -52,8 +52,8 @@
 
 ### Tietokannan luonti
 
-[schema]('../SQLmaterials/creation 2018-04-10T1459.sql')
+[schema](../SQLmaterials/'creation 2018-04-10T1459.sql')
 
 ### Datan lisäys
 
-[insert into]('../SQLmaterials/insert into 2018-04-10T1459.sql')
+[insert into](../SQLmaterials/'insert into 2018-04-10T1459.sql')
