@@ -50,10 +50,10 @@
 * Uniikki indeksi pelille ja ei-pelaajalle. Estää esim. saman rahan olemassaolon usealla pelaajalla samassa pelissä.
 * ![UQ](../Images/phc_i.PNG)
 
-### Tietokannan luonti
+### DDL ja DML
 
-[schema](../SQLmaterials/'creation 2018-04-10T1459.sql')
+[schema](../SQLmaterials/db_creation_2018_04_10_T2120.sql)
 
 ### Datan lisäys
 
-[insert into](../SQLmaterials/'insert into 2018-04-10T1459.sql')
+[insert into](../SQLmaterials/insert_into_2018_04_10_T2118.sql)
