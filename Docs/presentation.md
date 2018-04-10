@@ -1,7 +1,9 @@
 # TODO
 # POISTA LOPULLISESTA VERSIOSTA
-* on delete on update
-
+* ON DELETE ON UPDATE
+* queries
+* mysql-palvelimen luonnista ja käytöstä raportointi
+* view
 # END OF TODO
 
 # Peliklooni
