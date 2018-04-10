@@ -4,6 +4,7 @@
 * queries
 * mysql-palvelimen luonnista ja käytöstä raportointi
 * view
+* Lisää jokaiseen tauluun tietoa ja tee tarvittavat kyselyt (mieluiten kaksi, joista toinen on monen taulun kysely ja toinen jokin summakysely).
 # END OF TODO
 
 # Peliklooni
