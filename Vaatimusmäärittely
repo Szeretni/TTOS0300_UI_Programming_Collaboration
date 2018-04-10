@@ -4,26 +4,36 @@ Oksman Hannu, Paananen Ville, Tarvainen Antti
 v0.1 21.3.2018
 
 1. Johdanto
-Ohjelmiston tavoitteena on virtuaalisten monopolipelien hallinnointi, tallennus ja käsittely tietokannassa. 
-Ohjelmassa täytyy pystyä käsittelemään vanhoja pelejä ja hallinnoida käynnissä olevia pelejä.
-
-
-<Mihin käyttöön ohjelmisto tehdään, kenelle se on tarkoitettu, mitkä ovat järjestelmän tavoitteet?>
-<Vieraiden määritelmien, termien yms. esittely sekä viitteet asiaan liittyviin dokumentteihin.>
+Ohjelmisto tehdään IT-instituutin opettajalle, Ari Rantalalle, opintojakson harjoitustietokantana, jonka tavoitteena on 
+virtuaalisten monopolipelien hallinnointi, käsittely ja tallennus. Tietokannan tarkoituksena on pystyä 
+käsittelemään useaa eri peliä samaan aikaan, ja tallentamaan kaikkien pelien tiedot tietokantaan.
 
 2. Yleiskuvaus
-<Kuvataan järjestelmän liittymät ympäristöön sekä käyttäjät ja käyttöympäristö.>
-<Kuvataan yleiset rajoitteet, esim. tiettyjen toteutustyökalujen käyttö.>
+Tietokanta asennettu RaspBerry Pi:lle.
+Tietokannalle tehdään käyttöliittymäkurssin harjoitustyöksi visuaalinen C# käyttöliittymä, jolla monopolin pelaaminen tapahtuu.
+Tietokannan hallinnointia varten tehty Microsoft Access käyttöliittymä.
 
 3. Toiminnot
-<Kuvataan järjestelmältä vaadittavat toiminnot yleisellä tasolla.>
-<Mainitse, onko vaatimus pakollinen, tärkeä vai olisi kiva saada>
+Pakollisia toimintoja ovat:
+  1. Usean käynnissä olevan pelien tallentaminen ja hallinnointi tietokannassa
+  2. Pelin voittajien hallinnointi
+  3. Pelaajien hallinnointi (Tunnus/nimi)
+  4. Pelissä käytettävän datan hallinnointi
+
+Mahdolliset toiminnot:
+  1. Random-kortit
 
 4. Ulkoiset liittymät
+  1. Monopoli peli, c# käyttöliittymä (valmistuu 26.4.2018 mennessä)
+  2. Tietokannan hallintatyökalu, Microsoft Access
+
 <Tässä voidaan täsmentää luvussa 2 yleisellä tasolla esitettyä kuvausta järjestelmän liitynnöistä. 
 Esimerkiksi käyttöliittymän tarkempi kuvaus sekä liitynnät muihin järjestelmiin, oheislaitteisiin ja tietoliikenneyhteyksiin.>
 
 5. Muut ominaisuudet
+Suorituskyky: perus-PC (Koulun kone, 8GB RAM, 3.5GHz:n prosessori, n. 10 000 rivin tietomäärällä) alle 1 sekunti.
+Käyettävyys: "5/5" -Ville Paananen
+
 <Kuvataan järjestelmältä vaadittavat ei-toiminnalliset ominaisuudet: suorituskyky, käytettävyys, toipuminen virhetilanteista, 
 turvallisuus, ylläpidettävyys, siirrettävyys jne. Esitä vaatimus siten, että se on testattavissa ja mitattavissa.>
 
