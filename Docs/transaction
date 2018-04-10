@@ -5,3 +5,9 @@ Transaktioita tarvitaan ongelmatilanteiden korjaamiseen:
 | 2b keskeneräinen päivitys  | Aina estettävä     |    Estetty luomalla transaktio |
 | 3a eritahtinen päivitys | Estetty eristävyystasolla |
 | 3b uusien rivien ongelma | Estetty eristävyystasolla |
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
