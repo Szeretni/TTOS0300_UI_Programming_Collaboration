@@ -1,3 +1,9 @@
+# TODO
+# POISTA LOPULLISESTA VERSIOSTA
+* on delete on update
+
+# END OF TODO
+
 # Peliklooni
 
 ## Hannu Oksman, Ville Paananen, Antti Tarvainen
@@ -6,13 +12,9 @@
 
 [Vaatimusmäärittely](/Vaatimusmäärittely)
 
-
-
 ### Käyttötapauskaavio
 
 ![use case](../Images/ttos0300_use_case.png)
-
-
 
 ### Käsite-ehdokkaista tehty käsitemalli
 
@@ -22,8 +24,6 @@
 * Mallintaa tarpeettoman tarkasti fyysistä lautapeliä, jossa Raha, Tontit ja Nappula ovat sidottuja Pelaajaan, joka tuo ne Pelikertaan.
 * Ei salli rinnakkaisia pelejä, vaan pitää pelata sarjassa.
 
-
-
 ### Draw.io:sta Workbenchiin
 
 ![asgfölh](../Images/monopoliasgfölh.PNG)
@@ -32,8 +32,6 @@
 * Moni-moneen-yhteydet purettu.
 * Edelleen pelaaja kuljettaa muita käsitteitä.
 
-
-
 ### Vain yksi moni-moneen-välitaulu
 
 ![asgfölh](../Images/monopoliumlmysql.PNG)
@@ -41,8 +39,6 @@
 #### Huomiot
 * Pelaaja ei enää tuo rahoja ym. peliin.
 * Käsitteisiin lisätty Owner. Tästä seuraa, että vaikka rahat voivat kuulua moniin peleihin, niin ne eivät voi tehdä sitä samanaikaisesti.
-
-
 
 ### Final
 
@@ -54,3 +50,10 @@
 * Uniikki indeksi pelille ja ei-pelaajalle. Estää esim. saman rahan olemassaolon usealla pelaajalla samassa pelissä.
 * ![UQ](../Images/phc_i.PNG)
 
+### Tietokannan luonti
+
+[schema](../SQLmaterials/creation 2018-04-10T1459.sql)
+
+### Datan lisäys
+
+[insert into](../SQLmaterials/insert into 2018-04-10T1459.sql)
