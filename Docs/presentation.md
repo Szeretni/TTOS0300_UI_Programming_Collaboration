@@ -52,8 +52,8 @@
 
 ### DDL ja DML
 
-[schema](../SQLmaterials/db_creation_2018_04_10_T2120.sql)
+[schema](../SQLmaterials/schema.sql)
 
 ### Datan lisäys
 
-[insert into](../SQLmaterials/insert_into_2018_04_10_T2118.sql)
+[insert into](../SQLmaterials/insert_into.sql)
