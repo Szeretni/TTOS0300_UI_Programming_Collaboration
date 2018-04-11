@@ -98,11 +98,11 @@
 
 ### Access käyttöliittymä
 
-![Pääsivu](../Images/AccessMain.png)
-![Rakennus muokkaus/selailu](../Images/AccessBuildings.png)
-![Ruutujen muokkaus/selailu](../Images/AccessCells.png)
-![Rahojen muokkaus/selailu](../Images/AccessCash.png)
-![Pelaajien rahat eri peleissä](../Images/AccessTotalCash.png)
+![Pääsivu](../Images/AccessMain.PNG)
+![Rakennus muokkaus/selailu](../Images/AccessBuildings.PNG)
+![Ruutujen muokkaus/selailu](../Images/AccessCells.PNG)
+![Rahojen muokkaus/selailu](../Images/AccessCash.PNG)
+![Pelaajien rahat eri peleissä](../Images/AccessTotalCash.PNG)
 
 ### Mysql serverin asennus Raspberry Pi:lle
 
