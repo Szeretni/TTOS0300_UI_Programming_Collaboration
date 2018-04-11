@@ -43,28 +43,3 @@ Mahdolliset toiminnot:
 Suorituskyky: perus-PC (Koulun kone, 8GB RAM, 3.5GHz:n prosessori, n. 10 000 rivin tietomäärällä) alle 1 sekunti.
 Tietoturva: Eristyneisyystaso nostetaan Serializableen, joka estää ongelmat 'Dirty Read', 'Nonrepeatable Read' ja 'Phantoms'. Transaktiot toteutetaan ohjelmallisesti. Autocommit asetetaan nollaan lopullisessa versiossa. Näillä toimenpiteillä päivitysten välisiä häiriöitä ja sekaantumisia.
 Käytettävyys: Dataan pääsee helposti käsiksi, hyvä käyttöliittymä.
-
-/* LISÄOHJE */
-/* TÄMÄ POISTETAAN ENNEN ESITYSTÄ */
-1. Tarkoitus
-Vaatimusmäärittelyn tarkoituksena on kartoittaa asiakkaan tarpeet ja toiveet toteutettavan järjestelmän suhteen, tarkemmin kuin työn 
-tehtävänannossa on määritelty. Vaikka dokumentti laaditaan yhteistyössä asiakkaan kanssa, on siinä jo syytä ottaa huomioon myös 
-toteutukselle jo näköpiirissä olevat tekniset rajoitukset.
-
-2. Tehtävät
-Määritellään yhdessä asiakkaan kanssa järjestelmän:
-käyttäjät, käyttöympäristö ja käyttötavat
-rajoitukset, kuten tietyt toteutustyökalut
-liittymät muihin järjestelmiin
-toiminnot, käyttöliittymä
-ei-toiminnalliset ominaisuudet, kuten:
-vasteajat
-tietoturva
-käytettävyys
-ylläpidettävyys
-siirrettävyys
-
-3. Tulokset
-Vaatimusmäärittelyn tuloksena on vaatimusmäärittelydokumentti. Vaatimusmäärittely on laadittava yhteistyössä työn asiakkaan kanssa. 
-Vaatimukset on syytä priorisoida: mitkä ovat järjestelmälle välttämättömiä (must), mitkä toivottavia (useful), mitkä muuten vaan 
-kivoja ominaisuuksia (nice to have).
