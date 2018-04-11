@@ -1,3 +1,5 @@
+-- DO NOT run the whole file. Some of the material is just for reference ie. how to set isolation levels
+
 -- VIEW CREATION
 -- query verification
 SELECT GameSessionId,PlayerName,SUM(Value) as TotalCash 
@@ -40,3 +42,19 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+-- TRANSACTION
+-- view autocommit value
+SELECT @@autocommit;
+
+-- set autocommit
+SET AUTOCOMMIT=0;
+SET AUTOCOMMIT=on;
+
+-- view isolation level
+SELECT @@tx_isolation;
+SET tx_isolation = 'READ-UNCOMMITTED';
+SET tx_isolation = 'READ-COMMITTED';
+SET tx_isolation = 'REPEATABLE-READ';
+SET tx_isolation = 'SERIALIZABLE';
