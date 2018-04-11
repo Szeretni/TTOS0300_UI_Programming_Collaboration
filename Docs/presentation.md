@@ -1,9 +1,9 @@
 
 # TODO. POISTA LOPULLISESTA VERSIOSTA
-* DONE SCHEMA10, ei vielä sql_csharp_ui: ON DELETE ON UPDATE
+* DONE SCHEMA10, ei vielä sql_csharp_ui dbssä: ON DELETE ON UPDATE
 * queries
 * mysql-palvelimen luonnista ja käytöstä raportointi
-* view
+* DONE SCHEMA10, ei vielä sql_csharp_ui dbssä: view
 * Lisää jokaiseen tauluun tietoa ja tee tarvittavat kyselyt (mieluiten kaksi, joista toinen on monen taulun kysely ja toinen jokin summakysely).
 * if jos type 0 ei voi omistaa
 # END OF TODO
@@ -66,3 +66,7 @@
 ### CASCADE
 
 ![same cash same game](../Images/on_update_toimii.png)
+
+### Create View
+
+![same cash same game](../Images/create_view.PNG)
