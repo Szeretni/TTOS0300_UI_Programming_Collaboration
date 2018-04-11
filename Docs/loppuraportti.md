@@ -12,7 +12,7 @@
 
 [Vaatimusmäärittely-dokumentti](/Vaatimusmäärittely)
 
-### Käyttötapauskaavio
+### Käyttötapauskaavio käyttöliittymäsovellusta varten
 
 ![use case](../Images/ttos0300_use_case.png)
 
@@ -111,3 +111,15 @@ Päätimme käyttää raspille asennettua tietokantaa, jotta tietokantaa pystyis
 Suurin ongelma mysql serverin asentamisessa Pi:lle oli, että mysql ei vakiona salli kuin localhostin yhdistämisen palvelimelle. Tämä ratkesi kuitenkin vaihtamalla mysql asetustiedostosta "bind-address=" rivi kommentiksi.
 
 
+## Arvosanaehdotukset perusteluineen
+
+Oksman 5/5. Melkein kaikki dokumentaatio, Githubin pystytys, ER-kaavioiden piirto, jatkuva iterointi, sql-lauseiden kirjoitus.
+Tarvainen 5/5. MySQL-palvelin RasPille, Access-käyttöliittymä, ER-kaavioiden piirto, jatkuva iterointi, sql-lauseiden kirjoitus.
+Paananen 4/5. Vaatimusmäärittelyn kirjoitus. Osallistui ER-kaavioiden iterointiin. Lopussa osallistuminen väheni.
+
+
+## Koottuna harjoitustyöohjeessa pyydetyt dokumentit:
+* [Vaatimusmäärittely-dokumentti](/Vaatimusmäärittely)
+* ![ER-kaavio](../Images/monopolifinal.PNG)
+* [schema.sql](../SQLmaterials/schema.sql)
+* [insert_into.sql](../SQLmaterials/insert_into.sql)
