@@ -65,6 +65,10 @@
 
 [insert_into.sql](../SQLmaterials/insert_into.sql)
 
+### Rivit lisäyksen jälkeen
+
+![rows](../Images/nbr_of_table_rows.PNG)
+
 ### Vyörytys
 
 ![same cash same game](../Images/on_update_toimii.png)
