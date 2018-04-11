@@ -1,16 +1,3 @@
-
-# TODO. POISTA LOPULLISESTA VERSIOSTA
-* DONE SCHEMA10, ei vielä sql_csharp_ui dbssä: ON DELETE ON UPDATE
-* queries
-* mysql-palvelimen luonnista ja käytöstä raportointi
-* DONE SCHEMA10, ei vielä sql_csharp_ui dbssä: view
-* Lisää jokaiseen tauluun tietoa ja tee tarvittavat kyselyt (mieluiten kaksi, joista toinen on monen taulun kysely ja toinen jokin summakysely).
-* if jos type 0 ei voi omistaa
-* DONE proseduuri tehty, lisätty queries.sql
-# END OF TODO
-
-# Peliklooni
-
 ## Hannu Oksman, Ville Paananen, Antti Tarvainen
 
 ### Vaatimusmäärittely
