@@ -45,5 +45,5 @@ Tietoturva: Eristyneisyystaso nostetaan Serializableen, joka estää ongelmat 'D
             päivitysten välisiä häiriöitä ja sekaantumisia.
 Käytettävyys: Dataan pääsee helposti käsiksi, hyvä käyttöliittymä.
 Ylläpidettävyys: Ylläpito tapahtuu kirjautumalla etäyhdeydellä mysql-palvelimelle, tai suoraan tietokannan sisältävällä RaspBerryllä.
-Siirrettävyys: Hyvä versionhallinta GitHubissa, mahdollistaa hyvän siirrettävyyden ja hallinnan.
+Siirrettävyys: Hyvä versionhallinta GitHubissa, mahdollistaa hyvän siirrettävyyden ja hallinnan. Tietokannasta on helppo ottaa dumppi ja siirtää toiselle palvelimelle.
 Toipuminen virhetilanteista: Ei ole, mahdollisten virheiden ja kaatumisien korjaaminen tapahtuu käsin.
