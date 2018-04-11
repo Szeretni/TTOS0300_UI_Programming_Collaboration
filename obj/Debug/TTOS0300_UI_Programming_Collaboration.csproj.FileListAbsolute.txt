@@ -28,3 +28,5 @@ C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS
 C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb
 C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\bin\Debug\MySql.Data.dll
 C:\Users\l2912\Source\Repos\TTOS0300_UI_Programming_Collaboration\bin\Debug\MySql.Data.xml
+D:\L4623\TTOS0300_UI_Programming_Collaboration\bin\Debug\MySql.Data.dll
+D:\L4623\TTOS0300_UI_Programming_Collaboration\bin\Debug\MySql.Data.xml

@@ -26,6 +26,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Grid> grids = new List<Grid>();
         List<TextBlock> textBlocks = new List<TextBlock>();
         List<Player> players = new List<Player>();
+        List<Border> borders = new List<Border>();
+        int bordernumber = 0;
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -118,70 +120,89 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void AddGrid(double x, double y, Color color, Color bg)
         {
-            Grid g = new Grid();
+            try
+            {
+                Grid g = new Grid();
 
-            Border myBorder1 = new Border();
-            myBorder1.BorderBrush = Brushes.Black;
-            myBorder1.BorderThickness = new Thickness(5, 5, 5, 5);
-            myBorder1.Background = new SolidColorBrush(bg);
-            myBorder1.Padding = new Thickness(5);
-            myBorder1.CornerRadius = new CornerRadius(15);
+                borders.Add(new Border());
 
-            g.Height = (double)windowHeight / 10;
-            g.Width = (double)windowWidth / 10;
+                borders[bordernumber].BorderBrush = Brushes.Black;
+                borders[bordernumber].BorderThickness = new Thickness(1);
+                
+                /*
+                borders[bordernumber].BorderBrush = Brushes.Black;
+                borders[bordernumber].BorderThickness = new Thickness(5, 5, 5, 5);
+                borders[bordernumber].Background = new SolidColorBrush(bg);
+                borders[bordernumber].Padding = new Thickness(5);
+                borders[bordernumber].CornerRadius = new CornerRadius(15);
+                */
 
-            //g.ShowGridLines = true;
-            // Define the Columns
-            ColumnDefinition colDef1 = new ColumnDefinition();
-            g.ColumnDefinitions.Add(colDef1);
+                g.Height = (double)windowHeight / 10;
+                g.Width = (double)windowWidth / 10;
 
-            // Define the Rows
-            RowDefinition rowDef1 = new RowDefinition();
-            RowDefinition rowDef2 = new RowDefinition();
-            RowDefinition rowDef3 = new RowDefinition();
-            g.RowDefinitions.Add(rowDef1);
-            g.RowDefinitions.Add(rowDef2);
-            g.RowDefinitions.Add(rowDef3);
+                //g.ShowGridLines = true;
+                // Define the Columns
+                ColumnDefinition colDef1 = new ColumnDefinition();
+                g.ColumnDefinitions.Add(colDef1);
 
-            Rectangle r = new Rectangle();
+                // Define the Rows
+                RowDefinition rowDef1 = new RowDefinition();
+                RowDefinition rowDef2 = new RowDefinition();
+                RowDefinition rowDef3 = new RowDefinition();
+                g.RowDefinitions.Add(rowDef1);
+                g.RowDefinitions.Add(rowDef2);
+                g.RowDefinitions.Add(rowDef3);
 
-            r.Fill = Brushes.SkyBlue;
-            Grid.SetRow(r, 0);
-            Grid.SetColumn(r, 0);
+                Rectangle r = new Rectangle();
 
-            TextBlock txt1 = new TextBlock();
-            txt1.Text = "asdf";
-            txt1.FontSize = 14;
-            txt1.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt1, 1);
-            Grid.SetColumn(txt1, 0);
+                r.Fill = Brushes.SkyBlue;
+                Grid.SetRow(r, 0);
+                Grid.SetColumn(r, 0);
 
-            StackPanel stack = new StackPanel();
-            Grid.SetRow(stack, 2);
-            Grid.SetColumn(stack, 0);
-            stack.Orientation = Orientation.Horizontal;
+                TextBlock txt1 = new TextBlock();
+                txt1.Text = "asdf";
+                txt1.FontSize = 14;
+                txt1.FontWeight = FontWeights.Bold;
+                Grid.SetRow(txt1, 1);
+                Grid.SetColumn(txt1, 0);
 
-            Rectangle r2 = new Rectangle();
-            r2.Fill = Brushes.Brown;
-            r2.Width = 15;
-            r2.Height = 15;
-            stack.Children.Add(r2);
-            r2.Margin = new Thickness(5, 0, 5, 0);
+                StackPanel stack = new StackPanel();
+                Grid.SetRow(stack, 2);
+                Grid.SetColumn(stack, 0);
+                stack.Orientation = Orientation.Horizontal;
 
-            Rectangle r3 = new Rectangle();
-            r3.Fill = Brushes.BlueViolet;
-            r3.Width = 15;
-            r3.Height = 15;
-            stack.Children.Add(r3);
+                Rectangle r2 = new Rectangle();
+                r2.Fill = Brushes.Brown;
+                r2.Width = 15;
+                r2.Height = 15;
+                stack.Children.Add(r2);
+                r2.Margin = new Thickness(5, 0, 5, 0);
 
-            g.Children.Add(stack);
-            g.Children.Add(r);
-            g.Children.Add(txt1);
+                Rectangle r3 = new Rectangle();
+                r3.Fill = Brushes.BlueViolet;
+                r3.Width = 15;
+                r3.Height = 15;
+                stack.Children.Add(r3);
 
-            Canvas.SetLeft(g, x);
-            Canvas.SetTop(g, y);
+                g.Children.Add(stack);
+                g.Children.Add(r);
+                g.Children.Add(txt1);
 
-            canvasObj.Children.Add(g);
+
+                borders[bordernumber].Child = g;
+                Canvas.SetLeft(borders[bordernumber], x);
+                Canvas.SetTop(borders[bordernumber], y);
+
+                canvasObj.Children.Add(borders[bordernumber]);
+
+                bordernumber++;
+            }
+
+            catch (Exception )
+            {
+                throw;
+                //MessageBox.Show(ex.Message);
+            }
         }
 
         private void AddVerticalGrid(double x, double y, Color color, Color bg)
@@ -191,7 +212,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             g.Height = (double)windowHeight / 10;
             g.Width = (double)windowWidth / 10;
 
-            g.Background = new SolidColorBrush(bg);
+            //g.Background = new SolidColorBrush(bg);
             //g.ShowGridLines = true;
             // Define the Columns
             ColumnDefinition colDef1 = new ColumnDefinition();
