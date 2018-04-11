@@ -2,6 +2,10 @@
 -- Some of the material is just for reference ie. how to set isolation levels.
 -- Some is added to schema.sql
 
+-- DDL
+alter table Cell modify column Name varchar(256);
+alter table Cell modify column CellId int auto_increment;
+
 -- simple queries
 -- number of games per player
 SELECT PlayerName AS Player,COUNT(DISTINCT(GameSessionId)) AS Games
