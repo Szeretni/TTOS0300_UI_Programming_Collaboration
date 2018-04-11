@@ -112,6 +112,7 @@ INSERT INTO Token (Name) VALUES ("Battleship"),("Cannon"),("Cat"),("Iron"),("Pen
 -- Initializing the first game
 -- gamesession
 INSERT INTO GameSession (WinnerId, WinnerCash, WinnerCell) VALUES (null, null, null);
+INSERT INTO GameSession (WinnerId,WinnerCash,WinnerCell) VALUES (1,500,15),(2,300,20);
 
 
 -- players to the gamesession. CellId is players' current position
@@ -119,6 +120,8 @@ INSERT INTO GameSession_has_player (PlayerId,GameSessionId,CellId) VALUES (1,1,1
 INSERT INTO GameSession_has_player(PlayerId, GameSessionId, CellId)
 VALUES
 (3,1,1);
+INSERT INTO GameSession_has_player (PlayerId,GameSessionId,CellId) VALUES (4,1,1);
+INSERT INTO GameSession_has_player (PlayerId,GameSessionId,CellId) VALUES (1,2,5),(3,2,8);
 
 
 -- Inserted starting cash to players; 2 x 500, 4 x 100, 1 x 50, 1 x 20, 2 x 10, 1 x 5, 5 x 1
@@ -148,9 +151,23 @@ VALUES
 (3, 123, 1),
 (3, 151, 1),(3, 152, 1),(3, 153, 1),(3, 154, 1),(3, 155, 1);
 
+INSERT INTO Player_has_Cash (PlayerId,CashId,GamesessionId) VALUES (4,7,1);
+INSERT INTO Player_has_Cash (PlayerId,CashId,GameSessionId) VALUES (1,1,2),(3,2,2);
+
 
 -- tokens to players
 INSERT INTO Player_has_Token (PlayerId,TokenId,GameSessionId) VALUES (1,1,1),(2,2,1);
 INSERT INTO Player_has_Token(PlayerId, TokenId, GameSessionId)
 VALUES
 (3, 3, 1);
+
+
+--buildings to players
+INSERT INTO Player_has_Building (PlayerId,BuildingId,GameSessionId) VALUES (1,1,1),(1,2,1),(2,3,1);
+
+
+-- properties (cells,shares) to players
+INSERT INTO Player_has_Cell (PlayerId,CellId,GameSessionId) VALUES (1,2,1),(3,8,1),(2,15,1);
+
+
+--
