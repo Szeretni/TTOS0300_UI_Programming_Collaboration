@@ -1,4 +1,12 @@
-## Hannu Oksman, Ville Paananen, Antti Tarvainen
+# Loppuraportti
+
+## Hannu Oksman L2912
+
+## Ville Paananen L4079
+
+## Antti Tarvainen L4623
+
+### Opintojakso TTZC0800 Tietokannat
 
 ### Vaatimusmäärittely
 
@@ -13,6 +21,7 @@
 ![uml](../Images/monopoliuml.png)
 
 #### Huomiot
+* Tämä on ensimmäinen iteraatio, jonka teimme käsite-ehdokaslistan pohjalta. Tässä havaitsimme monta ongelmaa.
 * Mallintaa tarpeettoman tarkasti fyysistä lautapeliä, jossa Raha, Tontit ja Nappula ovat sidottuja Pelaajaan, joka tuo ne Pelikertaan.
 * Ei salli rinnakkaisia pelejä, vaan pitää pelata sarjassa.
 
@@ -21,23 +30,26 @@
 ![asgfölh](../Images/monopoliasgfölh.PNG)
 
 #### Huomiot
-* Moni-moneen-yhteydet purettu.
+* Moni-moneen-yhteydet purettu. Kokeiltu, että Player on moni-moneen-suhteessa muihin käsitteisiin. Tässä toteutettu vain Player_has_Cash ja Attendance.
 * Edelleen pelaaja kuljettaa muita käsitteitä.
+* Toimii vain jos on yksi peli kerrallaan. Välitaulut pitäisi tyhjentää ennen kuin voi pelata seuraavan pelin, koska jos Player 1 on Cash 1, niin Cash 1 ei voi käyttää muissa peleissä.
 
 ### Vain yksi moni-moneen-välitaulu
 
 ![asgfölh](../Images/monopoliumlmysql.PNG)
 
 #### Huomiot
-* Pelaaja ei enää tuo rahoja ym. peliin.
-* Käsitteisiin lisätty Owner. Tästä seuraa, että vaikka rahat voivat kuulua moniin peleihin, niin ne eivät voi tehdä sitä samanaikaisesti.
+* Kokeilimme uutta lähestymistapaa, jossa oelaaja ei enää tuo rahoja ym. peliin.
+* Käsitteisiin lisätty Owner. Tästä seuraa vieläkin se, että vaikka rahat voivat kuulua moniin peleihin, niin ne eivät voi tehdä sitä samanaikaisesti.
+* Lisäksi tässä on uutena ongelmana se, että Attendance-tauluun tulee erittäin paljon null-soluja. Nyt meillä on 200 Cash, ja koska Cash on Attendancen viiteavain, niin Attendance-tauluun tulee vähintään kaksi sataa riviä, joissa suurin osa on null.
+* Nullien suuri määrä on selkeä merkki, että käsitemalli ei ole hyvä.
 
-### Final
+### Lopullinen versio
 
 ![ER-kaavio](../Images/monopolifinal.PNG)
 
 #### Huomiot
-* Välitauluissa on pelaaja ja peli, jotka yhdessä kunkin käsitteen kanssa muodostavat pääavaimen. Esim. rahat voivat olla nyt monessa pelissä samanaikaisesti.
+* Välitauluissa on pelaaja ja peli, jotka yhdessä kunkin käsitteen id:n kanssa muodostavat pääavaimen. Esim. sama raha voi olla nyt monessa pelissä samanaikaisesti, koska komposiittipääavain on erilainen.
 * ![same cash different game](../Images/same_cash_different_game.PNG)
 * ![PK](../Images/phc_pk.PNG)
 * Uniikki indeksi pelille ja ei-pelaajalle. Estää esim. saman rahan olemassaolon usealla pelaajalla samassa pelissä.
