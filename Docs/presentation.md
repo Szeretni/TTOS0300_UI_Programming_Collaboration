@@ -51,6 +51,7 @@
 
 #### Huomiot
 * Välitauluissa on pelaaja ja peli, jotka yhdessä kunkin käsitteen kanssa muodostavat pääavaimen. Esim. rahat voivat olla nyt monessa pelissä samanaikaisesti.
+* ![same cash different game](../Images/same_cash_different_game.PNG)
 * ![PK](../Images/phc_pk.PNG)
 * Uniikki indeksi pelille ja ei-pelaajalle. Estää esim. saman rahan olemassaolon usealla pelaajalla samassa pelissä.
 * ![UQ](../Images/phc_i.PNG)
