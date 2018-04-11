@@ -162,12 +162,9 @@ VALUES
 (3, 3, 1);
 
 
---buildings to players
+-- buildings to players
 INSERT INTO Player_has_Building (PlayerId,BuildingId,GameSessionId) VALUES (1,1,1),(1,2,1),(2,3,1);
 
 
 -- properties (cells,shares) to players
 INSERT INTO Player_has_Cell (PlayerId,CellId,GameSessionId) VALUES (1,2,1),(3,8,1),(2,15,1);
-
-
---
