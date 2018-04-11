@@ -6,6 +6,7 @@
 * DONE SCHEMA10, ei vielä sql_csharp_ui dbssä: view
 * Lisää jokaiseen tauluun tietoa ja tee tarvittavat kyselyt (mieluiten kaksi, joista toinen on monen taulun kysely ja toinen jokin summakysely).
 * if jos type 0 ei voi omistaa
+* DONE proseduuri tehty, lisätty queries.sql
 # END OF TODO
 
 # Peliklooni
@@ -63,10 +64,14 @@
 
 [insert_into.sql](../SQLmaterials/insert_into.sql)
 
-### CASCADE
+### Vyörytys
 
 ![same cash same game](../Images/on_update_toimii.png)
 
-### Create View
+### Näkymä
 
 ![same cash same game](../Images/create_view.PNG)
+
+### Proseduuri
+
+![unbyuable_cells](../Images/delimiter.PNG)
