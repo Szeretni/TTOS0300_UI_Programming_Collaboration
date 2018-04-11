@@ -60,27 +60,38 @@
 
 [schema.sql](../SQLmaterials/schema.sql)
 
+#### Huomioita
+* Viimeisimmässä Workbenchin ER-kaaviossa ei vielä käytetty proseduureja. Lisäsimme ne lennosta suoraan valmiiseen tietokantaan ja päivitimme tietokannan luontiskriptiä. 
+* Myöskään ei ollut vyörytyssääntöjä. Säilytämme GitHubissa tiedostoja, ja helpointi oli lisätä vyörytyssäännöt Wordin kautta käyttäen Replace All -toimintoa.
+* Lisäsimme myös yhden näkymän suoraan luontiskriptiin ja asetimme eristävyystason korkeimmaksi.
+
 ### Datan lisäys
 
 [insert_into.sql](../SQLmaterials/insert_into.sql)
+
+#### Huomioita
+* Aluksi ajattelimme että asetamme käsin CellId:n (pelilaudan ruutujen), jotta voisimme helpommin vaihtaa järjestystä käyttöliittymässä. Piirto tapautuisi toistorakenteessa id:n mukaan.
+* Luontiskriptin ajo pysähtyi tästä syystä tietenkin heti pääavainkonfliktiin. Päätimme lisätä lennosta CellId auto_increment.
+* alter table Cell modify column CellId int auto_increment;
+* Myöhemmin lisäsimme sen suoraan tietokannan luontiskriptiin.
 
 ### Rivit lisäyksen jälkeen
 
 ![rows](../Images/nbr_of_table_rows.PNG)
 
-### Vyörytys
+### Vyörytys toimii. Poistettaessa pelaaja myös raha vapautuu
 
 ![same cash same game](../Images/on_update_toimii.png)
 
-### Näkymä
+### Näkymä toimii
 
 ![same cash same game](../Images/create_view.PNG)
 
 
-### Kysely
+### Kysely toimii
 
 ![number of games per player](../Images/games_per_player.PNG)
 
-### Proseduuri
+### Proseduuri toimii
 
 ![unbyuable_cells](../Images/delimiter.PNG)
