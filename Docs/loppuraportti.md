@@ -83,16 +83,16 @@
 
 ![same cash same game](../Images/on_update_toimii.png)
 
-### Näkymä toimii
+### Näkymä toimii. Näyttää pelaajien rahasummat kussakin pelissä
 
 ![same cash same game](../Images/create_view.PNG)
 
 
-### Kysely toimii
+### Kysely toimii. Näyttää kuinka monessa eri pelissä pelaajat ovat
 
 ![number of games per player](../Images/games_per_player.PNG)
 
-### Proseduuri toimii
+### Proseduuri toimii. Estää lähtöruutujen, vankiloiden jne. omistuksen antamisen pelaajalle
 
 ![unbyuable_cells](../Images/delimiter.PNG)
 
@@ -115,7 +115,7 @@ Suurin ongelma mysql serverin asentamisessa Pi:lle oli, että mysql ei vakiona s
 
 Oksman 5/5. Melkein kaikki dokumentaatio, Githubin pystytys, ER-kaavioiden piirto, jatkuva iterointi, sql-lauseiden kirjoitus.
 Tarvainen 5/5. MySQL-palvelin RasPille, Access-käyttöliittymä, ER-kaavioiden piirto, jatkuva iterointi, sql-lauseiden kirjoitus.
-Paananen 4/5. Vaatimusmäärittelyn kirjoitus. Osallistui ER-kaavioiden iterointiin. Lopussa osallistuminen väheni.
+Paananen 3-4/5. Vaatimusmäärittelyn kirjoitus. Osallistui ER-kaavioiden iterointiin. Lopussa osallistuminen väheni.
 
 
 ## Koottuna vielä harjoitustyöohjeessa pyydetyt dokumentit:
