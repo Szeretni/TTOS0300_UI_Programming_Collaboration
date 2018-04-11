@@ -118,7 +118,7 @@ Tarvainen 5/5. MySQL-palvelin RasPille, Access-käyttöliittymä, ER-kaavioiden 
 Paananen 4/5. Vaatimusmäärittelyn kirjoitus. Osallistui ER-kaavioiden iterointiin. Lopussa osallistuminen väheni.
 
 
-## Koottuna harjoitustyöohjeessa pyydetyt dokumentit:
+## Koottuna vielä harjoitustyöohjeessa pyydetyt dokumentit:
 * [Vaatimusmäärittely-dokumentti](/Vaatimusmäärittely)
 * ![ER-kaavio](../Images/monopolifinal.PNG)
 * [schema.sql](../SQLmaterials/schema.sql)
