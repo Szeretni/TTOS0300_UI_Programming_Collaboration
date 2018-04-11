@@ -77,6 +77,11 @@
 
 ![same cash same game](../Images/create_view.PNG)
 
+
+### Kysely
+
+![number of games per player](../Images/games_per_player.PNG)
+
 ### Proseduuri
 
 ![unbyuable_cells](../Images/delimiter.PNG)
