@@ -41,5 +41,7 @@ Mahdolliset toiminnot:
 
 5. Muut ominaisuudet
 Suorituskyky: perus-PC (Koulun kone, 8GB RAM, 3.5GHz:n prosessori, n. 10 000 rivin tietomäärällä) alle 1 sekunti.
-Tietoturva: Eristyneisyystaso nostetaan Serializableen, joka estää ongelmat 'Dirty Read', 'Nonrepeatable Read' ja 'Phantoms'. Transaktiot toteutetaan ohjelmallisesti. Autocommit asetetaan nollaan lopullisessa versiossa. Näillä toimenpiteillä päivitysten välisiä häiriöitä ja sekaantumisia.
+Tietoturva: Eristyneisyystaso nostetaan Serializableen, joka estää ongelmat 'Dirty Read', 'Nonrepeatable Read' ja 'Phantoms'. 
+Transaktiot toteutetaan ohjelmallisesti. Autocommit asetetaan nollaan lopullisessa versiossa. Näillä toimenpiteillä päivitysten 
+välisiä häiriöitä ja sekaantumisia.
 Käytettävyys: Dataan pääsee helposti käsiksi, hyvä käyttöliittymä.
