@@ -96,8 +96,18 @@
 
 ![unbyuable_cells](../Images/delimiter.PNG)
 
+### Access käyttöliittymä
+
+![Pääsivu](../Images/AccessMain.png)
+![Rakennus muokkaus/selailu](../Images/AccessBuildings.png)
+![Ruutujen muokkaus/selailu](../Images/AccessCells.png)
+![Rahojen muokkaus/selailu](../Images/AccessCash.png)
+![Pelaajien rahat eri peleissä](../Images/AccessTotalCash.png)
+
 ### Mysql serverin asennus Raspberry Pi:lle
 
 Päätimme käyttää raspille asennettua tietokantaa, jotta tietokantaa pystyisi käsittelemään yhtä aikaa ilman jamkin mysql serverin käyttöä. Tämä toimi ulkopuolisilta tietokoneilta hyvin, mutta labranetin sisäisiltä koneilta yhdistäminen tietokantaan ei onnistu. Tämä tuotti ongelmia kouluaikana harjoitustyön tekemiseen, mutta vapaa-ajalla raspilla oleva serveri toimi hyvin.
 
-Suurin ongelma mysql serverin asentamisessa Pi:lle oli, että mysql ei vakiona salli kuin localhostin yhdistämisen palvelimelle. Tämä ratkesi kuitenkin poistamalla mysql asetustiedostosta bind-
+Suurin ongelma mysql serverin asentamisessa Pi:lle oli, että mysql ei vakiona salli kuin localhostin yhdistämisen palvelimelle. Tämä ratkesi kuitenkin vaihtamalla mysql asetustiedostosta "bind-address=" rivi kommenteiksi.
+
+
