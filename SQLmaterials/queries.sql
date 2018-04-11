@@ -1,4 +1,16 @@
--- DO NOT run the whole file. Some of the material is just for reference ie. how to set isolation levels
+-- DO NOT RUN THE WHOLE FILE!
+-- Some of the material is just for reference ie. how to set isolation levels.
+-- Some is added to schema.sql
+
+-- simple queries
+-- number of games per player
+SELECT PlayerName AS Player,COUNT(DISTINCT(GameSessionId)) AS Games
+FROM Player 
+INNER JOIN GameSession_has_player 
+ON Player.PlayerId = GameSession_has_player.PlayerId
+GROUP BY PlayerName
+;
+
 
 -- VIEW CREATION
 -- query verification
@@ -11,6 +23,7 @@ ON Player_has_Cash.CashId = Cash.CashId
 GROUP BY GameSessionId,PlayerName
 ;
 
+-- ADDED TO SCHEMA.SQL
 -- creating the view
 CREATE VIEW CashPerPlayerPerGame
 AS
@@ -27,7 +40,7 @@ GROUP BY GameSessionId,PlayerName
 -- using the view
 SELECT * FROM CashPerPlayerPerGame;
 
-
+-- ADDED TO SCHEMA.SQL
 -- DELIMITER
 -- prevents buying start, jail etc. common and shared cells
 DELIMITER $$
