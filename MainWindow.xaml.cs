@@ -39,11 +39,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         public MainWindow()
         {
             InitializeComponent();
+            LoadPlayers();
             for (int i = 0; i < 36; i++)
             {
                 streets.Add(i.ToString());
             }
-            LoadPlayers();
         }
 
         private void LoadPlayers()
@@ -54,7 +54,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //players = BLLayer.GetPlayerList(); above is better
                 dgDbTest.ItemsSource = players;
                 cells = BLLayer.GetAllCellsFromDt();
-                celldbTest.ItemsSource = cells;
+                //celldbTest.ItemsSource = cells;
             }
             catch (Exception ex)
             {
@@ -79,6 +79,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             //canvasObj.Children.Clear();
             //PrintText(streets,b);
             canvasObj.Children.Clear();
+            bordernumber = 0;
             PrintGrid();
 
             /*
@@ -130,7 +131,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 borders.Add(new Border());
 
                 borders[bordernumber].BorderBrush = Brushes.Black;
-                borders[bordernumber].BorderThickness = new Thickness(1);
+                borders[bordernumber].BorderThickness = new Thickness(1,1,1,1);
                 
                 /*
                 borders[bordernumber].BorderBrush = Brushes.Black;
@@ -157,15 +158,58 @@ namespace TTOS0300_UI_Programming_Collaboration
                 g.RowDefinitions.Add(rowDef3);
 
                 Rectangle r = new Rectangle();
-
-                r.Fill = Brushes.SkyBlue;
+                switch (cells[bordernumber].SerieId)
+                {
+                    case 1:
+                        {
+                            r.Fill = Brushes.Brown;
+                            break;
+                        }
+                    case 3:
+                        {
+                            r.Fill = Brushes.SkyBlue;
+                            break;
+                        }
+                    case 4:
+                        {
+                            r.Fill = Brushes.Pink;
+                            break;
+                        }
+                    case 5:
+                        {
+                            r.Fill = Brushes.Orange;
+                            break;
+                        }
+                    case 6:
+                        {
+                            r.Fill = Brushes.Red;
+                            break;
+                        }
+                    case 7:
+                        {
+                            r.Fill = Brushes.Yellow;
+                            break;
+                        }
+                    case 8:
+                        {
+                            r.Fill = Brushes.DarkGreen;
+                            break;
+                        }
+                    case 9:
+                        {
+                            r.Fill = Brushes.DarkBlue;
+                            break;
+                        }
+                }
+                
                 Grid.SetRow(r, 0);
                 Grid.SetColumn(r, 0);
 
                 TextBlock txt1 = new TextBlock();
-                txt1.Text = "asdf";
+                txt1.Text = cells[bordernumber].Name;
                 txt1.FontSize = 14;
                 txt1.FontWeight = FontWeights.Bold;
+                txt1.TextAlignment = TextAlignment.Center;
                 Grid.SetRow(txt1, 1);
                 Grid.SetColumn(txt1, 0);
 
@@ -174,23 +218,21 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Grid.SetColumn(stack, 0);
                 stack.Orientation = Orientation.Horizontal;
 
-                Rectangle r2 = new Rectangle();
-                r2.Fill = Brushes.Brown;
-                r2.Width = 15;
-                r2.Height = 15;
-                stack.Children.Add(r2);
-                r2.Margin = new Thickness(5, 0, 5, 0);
-
-                Rectangle r3 = new Rectangle();
-                r3.Fill = Brushes.BlueViolet;
-                r3.Width = 15;
-                r3.Height = 15;
-                stack.Children.Add(r3);
+                TextBlock txt2 = new TextBlock();
+                if (cells[bordernumber].Price > 0)
+                {
+                    txt2.Text = cells[bordernumber].Price.ToString() + "$";
+                }
+                txt2.FontSize = 14;
+                txt2.FontWeight = FontWeights.Bold;
+                txt2.TextAlignment = TextAlignment.Center;
+                Grid.SetRow(txt2, 3);
+                Grid.SetColumn(txt2, 0);
 
                 g.Children.Add(stack);
                 g.Children.Add(r);
                 g.Children.Add(txt1);
-
+                g.Children.Add(txt2);
 
                 borders[bordernumber].Child = g;
                 Canvas.SetLeft(borders[bordernumber], x);
@@ -201,13 +243,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bordernumber++;
             }
 
-            catch (Exception )
+            catch (Exception ex)
             {
-                throw;
-                //MessageBox.Show(ex.Message);
+                //throw;
+                MessageBox.Show(ex.Message);
             }
         }
-
+        
         private void AddVerticalGrid(double x, double y, Color color, Color bg)
         {
             Grid g = new Grid();
@@ -304,7 +346,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     width = (int)Math.Round(tempw, 0);
                     temph = ((windowHeight / 10) * j);
                     height = (int)Math.Round(temph, 0);
-                    AddVerticalGrid(width, height, b, bg);
+                    AddGrid(width, height, b, bg);
                     j++;
                     if (j == 10)
                     {
