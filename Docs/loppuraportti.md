@@ -126,3 +126,4 @@ Paananen 3-4/5. Vaatimusmäärittelyn kirjoitus. Osallistui ER-kaavioiden iteroi
 * ![ER-kaavio](../Images/monopolifinal.PNG)
 * [schema.sql](../SQLmaterials/schema.sql)
 * [insert_into.sql](../SQLmaterials/insert_into.sql)
+* [Dump](../SQLmaterials/Dump20180411T1041.sql)
