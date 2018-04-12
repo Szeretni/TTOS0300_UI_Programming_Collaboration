@@ -29,6 +29,25 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        public static DataTable GetCellsFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
         {

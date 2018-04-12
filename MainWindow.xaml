@@ -8,6 +8,7 @@
         Title="MainWindow" MinHeight="400" Height="750" MinWidth="400" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Background="{x:Null}">
     <Grid x:Name="gridObj" Background="#FFBEBEBF">
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <DataGrid x:Name="dgDbTest" Height="300" Width="300" />
+        <DataGrid x:Name="dgDbTest" Margin="221,210,394,333" />
+        <DataGrid x:Name="celldbTest" Margin="386,210,229,333" />
     </Grid>
 </Window>

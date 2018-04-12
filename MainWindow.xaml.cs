@@ -26,6 +26,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Grid> grids = new List<Grid>();
         List<TextBlock> textBlocks = new List<TextBlock>();
         List<Player> players = new List<Player>();
+        List<Cell> cells = new List<Cell>();
         List<Border> borders = new List<Border>();
         int bordernumber = 0;
 
@@ -52,6 +53,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 players = BLLayer.GetAllPlayersFromDt();
                 //players = BLLayer.GetPlayerList(); above is better
                 dgDbTest.ItemsSource = players;
+                cells = BLLayer.GetAllCellsFromDt();
+                celldbTest.ItemsSource = cells;
             }
             catch (Exception ex)
             {
