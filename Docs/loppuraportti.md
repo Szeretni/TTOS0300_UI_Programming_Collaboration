@@ -39,8 +39,8 @@
 ![asgfölh](../Images/monopoliumlmysql.PNG)
 
 #### Huomiot
-* Kokeilimme uutta lähestymistapaa, jossa oelaaja ei enää tuo rahoja ym. peliin.
-* Käsitteisiin lisätty Owner. Tästä seuraa vieläkin se, että vaikka rahat voivat kuulua moniin peleihin, niin ne eivät voi tehdä sitä samanaikaisesti.
+* Kokeilimme uutta lähestymistapaa, jossa pelaaja ei enää tuo rahoja ym. peliin.
+* Käsitteisiin lisätty Owner. Tästä seuraa vieläkin se, että vaikka rahat voivat kuulua moniin peleihin, niin ne eivät voi tehdä sitä samanaikaisesti. Raha voi olla pelaajalla, joka ei ole toisessa pelissä mukana.
 * Lisäksi tässä on uutena ongelmana se, että Attendance-tauluun tulee erittäin paljon null-soluja. Nyt meillä on 200 Cash, ja koska Cash on Attendancen viiteavain, niin Attendance-tauluun tulee vähintään kaksi sataa riviä, joissa suurin osa on null.
 * Nullien suuri määrä on selkeä merkki, että käsitemalli ei ole hyvä.
 
