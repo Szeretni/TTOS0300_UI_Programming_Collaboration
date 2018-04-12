@@ -107,6 +107,8 @@
     </ApplicationDefinition>
     <Compile Include="BLLayer.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="Chance.cs" />
+    <Compile Include="CommunityChest.cs" />
     <Compile Include="DBLayer.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Player.cs" />
@@ -190,6 +192,19 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Docs\MySqlCommand.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="dicetransparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="token1.png" />
+    <Resource Include="token2.png" />
+    <Resource Include="token3.png" />
+    <Resource Include="token4.png" />
+    <Resource Include="token5.png" />
+    <Resource Include="token6.png" />
+    <Resource Include="token7.png" />
+    <Resource Include="token8.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

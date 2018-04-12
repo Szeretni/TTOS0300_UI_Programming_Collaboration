@@ -10,5 +10,7 @@ namespace TTOS0300_UI_Programming_Collaboration
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public int Cash { get; set; }
+        public int Position { get; set; }
     }
 }

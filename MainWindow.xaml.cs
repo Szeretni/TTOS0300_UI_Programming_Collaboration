@@ -76,38 +76,9 @@ namespace TTOS0300_UI_Programming_Collaboration
             FrameworkElement client = this.Content as FrameworkElement;
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
-            //canvasObj.Children.Clear();
-            //PrintText(streets,b);
             canvasObj.Children.Clear();
             bordernumber = 0;
             PrintGrid();
-
-            /*
-            Color pc1 = Color.FromRgb(127, 2, 44);
-            Color pc2 = Color.FromRgb(28, 24, 25);
-            Color pc3 = Color.FromRgb(58, 255, 88);
-            Color pc4 = Color.FromRgb(241, 255, 57);
-
-            int position = 4;
-
-            PlayerTest(pc1, position);
-            PlayerTest(pc2, position);
-            PlayerTest(pc3, position);
-            PlayerTest(pc4, position);
-            */
-            /*
-            foreach (Grid g in grids)
-            {
-                canvasObj.Children.Add(g);
-            }
-            */
-            
-            /*
-            foreach (TextBlock t in textBlocks)
-            {
-                canvasObj.Children.Add(t);
-            }
-            */
         }
 
         private void PlayerTest(Color c, int pos)
@@ -131,20 +102,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 borders.Add(new Border());
 
                 borders[bordernumber].BorderBrush = Brushes.Black;
-                borders[bordernumber].BorderThickness = new Thickness(1,1,1,1);
-                
-                /*
-                borders[bordernumber].BorderBrush = Brushes.Black;
-                borders[bordernumber].BorderThickness = new Thickness(5, 5, 5, 5);
-                borders[bordernumber].Background = new SolidColorBrush(bg);
-                borders[bordernumber].Padding = new Thickness(5);
-                borders[bordernumber].CornerRadius = new CornerRadius(15);
-                */
+                borders[bordernumber].BorderThickness = new Thickness(2);
 
                 g.Height = (double)windowHeight / 10;
                 g.Width = (double)windowWidth / 10;
-
                 //g.ShowGridLines = true;
+
                 // Define the Columns
                 ColumnDefinition colDef1 = new ColumnDefinition();
                 g.ColumnDefinitions.Add(colDef1);
@@ -153,9 +116,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 RowDefinition rowDef1 = new RowDefinition();
                 RowDefinition rowDef2 = new RowDefinition();
                 RowDefinition rowDef3 = new RowDefinition();
+                RowDefinition rowDef4 = new RowDefinition();
                 g.RowDefinitions.Add(rowDef1);
                 g.RowDefinitions.Add(rowDef2);
                 g.RowDefinitions.Add(rowDef3);
+                g.RowDefinitions.Add(rowDef4);
 
                 Rectangle r = new Rectangle();
                 switch (cells[bordernumber].SerieId)
@@ -201,15 +166,14 @@ namespace TTOS0300_UI_Programming_Collaboration
                             break;
                         }
                 }
-                
                 Grid.SetRow(r, 0);
                 Grid.SetColumn(r, 0);
 
                 TextBlock txt1 = new TextBlock();
                 txt1.Text = cells[bordernumber].Name;
-                txt1.FontSize = 14;
-                txt1.FontWeight = FontWeights.Bold;
+                txt1.FontSize = 12;
                 txt1.TextAlignment = TextAlignment.Center;
+                txt1.TextWrapping = TextWrapping.WrapWithOverflow;
                 Grid.SetRow(txt1, 1);
                 Grid.SetColumn(txt1, 0);
 
@@ -217,17 +181,46 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Grid.SetRow(stack, 2);
                 Grid.SetColumn(stack, 0);
                 stack.Orientation = Orientation.Horizontal;
+                
+                /*
+                BitmapImage bi3 = new BitmapImage();
+                bi3.BeginInit();
+                bi3.UriSource = new Uri(@"D:\L4623\TTOS0300_UI_Programming_Collaboration\token2.png", UriKind.Relative);
+                bi3.EndInit();
+                Image img1 = new Image();
+                //img1.Height = 40;
+                //img1.Width = 40;
+                img1.Stretch = Stretch.Fill;
+                img1.Source = bi3;
+                Grid.SetRow(img1, 3);
+                Grid.SetColumn(img1, 0);
+                */
+                Rectangle r1 = new Rectangle();
+                r1.Width = (double)windowHeight / 10 /4 - 5;
+                r1.Height = (double)windowWidth / 10 /4 - 5;
+                //Grid.SetRow(r1, 2);
+                //Grid.SetColumn(r1, 0);
+                r1.Fill = new ImageBrush(new BitmapImage(new Uri(@"D:\L4623\TTOS0300_UI_Programming_Collaboration\token2.png", UriKind.Relative)));
+
+                Rectangle r2 = new Rectangle();
+                r2.Width = (double)windowHeight / 10 /4 - 5;
+                r2.Height = (double)windowWidth / 10 /4 - 5;
+                //Grid.SetRow(r2, 2);
+                //Grid.SetColumn(r2, 0);
+                r2.Fill = new ImageBrush(new BitmapImage(new Uri(@"D:\L4623\TTOS0300_UI_Programming_Collaboration\token3.png", UriKind.Relative)));
 
                 TextBlock txt2 = new TextBlock();
                 if (cells[bordernumber].Price > 0)
                 {
                     txt2.Text = cells[bordernumber].Price.ToString() + "$";
                 }
-                txt2.FontSize = 14;
-                txt2.FontWeight = FontWeights.Bold;
+                txt2.FontSize = 12;
                 txt2.TextAlignment = TextAlignment.Center;
                 Grid.SetRow(txt2, 3);
                 Grid.SetColumn(txt2, 0);
+
+                stack.Children.Add(r1);
+                stack.Children.Add(r2);
 
                 g.Children.Add(stack);
                 g.Children.Add(r);
@@ -243,72 +236,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bordernumber++;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                //throw;
-                MessageBox.Show(ex.Message);
+                throw;
+                //MessageBox.Show(ex.Message);
             }
         }
-        
-        private void AddVerticalGrid(double x, double y, Color color, Color bg)
-        {
-            Grid g = new Grid();
-
-            g.Height = (double)windowHeight / 10;
-            g.Width = (double)windowWidth / 10;
-
-            //g.Background = new SolidColorBrush(bg);
-            //g.ShowGridLines = true;
-            // Define the Columns
-            ColumnDefinition colDef1 = new ColumnDefinition();
-            ColumnDefinition colDef2 = new ColumnDefinition();
-            ColumnDefinition colDef3 = new ColumnDefinition();
-            g.ColumnDefinitions.Add(colDef1);
-            g.ColumnDefinitions.Add(colDef2);
-            g.ColumnDefinitions.Add(colDef3);
-
-            // Define the Rows
-            RowDefinition rowDef1 = new RowDefinition();
-            g.RowDefinitions.Add(rowDef1);
-
-            Rectangle r = new Rectangle();
-
-            r.Fill = Brushes.SkyBlue;
-            Grid.SetRow(r, 0);
-            Grid.SetColumn(r, 0);
-
-            TextBlock txt1 = new TextBlock();
-            txt1.Text = "asdf";
-            txt1.FontSize = 14;
-            txt1.FontWeight = FontWeights.Bold;
-            Grid.SetRow(txt1,0);
-            Grid.SetColumn(txt1, 1);
-
-            g.Children.Add(r);
-            g.Children.Add(txt1);
-
-            Canvas.SetLeft(g, x);
-            Canvas.SetTop(g, y);
-
-            canvasObj.Children.Add(g);
-        }
-
-        private void Text(double x, double y, string text, Color color, Color bg)
-        {
-            TextBlock textBlock = new TextBlock();
-
-            textBlock.Text = text;
-            textBlock.Foreground = new SolidColorBrush(color);
-            textBlock.Background = new SolidColorBrush(bg);
-            textBlock.Height = (double)windowHeight/10;
-            textBlock.Width = (double)windowWidth /10;
-            textBlock.TextAlignment = TextAlignment.Center;
-
-            Canvas.SetLeft(textBlock, x);
-            Canvas.SetTop(textBlock, y);
-
-            textBlocks.Add(textBlock);
-        }
+       
         private void PrintGrid()
         {
             int j = 1;
@@ -369,66 +303,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        /*
-        private void PrintText(List<string> streets, Color b)
+        private void btnDice_Click(object sender, RoutedEventArgs e)
         {
-            int j = 1;
-            int height = 0;
-            int width = 0;
-            double temph = 0;
-            double tempw = 0;
-            for (int i = 0; i < 36; i++)
-            {
-                if (i<10)
-                {
-                    temph = (windowHeight - ((windowHeight / 10) * j));
-                    height = (int)Math.Round(temph,0);
-                    Text(0, height, streets[i], b, bg);
-                    j++;
-                    if (j == 11)
-                    {
-                        j = 1;
-                    }
-                }
-                else if (i<19)
-                {
-                    tempw = ((windowWidth / 10 * j));
-                    width = (int)Math.Round(tempw, 0);
-                    Text(width, 0, streets[i], b, bg);
-                    j++;
-                    if (j == 10)
-                    {
-                        j = 1;
-                    }
-                }
-                else if (i<28)
-                {
-                    tempw = (windowWidth * 0.9);
-                    width = (int)Math.Round(tempw, 0);
-                    temph = ((windowHeight / 10) * j);
-                    height = (int)Math.Round(temph, 0);
-                    Text(tempw, temph, streets[i], b, bg);
-                    j++;
-                    if (j == 10)
-                    {
-                        j = 2;
-                    }
-                }
-                else
-                {
-                    tempw = (windowWidth - windowWidth / 10 * j);
-                    width = (int)Math.Round(tempw, 0);
-                    temph = (windowHeight * 0.9);
-                    height = (int)Math.Round(temph, 0);
-                    Text(width, height, streets[i], b, bg);
-                    j++;
-                    if (j == 10)
-                    {
-                        j = 1;
-                    }
-                }
-            }
+            Random rng = new Random();
+
+            players[0].Position += rng.Next(1, 6);
         }
-        */
     }
 }

@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("monopoli.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dicetransparent.png")]
 
 

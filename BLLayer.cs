@@ -19,8 +19,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Player player = new Player
                     {
+                        //PlayerId,PlayerName,SUM(Value) as TotalCash
                         Id = int.Parse(dr[0].ToString()),
-                        Name = dr[1].ToString()
+                        Name = dr[1].ToString(),
+                        Cash = int.Parse(dr[2].ToString()),
+                        Position = int.Parse(dr[3].ToString())
                     };
                     players.Add(player);
                 }
