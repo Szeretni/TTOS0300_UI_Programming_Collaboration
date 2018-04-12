@@ -32,6 +32,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        /* list-style obsolete
         public static List<Player> GetPlayerList()
         {
             try
@@ -45,5 +46,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+        */
     }
 }

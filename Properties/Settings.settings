@@ -6,7 +6,7 @@
       <Value Profile="(Default)">91.154.199.251</Value>
     </Setting>
     <Setting Name="port" Type="System.String" Scope="User">
-      <Value Profile="(Default)">4321</Value>
+      <Value Profile="(Default)">5000</Value>
     </Setting>
     <Setting Name="password" Type="System.String" Scope="User">
       <Value Profile="(Default)">12345</Value>
