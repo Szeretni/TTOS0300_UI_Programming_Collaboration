@@ -6,13 +6,13 @@
       <Value Profile="(Default)">91.154.199.251</Value>
     </Setting>
     <Setting Name="port" Type="System.String" Scope="User">
-      <Value Profile="(Default)">5000</Value>
+      <Value Profile="(Default)">3306</Value>
     </Setting>
     <Setting Name="password" Type="System.String" Scope="User">
       <Value Profile="(Default)">12345</Value>
     </Setting>
     <Setting Name="database" Type="System.String" Scope="User">
-      <Value Profile="(Default)">SQL_CSHARP_UI</Value>
+      <Value Profile="(Default)">SCHEMA10</Value>
     </Setting>
     <Setting Name="user" Type="System.String" Scope="User">
       <Value Profile="(Default)">user</Value>

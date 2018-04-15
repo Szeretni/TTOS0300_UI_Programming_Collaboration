@@ -24,7 +24,6 @@ namespace TTOS0300_UI_Programming_Collaboration
     public partial class MainWindow : Window
     {
         List<Grid> grids = new List<Grid>();
-        List<TextBlock> textBlocks = new List<TextBlock>();
         List<Player> players = new List<Player>();
         List<Cell> cells = new List<Cell>();
         List<Border> borders = new List<Border>();
@@ -32,21 +31,11 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
-        List<string> streets = new List<string>();
-        Color b = Color.FromRgb(0, 0, 0);
-        Color bg = Color.FromRgb(75, 143, 252);
-        static int tenth = 10;
-        static int larger = 7;
-        static int corner = larger;
 
         public MainWindow()
         {
             InitializeComponent();
             LoadPlayers();
-            for (int i = 0; i < 36; i++)
-            {
-                streets.Add(i.ToString());
-            }
         }
 
         private void LoadPlayers()
@@ -54,10 +43,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             try
             {
                 players = BLLayer.GetAllPlayersFromDt();
-                //players = BLLayer.GetPlayerList(); above is better
-                dgDbTest.ItemsSource = players;
                 cells = BLLayer.GetAllCellsFromDt();
-                //celldbTest.ItemsSource = cells;
             }
             catch (Exception ex)
             {
@@ -80,8 +66,17 @@ namespace TTOS0300_UI_Programming_Collaboration
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
             canvasObj.Children.Clear();
-            bordernumber = 0;
-            PrintGrid();
+            try
+            {
+                bordernumber = 0;
+                PrintGrid();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("1" + ex.Message);
+            }
+
+            
         }
 
         private void PlayerTest(Color c, int pos)
@@ -96,43 +91,52 @@ namespace TTOS0300_UI_Programming_Collaboration
             Grid.SetColumn(r, 0);
         }
 
-        private void AddGrid(double x, double y, Color color, Color bg,string side)
+        private void AddGrid(double x, double y, string side)
         {
             try
             {
                 Grid g = new Grid();
-
+                g.Background = Brushes.AliceBlue;
                 borders.Add(new Border());
-
                 borders[bordernumber].BorderBrush = Brushes.Black;
-                borders[bordernumber].BorderThickness = new Thickness(2);
+                if (bordernumber == 0 || bordernumber == 9 || bordernumber == 18 || bordernumber == 27)
+                {
+                }
+                if (bordernumber != 0 && bordernumber < 9)
+                {
+                    borders[bordernumber].BorderThickness = new Thickness(0,2,2,2);
+                }
+                else if (bordernumber != 9 && bordernumber > 9 && bordernumber < 19)
+                {
+                    borders[bordernumber].BorderThickness = new Thickness(2, 0, 2, 2);
+                }
+                else if (bordernumber != 18 && bordernumber > 18 && bordernumber < 28)
+                {
+                    borders[bordernumber].BorderThickness = new Thickness(2, 2, 0, 2);
+                }
+                else if (bordernumber != 27 && bordernumber > 27 && bordernumber < 36)
+                {
+                    borders[bordernumber].BorderThickness = new Thickness(2, 2, 2, 0);
+                }
 
                 //grid dimension
                 switch (side)
                 {
                     default:
-                        g.Height = windowHeight / tenth;
-                        g.Width = windowWidth / tenth;
+                        g.Height = windowHeight / 100 * 18;
+                        g.Width = windowWidth / 100 * 8;
                         break;
-                    case "left":
-                        g.Height = (windowHeight - 2 * (windowHeight / corner)) / tenth;
-                        g.Width = windowWidth / larger;
+                    case "sides":
+                        g.Height = windowHeight / 100 * 8;
+                        g.Width = windowWidth / 100 * 18;
                         break;
                     case "top":
-                        g.Height = windowHeight / larger;
-                        g.Width = (windowWidth - 2 * (windowWidth / corner)) / tenth;
-                        break;
-                    case "right":
-                        g.Height = (windowHeight - 2 * (windowHeight / corner)) / tenth;
-                        g.Width = windowWidth / larger;
-                        break;
-                    case "bottom":
-                        g.Height = windowHeight / larger;
-                        g.Width = (windowWidth - 2 * (windowWidth / corner)) / tenth;
+                        g.Height = windowHeight / 100 * 18;
+                        g.Width = windowWidth / 100 * 8;
                         break;
                     case "corner":
-                        g.Height = windowHeight / corner;
-                        g.Width = windowWidth / corner;
+                        g.Height = windowHeight / 100 * 18;
+                        g.Width = windowWidth / 100 * 18;
                         break;
                 }
 
@@ -153,6 +157,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 g.RowDefinitions.Add(rowDef4);
 
                 Rectangle r = new Rectangle();
+                
                 switch (cells[bordernumber].SerieId)
                 {
                     case 1:
@@ -196,6 +201,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                             break;
                         }
                 }
+                
                 Grid.SetRow(r, 0);
                 Grid.SetColumn(r, 0);
 
@@ -212,45 +218,16 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Grid.SetColumn(stack, 0);
                 stack.Orientation = Orientation.Horizontal;
                 
-                /*
-                BitmapImage bi3 = new BitmapImage();
-                bi3.BeginInit();
-                bi3.UriSource = new Uri(@"D:\L4623\TTOS0300_UI_Programming_Collaboration\token2.png", UriKind.Relative);
-                bi3.EndInit();
-                Image img1 = new Image();
-                //img1.Height = 40;
-                //img1.Width = 40;
-                img1.Stretch = Stretch.Fill;
-                img1.Source = bi3;
-                Grid.SetRow(img1, 3);
-                Grid.SetColumn(img1, 0);
-                */
-                Rectangle r1 = new Rectangle();
-                r1.Width = (double)windowHeight / 10 /4 - 5;
-                r1.Height = (double)windowWidth / 10 /4 - 5;
-                //Grid.SetRow(r1, 2);
-                //Grid.SetColumn(r1, 0);
-                r1.Fill = new ImageBrush(new BitmapImage(new Uri("../TTOS0300_UI_Programming_Collaboration/token2.png", UriKind.Relative)));
-
-                Rectangle r2 = new Rectangle();
-                r2.Width = (double)windowHeight / 10 /4 - 5;
-                r2.Height = (double)windowWidth / 10 /4 - 5;
-                //Grid.SetRow(r2, 2);
-                //Grid.SetColumn(r2, 0);
-                r2.Fill = new ImageBrush(new BitmapImage(new Uri("../TTOS0300_UI_Programming_Collaboration/token3.png", UriKind.Relative)));
-
                 TextBlock txt2 = new TextBlock();
                 if (cells[bordernumber].Price > 0)
                 {
                     txt2.Text = cells[bordernumber].Price.ToString() + "$";
                 }
+
                 txt2.FontSize = 12;
                 txt2.TextAlignment = TextAlignment.Center;
                 Grid.SetRow(txt2, 3);
                 Grid.SetColumn(txt2, 0);
-
-                stack.Children.Add(r1);
-                stack.Children.Add(r2);
 
                 g.Children.Add(stack);
                 g.Children.Add(r);
@@ -258,103 +235,90 @@ namespace TTOS0300_UI_Programming_Collaboration
                 g.Children.Add(txt2);
 
                 borders[bordernumber].Child = g;
+
+
                 Canvas.SetLeft(borders[bordernumber], x);
                 Canvas.SetTop(borders[bordernumber], y);
+
+                
 
                 canvasObj.Children.Add(borders[bordernumber]);
 
                 bordernumber++;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-                //MessageBox.Show(ex.Message);
+                //throw;
+                MessageBox.Show("2 " + ex.Message);
             }
         }
 
         private void PrintGrid()
         {
             int j = 1; //used to determine coordinates for printing
-            int height = 0;
-            int width = 0;
-            double temph = 0;
-            double tempw = 0;
+            double htop = windowHeight / 100 * 18;
+            double wtop = windowWidth / 100 * 8;
+            double hsides = windowHeight / 100 * 8;
+            double wsides = windowWidth / 100 * 18;
             for (int i = 0; i < 36; i++)
             {
-                if (i == 0) // bottom left corner
+                if (i == 0) // bottom left corner, left x - top y
                 {
-                    temph = (windowHeight - ((windowHeight / 10) * j));
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(0, height, b, bg, "corner");
+                    AddGrid(0, windowHeight - htop, "corner");
+                }
+
+                else if (i < 9) // left cells width 15% height 8,75% starting from 15% from bottom, left x - top y
+                {
+                    AddGrid(0, windowHeight - htop - (hsides*j), "sides");
                     j++;
                 }
-                else if (i < 9) // left cells
+                
+                else if (i == 9) // top left corner, left x - top y
                 {
-                    double available_height_between_corners = windowHeight - 2 * (windowHeight / larger);
-                    temph = (windowHeight - ((available_height_between_corners / 8) * j));
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(0, height, b, bg, "left");
-                    j++;
-                }
-                else if (i == 9) // top left corner
-                {
-                    temph = (windowHeight - ((windowHeight / 10) * j));
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(0, height, b, bg, "corner");
+                    AddGrid(0, 0, "corner");
                     j = 1;
                 }
-                else if (i < 18) // top cells
+                
+                else if (i < 18) // top cells, left x - top y
                 {
-                    tempw = ((windowWidth / 10 * j));
-                    width = (int)Math.Round(tempw, 0);
-                    AddGrid(width, 0, b, bg, "top");
+                    AddGrid(windowWidth - wsides - (wtop * j), 0, "top");
                     j++;
                 }
-                else if (i == 18) // top right corner
+                
+                else if (i == 18) // top right corner, left x - top y
                 {
-                    temph = (windowHeight - ((windowHeight / 10) * j));
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(0, height, b, bg, "corner");
+                    AddGrid(windowWidth - wsides, 0, "corner");
                     j = 1;
                 }
-                else if (i < 27) // right cells
+                
+                else if (i < 27) // right cells, left x - top y
                 {
-                    tempw = (windowWidth * 0.9);
-                    width = (int)Math.Round(tempw, 0);
-                    temph = ((windowHeight / 10) * j);
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(width, height, b, bg, "right");
+                    AddGrid(windowWidth - wsides, windowHeight - htop - (hsides * j), "sides");
                     j++;
                 }
-                else if (i == 27) // bottom right corner
+                
+                else if (i == 27) // bottom right corner, left x - top y
                 {
-                    temph = (windowHeight - ((windowHeight / 10) * j));
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(0, height, b, bg, "corner");
-                    j = 2;
+                    AddGrid(windowWidth - wsides, windowHeight - htop, "corner");
+                    j = 1;
                 }
-                else // bottom cells
+
+                else // bottom cells, left x - top y
                 {
-                    tempw = (windowWidth - windowWidth / 10 * j);
-                    width = (int)Math.Round(tempw, 0);
-                    temph = (windowHeight * 0.9);
-                    height = (int)Math.Round(temph, 0);
-                    AddGrid(width, height - 20, b, bg, "bottom");
+                    //(windowWidth - wsides - (wtop * j)
+                    AddGrid(windowWidth - wsides - (wtop*j), windowHeight - htop, "top");
                     j++;
-                    if (j == 10)
-                    {
-                        j = 1;
-                    }
                 }
             }
         }
-
+        
         private void btnDice_Click(object sender, RoutedEventArgs e)
         {
             Random rng = new Random();
 
             players[0].Position += rng.Next(1, 6);
         }
+        
     }
 }
