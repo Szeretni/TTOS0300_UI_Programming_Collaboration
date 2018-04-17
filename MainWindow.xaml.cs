@@ -39,7 +39,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         public MainWindow()
         {
             InitializeComponent();
+
             LoadPlayers();
+            players[0].Position = 0;
         }
 
         private void LoadPlayers()
@@ -88,21 +90,49 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                Random rng = new Random();
+                Random rnd = new Random();
 
-                players[0].Position += rng.Next(1, 6);
+                int temp = players[0].Position;
+                int maxposition = 35;
+                
+                players[0].Position += rnd.Next(2,12);
+
+                if (players[0].Position > 35)
+                {
+                    players[0].Position -= maxposition;
+                }
+                else if(players[0].Position == 36)
+                {
+                    players[0].Position = 0;
+                }
 
                 Storyboard story = new Storyboard();
 
                 DoubleAnimation dbCanvasX = new DoubleAnimation();
-                dbCanvasX.From = points[0].X;
-                dbCanvasX.To = points[4].X;
-                dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(3));
+                if (players[0].Position == 27)
+                {
+                    dbCanvasX.From = points[temp * 4].X;
+                    dbCanvasX.To = points[36].X;
+                    players[0].Position = 9;
+                }
+                else
+                {
+                    dbCanvasX.From = points[temp * 4].X;
+                    dbCanvasX.To = points[players[0].Position * 4].X;
+                }
+                dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
 
                 DoubleAnimation dbCanvasY = new DoubleAnimation();
-
-                dbCanvasY.From = points[0].Y;
-                dbCanvasY.To = points[4].Y;
+                if (players[0].Position == 27)
+                {
+                    dbCanvasY.From = points[temp * 4].Y;
+                    dbCanvasY.To = points[36].Y;
+                }
+                else
+                {
+                    dbCanvasY.From = points[temp * 4].Y;
+                    dbCanvasY.To = points[players[0].Position * 4].Y;
+                }
 
                 story.Children.Add(dbCanvasX);
                 Storyboard.SetTargetName(dbCanvasX, tokens[0].Name);
@@ -135,17 +165,31 @@ namespace TTOS0300_UI_Programming_Collaboration
             FrameworkElement client = this.Content as FrameworkElement;
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
-            canvasObj.Children.Clear();
             try
             {
+                canvasObj.Children.Clear();
+
                 bordernumber = 0;
+
+                for (int i = 0; i<tokens.Count;i++)
+                {
+                    canvasObj.UnregisterName(tokens[i].Name);
+                }
+
+                tokens.Clear();
+
+                points.Clear();
+                
                 PrintGrid();
+
+                CreatePlayerTokens();
             }
+
             catch (Exception ex)
             {
                 MessageBox.Show("1" + ex.Message);
             }
-            CreatePlayerTokens();
+
         }
 
         private void PlayerTest(Color c, int pos)
@@ -313,10 +357,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (bordernumber >= 1 && bordernumber <= 8)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.30) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.30) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
                 }
                 else if (bordernumber >= 10 && bordernumber <= 17)
                 {
@@ -327,10 +371,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (bordernumber >= 19 && bordernumber <= 26)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.30) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.30) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
                 }
                 else if (bordernumber >= 28 && bordernumber <= 35)
                 {
@@ -378,25 +422,25 @@ namespace TTOS0300_UI_Programming_Collaboration
                 else if (i == 9) // top left corner, left x - top y
                 {
                     AddGrid(0, 0, "corner");
-                    j = 1;
+                    j = 8;
                 }
                 
                 else if (i < 18) // top cells, left x - top y
                 {
                     AddGrid(windowWidth - wsides - (wtop * j), 0, "top");
-                    j++;
+                    j--;
                 }
                 
                 else if (i == 18) // top right corner, left x - top y
                 {
                     AddGrid(windowWidth - wsides, 0, "corner");
-                    j = 1;
+                    j = 8;
                 }
                 
                 else if (i < 27) // right cells, left x - top y
                 {
                     AddGrid(windowWidth - wsides, windowHeight - htop - (hsides * j), "sides");
-                    j++;
+                    j--;
                 }
                 
                 else if (i == 27) // bottom right corner, left x - top y
