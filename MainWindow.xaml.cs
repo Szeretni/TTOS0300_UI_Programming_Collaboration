@@ -30,8 +30,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Cell> cells = new List<Cell>();
         List<Border> borders = new List<Border>();
         List<Image> tokens = new List<Image>();
-        List<double> xcoords = new List<double>();
-        List<double> ycoords = new List<double>();
+        List<Point> points = new List<Point>();
         int bordernumber = 0;
 
         public static double windowWidth = 0;
@@ -41,7 +40,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             InitializeComponent();
             LoadPlayers();
-            
         }
 
         private void LoadPlayers()
@@ -59,22 +57,31 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void CreatePlayerTokens()
         {
-            for (int i = 0; i < 36; i++)
+            try
             {
-                BitmapImage bi = new BitmapImage();
-                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                bi.BeginInit();
-                bi.UriSource = new Uri(@"F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\token1.png", UriKind.RelativeOrAbsolute);
-                bi.EndInit();
-                tokens.Add(new Image { Width = windowWidth / 100 * 5, Height = windowWidth / 100 * 5, Source = bi });
-                Canvas.SetLeft(tokens[i], xcoords[i]);
-                Canvas.SetTop(tokens[i], ycoords[i]);
-                canvasObj.Children.Add(tokens[i]);
+                for (int i = 0; i < 144; i++)
+                {
+                    BitmapImage bi = new BitmapImage();
+                    // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+                    bi.BeginInit();
+                    bi.UriSource = new Uri(@"F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\token1.png", UriKind.RelativeOrAbsolute);
+                    bi.EndInit();
+                    // add player tokens into list
+                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi });
+                    Canvas.SetLeft(tokens[i], points[i].X);
+                    Canvas.SetTop(tokens[i], points[i].Y);
+                    canvasObj.Children.Add(tokens[i]);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("asdf" + ex.Message);
             }
         }
 
         private void buttonMoveToken_Click(object sender, RoutedEventArgs e)
         {
+            //move animation for tokens, MoveTo(new x, new y)
             for (int i = 0; i < tokens.Count; i++)
             {
                 tokens[i].MoveTo(100,100);
@@ -106,7 +113,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 MessageBox.Show("1" + ex.Message);
             }
             CreatePlayerTokens();
-
         }
 
         private void PlayerTest(Color c, int pos)
@@ -150,20 +156,20 @@ namespace TTOS0300_UI_Programming_Collaboration
                 switch (side)
                 {
                     default:
-                        g.Height = windowHeight / 100 * 18;
-                        g.Width = windowWidth / 100 * 8;
+                        g.Height = windowHeight / 100 * 16;
+                        g.Width = windowWidth / 100 * 8.5;
                         break;
                     case "sides":
-                        g.Height = windowHeight / 100 * 8;
-                        g.Width = windowWidth / 100 * 18;
+                        g.Height = windowHeight / 100 * 8.5;
+                        g.Width = windowWidth / 100 * 16;
                         break;
                     case "top":
-                        g.Height = windowHeight / 100 * 18;
-                        g.Width = windowWidth / 100 * 8;
+                        g.Height = windowHeight / 100 * 16;
+                        g.Width = windowWidth / 100 * 8.5;
                         break;
                     case "corner":
-                        g.Height = windowHeight / 100 * 18;
-                        g.Width = windowWidth / 100 * 18;
+                        g.Height = windowHeight / 100 * 16;
+                        g.Width = windowWidth / 100 * 16;
                         break;
                 }
 
@@ -263,33 +269,66 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 borders[bordernumber].Child = g;
 
-                xcoords.Add(x + 10);
-                ycoords.Add(y + 10);
+                //set coordinates for player token spots, needs some adjustments
+                if (bordernumber == 0 || bordernumber == 9 || bordernumber == 18 || bordernumber == 27)
+                {
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.5), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+
+                }
+                else if (bordernumber >= 1 && bordernumber <= 8)
+                {
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.65) });
+                }
+                else if (bordernumber >= 10 && bordernumber <= 17)
+                {
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.6), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+                }
+                else if (bordernumber >= 19 && bordernumber <= 26)
+                {
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.65) });
+                }
+                else if (bordernumber >= 28 && bordernumber <= 35)
+                {
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.6), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+                }
 
                 Canvas.SetLeft(borders[bordernumber], x);
                 Canvas.SetTop(borders[bordernumber], y);
-
-                
 
                 canvasObj.Children.Add(borders[bordernumber]);
 
                 bordernumber++;
             }
 
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
-                //MessageBox.Show("2 " + ex.Message);
+                //throw;
+                MessageBox.Show("2 " + ex.Message);
             }
         }
 
         private void PrintGrid()
         {
             int j = 1; //used to determine coordinates for printing
-            double htop = windowHeight / 100 * 18;
-            double wtop = windowWidth / 100 * 8;
-            double hsides = windowHeight / 100 * 8;
-            double wsides = windowWidth / 100 * 18;
+            double htop = windowHeight / 100 * 16;
+            double wtop = windowWidth / 100 * 8.5;
+            double hsides = windowHeight / 100 * 8.5;
+            double wsides = windowWidth / 100 * 16;
             for (int i = 0; i < 36; i++)
             {
                 if (i == 0) // bottom left corner, left x - top y
