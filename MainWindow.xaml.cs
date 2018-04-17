@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Windows.Media.Animation;
+using ExtensionMethods;
 
 namespace TTOS0300_UI_Programming_Collaboration
 {
@@ -27,6 +29,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Player> players = new List<Player>();
         List<Cell> cells = new List<Cell>();
         List<Border> borders = new List<Border>();
+        List<Image> tokens = new List<Image>();
+        List<double> xcoords = new List<double>();
+        List<double> ycoords = new List<double>();
         int bordernumber = 0;
 
         public static double windowWidth = 0;
@@ -36,6 +41,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             InitializeComponent();
             LoadPlayers();
+            
         }
 
         private void LoadPlayers()
@@ -48,6 +54,30 @@ namespace TTOS0300_UI_Programming_Collaboration
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void CreatePlayerTokens()
+        {
+            for (int i = 0; i < 36; i++)
+            {
+                BitmapImage bi = new BitmapImage();
+                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+                bi.BeginInit();
+                bi.UriSource = new Uri(@"F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\token1.png", UriKind.RelativeOrAbsolute);
+                bi.EndInit();
+                tokens.Add(new Image { Width = windowWidth / 100 * 5, Height = windowWidth / 100 * 5, Source = bi });
+                Canvas.SetLeft(tokens[i], xcoords[i]);
+                Canvas.SetTop(tokens[i], ycoords[i]);
+                canvasObj.Children.Add(tokens[i]);
+            }
+        }
+
+        private void buttonMoveToken_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < tokens.Count; i++)
+            {
+                tokens[i].MoveTo(100,100);
             }
         }
 
@@ -75,8 +105,8 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 MessageBox.Show("1" + ex.Message);
             }
+            CreatePlayerTokens();
 
-            
         }
 
         private void PlayerTest(Color c, int pos)
@@ -99,9 +129,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 g.Background = Brushes.AliceBlue;
                 borders.Add(new Border());
                 borders[bordernumber].BorderBrush = Brushes.Black;
-                if (bordernumber == 0 || bordernumber == 9 || bordernumber == 18 || bordernumber == 27)
-                {
-                }
                 if (bordernumber != 0 && bordernumber < 9)
                 {
                     borders[bordernumber].BorderThickness = new Thickness(0,2,2,2);
@@ -236,6 +263,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 borders[bordernumber].Child = g;
 
+                xcoords.Add(x + 10);
+                ycoords.Add(y + 10);
 
                 Canvas.SetLeft(borders[bordernumber], x);
                 Canvas.SetTop(borders[bordernumber], y);
@@ -247,10 +276,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bordernumber++;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                //throw;
-                MessageBox.Show("2 " + ex.Message);
+                throw;
+                //MessageBox.Show("2 " + ex.Message);
             }
         }
 
@@ -319,6 +348,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             players[0].Position += rng.Next(1, 6);
         }
-        
+
+
     }
 }

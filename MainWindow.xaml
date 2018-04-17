@@ -8,5 +8,6 @@
         Title="MainWindow" MinHeight="400" Height="750" MinWidth="400" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Background="{x:Null}">
     <Grid x:Name="gridObj" Background="White">
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Button x:Name="buttonMoveToken" Content="Move token" HorizontalAlignment="Left" Margin="351,220,0,0" VerticalAlignment="Top" Width="75" Click="buttonMoveToken_Click"/>
     </Grid>
 </Window>
