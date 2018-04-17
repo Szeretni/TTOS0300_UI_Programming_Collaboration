@@ -115,4 +115,3 @@ F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programm
 F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csproj.CoreCompileInputs.cache
 F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.exe
 F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb
-F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programming_Collaboration.csprojResolveAssemblyReference.cache

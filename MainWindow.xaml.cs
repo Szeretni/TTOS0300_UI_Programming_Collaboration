@@ -59,15 +59,20 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                for (int i = 0; i < 144; i++)
+                for (int i = 0; i < players.Count; i++)
                 {
                     BitmapImage bi = new BitmapImage();
                     // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+                    int tokennumber = i + 1;
+                    string path = "/token" + tokennumber + ".png";
                     bi.BeginInit();
-                    bi.UriSource = new Uri(@"F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\token1.png", UriKind.RelativeOrAbsolute);
+                    bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
                     bi.EndInit();
+                    string name = "asdf" + i;
                     // add player tokens into list
-                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi });
+                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi});
+                    tokens[i].Name = name;
+                    canvasObj.RegisterName(tokens[i].Name, tokens[i]);
                     Canvas.SetLeft(tokens[i], points[i].X);
                     Canvas.SetTop(tokens[i], points[i].Y);
                     canvasObj.Children.Add(tokens[i]);
@@ -81,10 +86,38 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void buttonMoveToken_Click(object sender, RoutedEventArgs e)
         {
-            //move animation for tokens, MoveTo(new x, new y)
-            for (int i = 0; i < tokens.Count; i++)
+            try
             {
-                tokens[i].MoveTo(100,100);
+                Random rng = new Random();
+
+                players[0].Position += rng.Next(1, 6);
+
+                Storyboard story = new Storyboard();
+
+                DoubleAnimation dbCanvasX = new DoubleAnimation();
+                dbCanvasX.From = points[0].X;
+                dbCanvasX.To = points[4].X;
+                dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(3));
+
+                DoubleAnimation dbCanvasY = new DoubleAnimation();
+
+                dbCanvasY.From = points[0].Y;
+                dbCanvasY.To = points[4].Y;
+
+                story.Children.Add(dbCanvasX);
+                Storyboard.SetTargetName(dbCanvasX, tokens[0].Name);
+                Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
+
+                story.Children.Add(dbCanvasY);
+                Storyboard.SetTargetName(dbCanvasX, tokens[0].Name);
+                Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
+
+                story.Begin(tokens[0]);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("storyboard " + ex.Message);
+                //throw;
             }
         }
 
@@ -272,39 +305,39 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //set coordinates for player token spots, needs some adjustments
                 if (bordernumber == 0 || bordernumber == 9 || bordernumber == 18 || bordernumber == 27)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.5), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.16 * 0.7) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.25), Y = y + (windowHeight * 0.16 * 0.7) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.45), Y = y + (windowHeight * 0.16 * 0.7) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.16 * 0.7) });
 
                 }
                 else if (bordernumber >= 1 && bordernumber <= 8)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.40) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.30) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.65) });
                 }
                 else if (bordernumber >= 10 && bordernumber <= 17)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.6), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
                 }
                 else if (bordernumber >= 19 && bordernumber <= 26)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.40) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.40) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.30) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.30) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.01), Y = y + (windowHeight * 0.085 * 0.65) });
-                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.99), Y = y + (windowHeight * 0.085 * 0.65) });
+                    points.Add(new Point { X = x + (windowWidth * 0.16 * 0.8), Y = y + (windowHeight * 0.085 * 0.65) });
                 }
                 else if (bordernumber >= 28 && bordernumber <= 35)
                 {
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.2), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.4), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.6), Y = y + (windowHeight * 0.16 * 0.50) });
-                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.8), Y = y + (windowHeight * 0.16 * 0.50) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
+                    points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
                 }
 
                 Canvas.SetLeft(borders[bordernumber], x);
@@ -329,7 +362,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             double wtop = windowWidth / 100 * 8.5;
             double hsides = windowHeight / 100 * 8.5;
             double wsides = windowWidth / 100 * 16;
-            for (int i = 0; i < 36; i++)
+            for (int i = 0; i < 37; i++)
             {
                 if (i == 0) // bottom left corner, left x - top y
                 {
@@ -372,22 +405,24 @@ namespace TTOS0300_UI_Programming_Collaboration
                     j = 1;
                 }
 
-                else // bottom cells, left x - top y
+                else if (i < 36)// bottom cells, left x - top y
                 {
-                    //(windowWidth - wsides - (wtop * j)
                     AddGrid(windowWidth - wsides - (wtop*j), windowHeight - htop, "top");
                     j++;
                 }
+                else if (i == 36)
+                {
+                    buttonMoveToken.Height = windowWidth * 0.1;
+                    buttonMoveToken.Width = windowHeight * 0.1;
+                    buttonMoveToken.Content = "Roll Dice";
+                    buttonMoveToken.Background = Brushes.BlanchedAlmond;
+                    /*
+                    Canvas.SetLeft(buttonMoveToken, windowWidth - windowWidth * 0.5);
+                    Canvas.SetTop(buttonMoveToken, windowHeight - windowHeight * 0.5);
+                    canvasObj.Children.Add(buttonMoveToken);
+                    */
+                }
             }
         }
-        
-        private void btnDice_Click(object sender, RoutedEventArgs e)
-        {
-            Random rng = new Random();
-
-            players[0].Position += rng.Next(1, 6);
-        }
-
-
     }
 }

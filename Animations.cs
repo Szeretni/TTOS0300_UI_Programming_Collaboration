@@ -14,14 +14,12 @@ namespace ExtensionMethods
     {
         public static void MoveTo(this Image img, double newX, double newY)
         {
-            var top = Canvas.GetTop(img);
-            var left = Canvas.GetLeft(img);
             TranslateTransform trans = new TranslateTransform();
             img.RenderTransform = trans;
-            DoubleAnimation anim1 = new DoubleAnimation(top, newY, TimeSpan.FromSeconds(3));
-            DoubleAnimation anim2 = new DoubleAnimation(left, newX, TimeSpan.FromSeconds(3));
-            trans.BeginAnimation(TranslateTransform.XProperty, anim1);
+            DoubleAnimation anim1 = new DoubleAnimation(newY, TimeSpan.FromSeconds(3));
+            DoubleAnimation anim2 = new DoubleAnimation(newX, TimeSpan.FromSeconds(3));
             trans.BeginAnimation(TranslateTransform.YProperty, anim2);
+            trans.BeginAnimation(TranslateTransform.XProperty, anim1);
         }
     }
 }
