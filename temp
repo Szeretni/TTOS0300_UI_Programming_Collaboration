@@ -1,3 +1,18 @@
+2018-04-19
+die roll result view
+notification if go to jail
+git 
+modify db cash
+modify db building
+cards
+player cash to canvas
+popup > buy screen
+popup > pay rent
+build button
+end turn button
+display whose turn
+
+
 2018-04-10
 alter table Cell modify column Name varchar(256);
 
