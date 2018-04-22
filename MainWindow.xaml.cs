@@ -32,6 +32,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Image> tokens = new List<Image>();
         List<Point> points = new List<Point>();
         int bordernumber = 0;
+        int currentPlayer; //20180422
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -39,9 +40,19 @@ namespace TTOS0300_UI_Programming_Collaboration
         public MainWindow()
         {
             InitializeComponent();
-
+            //20180422
             LoadPlayers();
-            players[0].Position = 0;
+            for (int i = 0; i < players.Count(); i++)
+            {
+                players[i].Position = 0;
+            }
+            //players[0].Position = 0; //20180422
+            //20180422
+            if (players.Count() != 0)
+            {
+                lblCurrentPlayer.Content = "Player " + players[0].Name;
+                currentPlayer = 0;
+            }
         }
 
         private void LoadPlayers()
@@ -55,6 +66,43 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            // get our game window area
+            FrameworkElement client = this.Content as FrameworkElement;
+            windowWidth = (double)client.ActualWidth;
+            windowHeight = (double)client.ActualHeight;
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            // get our game window area
+            FrameworkElement client = this.Content as FrameworkElement;
+            windowWidth = (double)client.ActualWidth;
+            windowHeight = (double)client.ActualHeight;
+            try
+            {
+                canvasObj.Children.Clear();
+                bordernumber = 0;
+
+                for (int i = 0; i < tokens.Count; i++)
+                {
+                    canvasObj.UnregisterName(tokens[i].Name);
+                }
+
+                tokens.Clear();
+                points.Clear();
+                PrintGrid();
+                CreatePlayerTokens();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show("1" + ex.Message);
+            }
+
         }
 
         private void CreatePlayerTokens()
@@ -106,6 +154,16 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[0].Position = 0;
                 }
 
+                //20180422
+                //sets player's new position to db
+                BLLayer.SetPlayerPositionToMySQL(players[0].Id, players[0].Position);
+
+                lblCurrPlrId.Content = "Current Player's Id: " + players[0].Id.ToString();
+
+                //20180422
+                //this gets player position from db
+                //lblDebug.Content = BLLayer.GetPlayerPositionFromMySQL(players[0].Id);
+
                 Storyboard story = new Storyboard();
 
                 DoubleAnimation dbCanvasX = new DoubleAnimation();
@@ -149,47 +207,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 MessageBox.Show("storyboard " + ex.Message);
                 //throw;
             }
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            // get our game window area
-            FrameworkElement client = this.Content as FrameworkElement;
-            windowWidth = (double)client.ActualWidth;
-            windowHeight = (double)client.ActualHeight;
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            // get our game window area
-            FrameworkElement client = this.Content as FrameworkElement;
-            windowWidth = (double)client.ActualWidth;
-            windowHeight = (double)client.ActualHeight;
-            try
-            {
-                canvasObj.Children.Clear();
-
-                bordernumber = 0;
-
-                for (int i = 0; i<tokens.Count;i++)
-                {
-                    canvasObj.UnregisterName(tokens[i].Name);
-                }
-
-                tokens.Clear();
-
-                points.Clear();
-                
-                PrintGrid();
-
-                CreatePlayerTokens();
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show("1" + ex.Message);
-            }
-
         }
 
         private void PlayerTest(Color c, int pos)
@@ -466,6 +483,25 @@ namespace TTOS0300_UI_Programming_Collaboration
                     canvasObj.Children.Add(buttonMoveToken);
                     */
                 }
+            }
+        }
+
+        //20180422
+        private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            //in case of 0 players
+            try
+            {
+                currentPlayer++;
+                if (currentPlayer == players.Count())
+                {
+                    currentPlayer = 0;
+                }
+                lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

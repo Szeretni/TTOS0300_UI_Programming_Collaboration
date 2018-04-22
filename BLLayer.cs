@@ -63,6 +63,39 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180422
+        public static int GetPlayerPositionFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetPlayerPositionFromMySQL(playerid);
+                int position = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    position = int.Parse(dt.Rows[0].ToString());
+                }
+                return position;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static void SetPlayerPositionToMySQL(int playerid, int position)
+        {
+            try
+            {
+                DBLayer.SetPlayerPositionToMySQL(playerid, position);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
         /* list-style obsolete
         public static List<Player> GetPlayerList()
         {

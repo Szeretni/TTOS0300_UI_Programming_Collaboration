@@ -49,6 +49,51 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180422
+        public static DataTable GetPlayerPositionFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString();
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180422
+        public static void SetPlayerPositionToMySQL(int playerid,int position)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() +  " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1;";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
 
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
@@ -86,19 +131,19 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private static string GetConnectionString()
         {
-            string dbIpAddress = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.ip;
-            string dbPort = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.port;
-            string dbSchema = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.database;
-            string dbPassword = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.password;
-            string dbUser = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.user;
-            return string.Format("Data source={0};Port={1};Initial catalog={2};user={3};password={4}", dbIpAddress, dbPort, dbSchema, dbUser, dbPassword);
-            /*
+            //string dbIpAddress = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.ip;
+            //string dbPort = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.port;
+            //string dbSchema = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.database;
+            //string dbPassword = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.password;
+            //string dbUser = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.user;
+            //return string.Format("Data source={0};Port={1};Initial catalog={2};user={3};password={4}", dbIpAddress, dbPort, dbSchema, dbUser, dbPassword);
+            
             string dbIpAddress = "mysql.labranet.jamk.fi";
             string dbSchema = "L2912_2";
             string dbPassword = "q4ARIboJAkdZeErWozcP13NbCCtojxx6";
             string dbUser = "L2912";
             return string.Format("Data source={0};Initial catalog={1};user={2};password={3}", dbIpAddress, dbSchema, dbUser, dbPassword);
-            */
+            
         }
     }
 }
