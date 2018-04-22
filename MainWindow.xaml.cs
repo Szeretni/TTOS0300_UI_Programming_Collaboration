@@ -525,19 +525,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         //20180422
         private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
         {
-            //in case of 0 players
             try
             {
-                //loops players
-                currentPlayer++;
-                if (currentPlayer == players.Count())
-                {
-                    currentPlayer = 0;
-                }
+                BLMethod.NextTurn(ref currentPlayer, ref players);
                 //shows player's name in ui
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
-                //die rolled, cannot roll again
-                players[currentPlayer].DieRolled = false;
                 //reset notifications
                 lblNotification.Content = "Notifications";
             }

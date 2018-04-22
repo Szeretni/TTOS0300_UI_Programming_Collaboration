@@ -107,6 +107,7 @@
     </ApplicationDefinition>
     <Compile Include="Animations.cs" />
     <Compile Include="BLLayer.cs" />
+    <Compile Include="BLMethod.cs" />
     <Compile Include="Cell.cs" />
     <Compile Include="Chance.cs" />
     <Compile Include="CommunityChest.cs" />
