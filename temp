@@ -2,21 +2,22 @@
 SetPlayerPositionToMySQL implement GameSession. Now hard coded 1
 turn object?
 window loaded size changed: incorrect token position
+show every player's cash in ui
 
 
 2018-04-19
-die roll result view
+DONE die roll result view
 notification if go to jail
 git 
-modify db cash
+DONE modify db cash
 modify db building
 cards
-player cash to canvas
+DONE player cash to canvas
 popup > buy screen
 popup > pay rent
 build button
-end turn button
-display whose turn
+DONE end turn button
+DONE display whose turn
 
 
 2018-04-10
