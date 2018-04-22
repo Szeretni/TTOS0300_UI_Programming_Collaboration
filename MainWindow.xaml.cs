@@ -42,12 +42,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             InitializeComponent();
             //20180422
             LoadPlayers();
+            //init player's position from db
             for (int i = 0; i < players.Count(); i++)
             {
                 players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
             }
             //players[0].Position = 0; //20180422
             //20180422
+            //first player has first turn
             if (players.Count() != 0)
             {
                 lblCurrentPlayer.Content = "Player " + players[0].Name;
@@ -61,6 +63,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 players = BLLayer.GetAllPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
+                //init player's hasn't rolled die yet
                 for (int i = 0; i < players.Count(); i++)
                 {
                     players[i].DieRolled = false;
@@ -142,11 +145,13 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
+                //if die rolled, cannot roll again
                 if (players[currentPlayer].DieRolled != true)
                 { 
                     Random rnd = new Random();
 
-                    //20180422
+                    //20180422 players[0] -> players[currentPlayer]
+                    //also token[0] -> token[currentPlayer]
                     int DieResult = rnd.Next(2, 12);
 
                     lblDieResult.Content = "Die Result: " + DieResult.ToString();
@@ -166,12 +171,15 @@ namespace TTOS0300_UI_Programming_Collaboration
                     }
 
                     //20180422
+                    //shows previous position in ui
                     lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
 
                     //20180422
                     //sets player's new position to db
                     BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
 
+                    //20180422
+                    //shows current player's id in ui
                     lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
 
                     //20180422
@@ -179,6 +187,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
 
                     //20180422
+                    //shows current player's cash in ui
                     players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
                     lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
 
@@ -514,12 +523,15 @@ namespace TTOS0300_UI_Programming_Collaboration
             //in case of 0 players
             try
             {
+                //loops players
                 currentPlayer++;
                 if (currentPlayer == players.Count())
                 {
                     currentPlayer = 0;
                 }
+                //shows player's name in ui
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
+                //die rolled, cannot roll again
                 players[currentPlayer].DieRolled = false;
             }
             catch (Exception ex)
