@@ -12,5 +12,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         public string Name { get; set; }
         public int Cash { get; set; }
         public int Position { get; set; }
+        public bool DieRolled { get; set; }
     }
 }

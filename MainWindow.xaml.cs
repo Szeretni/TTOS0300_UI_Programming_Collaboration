@@ -61,6 +61,10 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 players = BLLayer.GetAllPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
+                for (int i = 0; i < players.Count(); i++)
+                {
+                    players[i].DieRolled = false;
+                }
             }
             catch (Exception ex)
             {
@@ -138,81 +142,87 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                Random rnd = new Random();
+                if (players[currentPlayer].DieRolled != true)
+                { 
+                    Random rnd = new Random();
 
-                //20180422
-                int DieResult = rnd.Next(2, 12);
+                    //20180422
+                    int DieResult = rnd.Next(2, 12);
 
-                lblDieResult.Content = "Die Result: " + DieResult.ToString();
+                    lblDieResult.Content = "Die Result: " + DieResult.ToString();
 
-                int temp = players[currentPlayer].Position;
-                int maxposition = 35;
+                    int temp = players[currentPlayer].Position;
+                    int maxposition = 35;
 
-                players[currentPlayer].Position += DieResult;
+                    players[currentPlayer].Position += DieResult;
 
-                if (players[currentPlayer].Position > 35)
-                {
-                    players[currentPlayer].Position -= maxposition;
+                    if (players[currentPlayer].Position > 35)
+                    {
+                        players[currentPlayer].Position -= maxposition;
+                    }
+                    else if (players[currentPlayer].Position == 36)
+                    {
+                        players[currentPlayer].Position = 0;
+                    }
+
+                    //20180422
+                    lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
+
+                    //20180422
+                    //sets player's new position to db
+                    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+
+                    lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
+
+                    //20180422
+                    //gets player position from db
+                    lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
+
+                    //20180422
+                    players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+                    lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
+
+                    Storyboard story = new Storyboard();
+
+                    DoubleAnimation dbCanvasX = new DoubleAnimation();
+                    if (players[currentPlayer].Position == 27)
+                    {
+                        dbCanvasX.From = points[temp * 4].X;
+                        dbCanvasX.To = points[36].X;
+                        players[currentPlayer].Position = 9;
+                    }
+                    else
+                    {
+                        dbCanvasX.From = points[temp * 4].X;
+                        dbCanvasX.To = points[players[currentPlayer].Position * 4].X;
+                    }
+                    dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
+
+                    DoubleAnimation dbCanvasY = new DoubleAnimation();
+                    if (players[currentPlayer].Position == 27)
+                    {
+                        dbCanvasY.From = points[temp * 4].Y;
+                        dbCanvasY.To = points[36].Y;
+                    }
+                    else
+                    {
+                        dbCanvasY.From = points[temp * 4].Y;
+                        dbCanvasY.To = points[players[currentPlayer].Position * 4].Y;
+                    }
+
+                    story.Children.Add(dbCanvasX);
+                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
+
+                    story.Children.Add(dbCanvasY);
+                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
+
+                    story.Begin(tokens[currentPlayer]);
+
+                    //20180422
+                    players[currentPlayer].DieRolled = true;
                 }
-                else if (players[currentPlayer].Position == 36)
-                {
-                    players[currentPlayer].Position = 0;
-                }
-
-                //20180422
-                lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
-
-                //20180422
-                //sets player's new position to db
-                BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-
-                lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
-
-                //20180422
-                //gets player position from db
-                lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
-
-                //20180422
-                players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
-                lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
-
-                Storyboard story = new Storyboard();
-
-                DoubleAnimation dbCanvasX = new DoubleAnimation();
-                if (players[currentPlayer].Position == 27)
-                {
-                    dbCanvasX.From = points[temp * 4].X;
-                    dbCanvasX.To = points[36].X;
-                    players[currentPlayer].Position = 9;
-                }
-                else
-                {
-                    dbCanvasX.From = points[temp * 4].X;
-                    dbCanvasX.To = points[players[currentPlayer].Position * 4].X;
-                }
-                dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
-
-                DoubleAnimation dbCanvasY = new DoubleAnimation();
-                if (players[currentPlayer].Position == 27)
-                {
-                    dbCanvasY.From = points[temp * 4].Y;
-                    dbCanvasY.To = points[36].Y;
-                }
-                else
-                {
-                    dbCanvasY.From = points[temp * 4].Y;
-                    dbCanvasY.To = points[players[currentPlayer].Position * 4].Y;
-                }
-
-                story.Children.Add(dbCanvasX);
-                Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
-
-                story.Children.Add(dbCanvasY);
-                Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
-
-                story.Begin(tokens[currentPlayer]);
             }
             catch (Exception ex)
             {
@@ -510,6 +520,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     currentPlayer = 0;
                 }
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
+                players[currentPlayer].DieRolled = false;
             }
             catch (Exception ex)
             {
