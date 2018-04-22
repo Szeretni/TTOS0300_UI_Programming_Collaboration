@@ -16,5 +16,6 @@
         <Label x:Name="lblDieResult" Content="DieResult" HorizontalAlignment="Left" Margin="267,289,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblPreviousPosition" Content="PreviousPosition" HorizontalAlignment="Left" Margin="434,354,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="267,372,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
+        <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" Margin="351,175,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

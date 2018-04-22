@@ -232,6 +232,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //20180422
                     players[currentPlayer].DieRolled = true;
                 }
+                //20180422
+                else
+                {
+                    lblNotification.Content = "You have already rolled the die.";
+                }
             }
             catch (Exception ex)
             {
@@ -533,6 +538,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
                 //die rolled, cannot roll again
                 players[currentPlayer].DieRolled = false;
+                //reset notifications
+                lblNotification.Content = "Notifications";
             }
             catch (Exception ex)
             {
