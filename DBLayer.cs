@@ -57,7 +57,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString();
+                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;

@@ -44,7 +44,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             LoadPlayers();
             for (int i = 0; i < players.Count(); i++)
             {
-                players[i].Position = 0;
+                players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
             }
             //players[0].Position = 0; //20180422
             //20180422
@@ -71,9 +71,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // get our game window area
-            FrameworkElement client = this.Content as FrameworkElement;
-            windowWidth = (double)client.ActualWidth;
-            windowHeight = (double)client.ActualHeight;
+            //FrameworkElement client = this.Content as FrameworkElement;
+            //windowWidth = (double)client.ActualWidth;
+            //windowHeight = (double)client.ActualHeight;
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -140,48 +140,56 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 Random rnd = new Random();
 
-                int temp = players[0].Position;
+                //20180422
+                int DieResult = rnd.Next(2, 12);
+
+                lblDieResult.Content = "Die Result: " + DieResult.ToString();
+
+                int temp = players[currentPlayer].Position;
                 int maxposition = 35;
                 
-                players[0].Position += rnd.Next(2,12);
+                players[currentPlayer].Position += DieResult;
 
-                if (players[0].Position > 35)
+                if (players[currentPlayer].Position > 35)
                 {
-                    players[0].Position -= maxposition;
+                    players[currentPlayer].Position -= maxposition;
                 }
-                else if(players[0].Position == 36)
+                else if(players[currentPlayer].Position == 36)
                 {
-                    players[0].Position = 0;
+                    players[currentPlayer].Position = 0;
                 }
+
+                //20180422
+                lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
 
                 //20180422
                 //sets player's new position to db
-                BLLayer.SetPlayerPositionToMySQL(players[0].Id, players[0].Position);
+                BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
 
-                lblCurrPlrId.Content = "Current Player's Id: " + players[0].Id.ToString();
+                lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
 
                 //20180422
                 //this gets player position from db
-                //lblDebug.Content = BLLayer.GetPlayerPositionFromMySQL(players[0].Id);
+                lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
 
                 Storyboard story = new Storyboard();
 
                 DoubleAnimation dbCanvasX = new DoubleAnimation();
-                if (players[0].Position == 27)
+                if (players[currentPlayer].Position == 27)
                 {
                     dbCanvasX.From = points[temp * 4].X;
                     dbCanvasX.To = points[36].X;
-                    players[0].Position = 9;
+                    players[currentPlayer].Position = 9;
                 }
                 else
                 {
                     dbCanvasX.From = points[temp * 4].X;
-                    dbCanvasX.To = points[players[0].Position * 4].X;
+                    dbCanvasX.To = points[players[currentPlayer].Position * 4].X;
                 }
                 dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
 
                 DoubleAnimation dbCanvasY = new DoubleAnimation();
-                if (players[0].Position == 27)
+                if (players[currentPlayer].Position == 27)
                 {
                     dbCanvasY.From = points[temp * 4].Y;
                     dbCanvasY.To = points[36].Y;
@@ -189,18 +197,18 @@ namespace TTOS0300_UI_Programming_Collaboration
                 else
                 {
                     dbCanvasY.From = points[temp * 4].Y;
-                    dbCanvasY.To = points[players[0].Position * 4].Y;
+                    dbCanvasY.To = points[players[currentPlayer].Position * 4].Y;
                 }
 
                 story.Children.Add(dbCanvasX);
-                Storyboard.SetTargetName(dbCanvasX, tokens[0].Name);
+                Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
                 Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
 
                 story.Children.Add(dbCanvasY);
-                Storyboard.SetTargetName(dbCanvasX, tokens[0].Name);
+                Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
                 Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
 
-                story.Begin(tokens[0]);
+                story.Begin(tokens[currentPlayer]);
             }
             catch (Exception ex)
             {

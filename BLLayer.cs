@@ -72,7 +72,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 int position = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
-                    position = int.Parse(dt.Rows[0].ToString());
+                    position = int.Parse(dr[0].ToString());
                 }
                 return position;
             }
