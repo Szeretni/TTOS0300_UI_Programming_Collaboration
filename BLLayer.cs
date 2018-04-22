@@ -9,6 +9,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 {
     class BLLayer
     {
+        // !!!
+        // Only Db methods
+        // !!!
         public static List<Player> GetAllPlayersFromDt()
         {
             try

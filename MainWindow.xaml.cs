@@ -193,12 +193,17 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     Storyboard story = new Storyboard();
 
+                    //send to prison animation
                     DoubleAnimation dbCanvasX = new DoubleAnimation();
                     if (players[currentPlayer].Position == 27)
                     {
                         dbCanvasX.From = points[temp * 4].X;
                         dbCanvasX.To = points[36].X;
                         players[currentPlayer].Position = 9;
+                        lblNotification.Content = "You were sent to the prison!";
+                        //update position to db instead of only to canvas
+                        //otherwise when game loaded player would be at "go to jail"-cell
+                        BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
                     }
                     else
                     {
