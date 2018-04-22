@@ -10,10 +10,11 @@
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Button x:Name="buttonMoveToken" Content="Move token" HorizontalAlignment="Left" Margin="351,220,0,0" VerticalAlignment="Top" Width="75" Click="buttonMoveToken_Click"/>
         <Label x:Name="lblCurrentPlayer" Content="Player" HorizontalAlignment="Left" Margin="263,341,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnNextPlayer" Content="End of Turn" HorizontalAlignment="Left" Margin="263,372,0,0" VerticalAlignment="Top" Width="75" Click="btnNextPlayer_Click"/>
+        <Button x:Name="btnNextPlayer" Content="End of Turn" HorizontalAlignment="Left" Margin="267,403,0,0" VerticalAlignment="Top" Width="75" Click="btnNextPlayer_Click"/>
         <Label x:Name="lblCell" Content="CellId" HorizontalAlignment="Left" Margin="426,315,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblCurrPlrId" Content="PlayerId" HorizontalAlignment="Left" Margin="263,315,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblDieResult" Content="DieResult" HorizontalAlignment="Left" Margin="267,289,0,0" VerticalAlignment="Top"/>
         <Label x:Name="lblPreviousPosition" Content="PreviousPosition" HorizontalAlignment="Left" Margin="434,354,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="267,372,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
     </Grid>
 </Window>

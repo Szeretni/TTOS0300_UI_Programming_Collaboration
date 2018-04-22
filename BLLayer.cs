@@ -95,6 +95,24 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180422
+        public static int GetPlayerCashFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetPlayerCashFromMySQL(playerid);
+                int cash = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    cash = int.Parse(dr[0].ToString());
+                }
+                return cash;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         /* list-style obsolete
         public static List<Player> GetPlayerList()

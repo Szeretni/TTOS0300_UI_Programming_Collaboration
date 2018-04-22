@@ -147,14 +147,14 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 int temp = players[currentPlayer].Position;
                 int maxposition = 35;
-                
+
                 players[currentPlayer].Position += DieResult;
 
                 if (players[currentPlayer].Position > 35)
                 {
                     players[currentPlayer].Position -= maxposition;
                 }
-                else if(players[currentPlayer].Position == 36)
+                else if (players[currentPlayer].Position == 36)
                 {
                     players[currentPlayer].Position = 0;
                 }
@@ -169,8 +169,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
 
                 //20180422
-                //this gets player position from db
+                //gets player position from db
                 lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
+
+                //20180422
+                players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+                lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
 
                 Storyboard story = new Storyboard();
 

@@ -94,6 +94,25 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180422
+        public static DataTable GetPlayerCashFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
