@@ -4,7 +4,7 @@ DONE current player can move indefinately by reloading game. current player coun
 mouse hover shows cell info
 load game button
 new game button
-cash when bypass start cell
+DONE cash when bypass start cell
 buy updates db
 BINDING...
 
@@ -20,7 +20,7 @@ DONE die roll result view
 DONE notification if go to jail
 DONE modify db cash
 DONE modify db building
-cards
+DONE cards
 DONE player cash to canvas
 DONE popup > buy screen
 DONE popup > pay rent
