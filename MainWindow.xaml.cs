@@ -40,6 +40,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         int temp = 0;
         int DieResult = 0;
         int propertyId = 0;
+        int truetemp = 0;
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
