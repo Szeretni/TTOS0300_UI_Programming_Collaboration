@@ -59,8 +59,8 @@ namespace TTOS0300_UI_Programming_Collaboration
             //first player has first turn
             if (players.Count() != 0)
             {
-                lblCurrentPlayer.Content = "Player " + players[0].Name;
-                currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL() - 1; //-1 to avoid out of index
+                currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL();
+                lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
             cells[5].HouseCount = 3;
             cells[6].HouseCount = 3;

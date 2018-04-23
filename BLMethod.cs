@@ -22,9 +22,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     currentPlayer = 0;
                 }
-                //die rolled, cannot roll again
+                //reset die roll for next turn
                 players[currentPlayer].DieRolled = false;
-                DBLayer.SetCurrentPlayerIdToMySQL(players[currentPlayer].Id);
+
+                // !!!
+                // Here must be db update whose turn will be when reloaded
+                // !!!
             }
             catch
             {

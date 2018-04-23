@@ -138,6 +138,20 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //20180423 HO
+        //set current player id to db
+        public static void SetCurrentPlayerIdToMySQL(int playerid)
+        {
+            try
+            {
+                DBLayer.SetCurrentPlayerIdToMySQL(playerid);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
         //gets players die rolled status from db
         public static bool GetDieRolledFlagFromMySQL(int playerid)
         {
