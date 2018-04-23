@@ -119,6 +119,19 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //20180423 HO
+        public static void SetPlayerCashToMySQL(int playerid, int cash)
+        {
+            try
+            {
+                DBLayer.SetPlayerCashToMySQL(playerid, cash);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
         //gets current player id from db
         public static int GetCurrentPlayerIdFromMySQL()
         {

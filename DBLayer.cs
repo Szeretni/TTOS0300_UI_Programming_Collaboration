@@ -114,6 +114,31 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180423
+        public static void SetPlayerCashToMySQL(int playerid, int cash)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE GameSession_has_player SET PlayerCash = "  + cash + " WHERE PlayerId = "+ playerid.ToString() + " AND GameSessionId = 1";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         //20180423 HO
         //updates current player to db
         //GameSessionId not dynamic yet

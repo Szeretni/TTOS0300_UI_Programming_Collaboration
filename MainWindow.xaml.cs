@@ -36,8 +36,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Image> buildings = new List<Image>();
         //List<Cell> player0Cells = new List<Cell>();
         int bordernumber = 0;
-        int currentPlayer; //20180422
-        int temp = 0;
+        int currentPlayer; //20180422;
         int DieResult = 0;
         int propertyId = 0;
 
@@ -49,10 +48,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             InitializeComponent();
             //20180422
             LoadPlayers();
-            //init player's position from db
+            //init player's positions from db
             for (int i = 0; i < players.Count(); i++)
             {
                 players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
+                players[i].Cash = BLLayer.GetPlayerCashFromMySQL(players[i].Id);
             }
             //players[0].Position = 0; //20180422
             //20180422
@@ -238,9 +238,11 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //TokenAnimation();
 
+                    //players moves through start position
                     if (players[currentPlayer].Position > 35)
                     {
                         players[currentPlayer].Position -= maxposition;
+                        BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash += 300);
                     }
                     else if (players[currentPlayer].Position == 36)
                     {
@@ -265,7 +267,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //20180422
                     //shows current player's cash in ui
-                    players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
                     lblCash.Content = "Cash: " + players[currentPlayer].Cash;
 
                     Storyboard story = new Storyboard();
