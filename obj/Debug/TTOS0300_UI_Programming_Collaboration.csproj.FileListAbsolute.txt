@@ -162,9 +162,7 @@ C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\TTOS0300_UI_Programming_Colla
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\TTOS0300_UI_Programming_Collaboration.pdb
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Data.dll
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\WebMatrix.Data.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Data.xml
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\WebMatrix.Data.xml
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\MainWindow.g.cs
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\App.g.cs
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Collaboration_MarkupCompile.cache
