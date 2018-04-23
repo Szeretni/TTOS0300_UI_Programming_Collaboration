@@ -48,13 +48,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             InitializeComponent();
             //20180422
             LoadPlayers();
-            //init player's positions from db
-            for (int i = 0; i < players.Count(); i++)
-            {
-                players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
-                players[i].Cash = BLLayer.GetPlayerCashFromMySQL(players[i].Id);
-            }
-            //players[0].Position = 0; //20180422
+
             //20180422
             //first player has first turn
             if (players.Count() != 0)
@@ -80,6 +74,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 for (int i = 0; i < players.Count(); i++)
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
+                    players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
                 }
             }
             catch (Exception ex)
