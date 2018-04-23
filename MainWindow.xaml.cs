@@ -62,6 +62,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL();
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
+            //updates labels
+            UpdateLabels();
+
             cells[5].HouseCount = 3;
             cells[6].HouseCount = 3;
             cells[12].HouseCount = 3;
@@ -251,27 +254,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                         players[currentPlayer].Position = 0;
                     }
 
-                    //20180422
-                    //shows previous position in ui
-                    lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
-
-                    //20180422
-                    //sets player's new position to db
-                    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-
-                    //20180422
-                    //shows current player's id in ui
-                    lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
-
-                    //20180422
-                    //gets player position from db
-                    lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
-
-
-                    //20180422
-                    //shows current player's cash in ui
-                    players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
-                    lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
+                    UpdateLabels();
 
                     Storyboard story = new Storyboard();
 
@@ -983,6 +966,31 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 lblNotification.Content = "Maximum number of houses on property.";
             }
+        }
+
+        private void UpdateLabels()
+        {
+            //20180422
+            //shows previous position in ui
+            lblPreviousPosition.Content = lblCell.Content = "Previous Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
+
+            //20180422
+            //sets player's new position to db
+            BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+
+            //20180422
+            //shows current player's id in ui
+            lblCurrPlrId.Content = "Current Player's Id: " + players[currentPlayer].Id.ToString();
+
+            //20180422
+            //gets player position from db
+            lblCell.Content = "Current Position" + BLLayer.GetPlayerPositionFromMySQL(players[currentPlayer].Id);
+
+
+            //20180422
+            //shows current player's cash in ui
+            players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+            lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
         }
     }
 }

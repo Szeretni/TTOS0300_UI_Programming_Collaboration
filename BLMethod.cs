@@ -24,10 +24,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 //reset die roll for next turn
                 players[currentPlayer].DieRolled = false;
-
-                // !!!
-                // Here must be db update whose turn will be when reloaded
-                // !!!
             }
             catch
             {
