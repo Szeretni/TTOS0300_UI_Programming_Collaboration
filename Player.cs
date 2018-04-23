@@ -11,21 +11,7 @@ namespace TTOS0300_UI_Programming_Collaboration
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int Cash
-        {
-            get
-            {
-                return cash;
-            }
-            set
-            {
-                if ((cash + value) >= 0)
-                {
-                    cash += value;
-                    BLLayer.SetPlayerCashToMySQL(Id, cash);
-                }
-            }
-        }
+        public int Cash { get; set; }
         public int Position;
         public bool DieRolled { get; set; }
 
@@ -50,7 +36,5 @@ namespace TTOS0300_UI_Programming_Collaboration
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        private int cash = 0;
     }
 }
