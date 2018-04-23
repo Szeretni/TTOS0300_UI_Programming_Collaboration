@@ -40,7 +40,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         int temp = 0;
         int DieResult = 0;
         int propertyId = 0;
-        int buttonClicks = 0;
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -63,11 +62,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrentPlayer.Content = "Player " + players[0].Name;
                 currentPlayer = 0;
             }
-            cells[5].HotelCount = 3;
-            cells[6].HotelCount = 3;
-            cells[12].HotelCount = 3;
+            cells[5].HouseCount = 3;
+            cells[6].HouseCount = 3;
+            cells[12].HouseCount = 3;
+            cells[7].HotelCount = 3;
+            cells[20].HotelCount = 3;
+            cells[34].HotelCount = 3;
 
-            CreateBuildings();
             cells[5].Owner = "Antti";
             cells[6].Owner = "Antti";
             cells[12].Owner = "Antti";
@@ -114,7 +115,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 canvasObj.Children.Clear();
                 bordernumber = 0;
-                buttonClicks = 0;
 
                 for (int i = 0; i < tokens.Count; i++)
                 {
@@ -124,6 +124,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 tokens.Clear();
                 points.Clear();
                 buildingPoints.Clear();
+                buildings.Clear();
                 PrintGrid();
                 CreatePlayerTokens();
                 CreateBuildings();
@@ -175,7 +176,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                         for (int j = 0; j < cells[i].HouseCount; j++)
                         {
                             BitmapImage bi = new BitmapImage();
-                            int tokennumber = i + 1;
                             string path = "/house.png";
                             bi.BeginInit();
                             bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
@@ -193,10 +193,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     else if (cells[i].HotelCount > 0)
                     {
-                        for (int j = 0; j < cells[i].HouseCount; j++)
+                        for (int j = 0; j < cells[i].HotelCount; j++)
                         {
                             BitmapImage bi = new BitmapImage();
-                            int tokennumber = i + 1;
                             string path = "/hotel.png";
                             bi.BeginInit();
                             bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
@@ -215,7 +214,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("asdf" + ex.Message);
+                MessageBox.Show("Buildings" + ex.Message);
             }
         }
 
@@ -317,15 +316,18 @@ namespace TTOS0300_UI_Programming_Collaboration
                     story.Begin(tokens[currentPlayer]);
 
                     //20180422
-                        players[currentPlayer].DieRolled = true;
+                    players[currentPlayer].DieRolled = true;
                 }
+
                 //20180422
                 else
                 {
                 //btnDice.IsHitTestVisible = false;
                 lblNotification.Content = "You have already rolled the die.";
+                }
+
+
             }
-        }
             catch (Exception ex)
             {
                 MessageBox.Show("storyboard " + ex.Message);
@@ -548,10 +550,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.50), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.70), Y = y + (windowHeight * 0.16 * 0.05) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.50), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.70), Y = y + (windowHeight * 0.16 * 0.01) });
                 }
                 else if (bordernumber >= 10 && bordernumber <= 17)
                 {
@@ -572,10 +574,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.50), Y = y + (windowHeight * 0.16 * 0.05) });
-                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.70), Y = y + (windowHeight * 0.16 * 0.05) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.50), Y = y + (windowHeight * 0.16 * 0.01) });
+                    buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.70), Y = y + (windowHeight * 0.16 * 0.01) });
                 }
                 else if (bordernumber >= 28 && bordernumber <= 35)
                 {
@@ -669,21 +671,21 @@ namespace TTOS0300_UI_Programming_Collaboration
                     btnDice.Height = windowHeight * 0.05;
                     btnDice.Width = windowWidth * 0.1;
                     btnDice.Content = "Roll Dice";
-                    btnDice.Background = Brushes.BlanchedAlmond;
+                    btnDice.Background = Brushes.Coral;
                     btnDice.Click += new RoutedEventHandler(buttonMoveToken_Click);
 
                     Button btnBuyBuildings = new Button();
                     btnBuyBuildings.Height = windowHeight * 0.05;
                     btnBuyBuildings.Width = windowWidth * 0.1;
                     btnBuyBuildings.Content = "Construct Buildings";
-                    btnBuyBuildings.Background = Brushes.BlanchedAlmond;
+                    btnBuyBuildings.Background = Brushes.Coral;
                     btnBuyBuildings.Click += new RoutedEventHandler(btnBuyBuildings_Click);
 
                     Button btnEndturn = new Button();
                     btnEndturn.Height = windowHeight * 0.05;
                     btnEndturn.Width = windowWidth * 0.1;
                     btnEndturn.Content = "End turn";
-                    btnEndturn.Background = Brushes.BlanchedAlmond;
+                    btnEndturn.Background = Brushes.Coral;
                     btnEndturn.Click += new RoutedEventHandler(btnNextPlayer_Click);
 
 
@@ -723,42 +725,42 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             try
             {
-                List<int> cellowned = new List<int>();
-                List<Button> buttons = new List<Button>();
                 Grid g = new Grid();
                 StackPanel stack = new StackPanel();
                 int i = 0;
-
-
-                TextBlock t = new TextBlock();
-                t.Text = "Select property to build on";
-                t.Height = 20;
-                t.Width = 200;
-                stack.Children.Add(t);
 
                 foreach (Cell c in cells)
                 {
                     if (players[currentPlayer].Name == c.Owner)
                     {
-                        buttons.Add(new Button());
-                        buttons[i].Height = 20;
-                        buttons[i].Width = 200;
-                        buttons[i].Content = c.Name;
-                        buttons[i].Name = c.Name.ToString();
-                        buttons[i].Background = Brushes.White;
-                        buttons[i].Click += new RoutedEventHandler(btnBuyForCell_Click);
-                        stack.Children.Add(buttons[i]);
+                        Button btn = new Button();
+                        btn.Height = 20;
+                        btn.Width = 200;
+                        btn.Content = c.Name;
+                        btn.Name = c.Name.ToString();
+                        btn.Background = Brushes.White;
+                        btn.Click += new RoutedEventHandler(btnBuyForCell_Click);
+                        stack.Children.Add(btn);
 
                         i++;
                     }
-
-                    else
-                    {
-                    }
                 }
 
+                TextBlock t = new TextBlock();
+                if (i == 0)
+                {
+                    t.Text = "You do not own any properties";
+                }
+                else
+                {
+                    t.Text = "Select property to build on";
+                }
+
+                t.Height = 20;
+                t.Width = 200;
+                stack.Children.Add(t);
+
                 g.Children.Add(stack);
-                Canvas.SetZIndex(g, 1000);
                 Canvas.SetLeft(g, 250);
                 Canvas.SetTop(g, 250);
                 canvasObj.Children.Add(g);
@@ -776,7 +778,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             try
             {
-                List<int> cellowned = new List<int>();
                 List<Button> buttons = new List<Button>();
                 Grid g = new Grid();
                 StackPanel stack = new StackPanel();
@@ -820,7 +821,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     stack.Children.Add(buttons[0]);
                 }
-                else if (cells[propertyId].HotelCount > 0)
+                else if (cells[propertyId].HotelCount == 4)
                 {
                     t.Text = "Property has maximum amount of hotels";
                     stack.Children.Add(t);
@@ -856,7 +857,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void btnBuyHotel_Click(object sender, RoutedEventArgs e)
         {
-            if (buttonClicks < 4)
+            cells[propertyId].HouseCount = 0;
+            if (cells[propertyId].HotelCount < 4)
             {
                 BitmapImage bi = new BitmapImage();
                 // BitmapImage.UriSource must be in a BeginInit/EndInit block.
@@ -866,22 +868,21 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bi.EndInit();
                 // add player tokens into list
                 Image image = new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi };
-                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + buttonClicks].X);
-                Canvas.SetTop(image, buildingPoints[propertyId * 4 + buttonClicks].Y);
+                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X);
+                Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
                 canvasObj.Children.Add(image);
-                buttonClicks++;
+
+                cells[propertyId].HotelCount++;
             }
             else
             {
                 lblNotification.Content = "Maximum number of houses on property.";
-                RecreateCanvas();
-                buttonClicks = 0;
             }
         }
 
         private void btnBuyHouse_Click(object sender, RoutedEventArgs e)
         {
-            if (buttonClicks < 4)
+            if (cells[propertyId].HouseCount < 4)
             {
                 BitmapImage bi = new BitmapImage();
                 // BitmapImage.UriSource must be in a BeginInit/EndInit block.
@@ -891,16 +892,15 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bi.EndInit();
                 // add player tokens into list
                 Image image = new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi };
-                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + buttonClicks].X);
-                Canvas.SetTop(image, buildingPoints[propertyId * 4 + buttonClicks].Y);
+                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].X);
+                Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].Y);
                 canvasObj.Children.Add(image);
-                buttonClicks++;
+
+                cells[propertyId].HouseCount++;
             }
             else
             {
                 lblNotification.Content = "Maximum number of houses on property.";
-                RecreateCanvas();
-                buttonClicks = 0;
             }
         }
     }
