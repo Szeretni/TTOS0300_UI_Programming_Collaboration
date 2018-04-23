@@ -2,7 +2,8 @@
 DONE cash value correct in ui
 current player can move indefinately by reloading game. current player count to db
 nuget: updating mysql.data brokes raspi connection bc of ssl
-
+mouse hover shows cell info
+fix ingame id's and db id's
 
 2018-04-22
 SetPlayerPositionToMySQL implement GameSession. Now hard coded 1
