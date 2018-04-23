@@ -157,12 +157,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="monopoly.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="monopoli.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Docs\MySqlTransaction.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +201,12 @@
     <Resource Include="token6.png" />
     <Resource Include="token7.png" />
     <Resource Include="token8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="house.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="hotel.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

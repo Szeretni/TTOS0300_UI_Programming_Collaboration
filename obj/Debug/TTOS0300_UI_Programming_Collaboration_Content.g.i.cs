@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("dicetransparent.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("hotel.png")]
 
 
