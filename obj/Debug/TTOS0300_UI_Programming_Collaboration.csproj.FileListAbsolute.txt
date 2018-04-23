@@ -160,8 +160,6 @@ F:\Opiskelu\TTOS0300_UI_Programming_Collaboration\obj\Debug\TTOS0300_UI_Programm
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe.config
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\TTOS0300_UI_Programming_Collaboration.exe
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\TTOS0300_UI_Programming_Collaboration.pdb
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\EntityFramework.dll
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\Microsoft.Web.Infrastructure.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Data.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Web.dll
@@ -172,8 +170,6 @@ C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\System.Web.WebPages.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\System.Web.WebPages.Razor.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\WebMatrix.Data.dll
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\WebMatrix.WebData.dll
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\EntityFramework.xml
-C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\EntityFramework.SqlServer.xml
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Data.xml
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\MySql.Web.xml
 C:\Users\MakeMervi\Source\Repos\Monopoli\bin\Debug\System.Web.Helpers.xml
