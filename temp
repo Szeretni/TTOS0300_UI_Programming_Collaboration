@@ -1,4 +1,5 @@
 2018-04-23
+we have to use classes more in order to avoid repeat. ie. cash: main should update player's cash-property and player handles db update 
 DONE cash value correct in ui
 DONE current player can move indefinately by reloading game. current player count to db
 mouse hover shows cell info
