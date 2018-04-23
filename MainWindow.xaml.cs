@@ -762,25 +762,35 @@ namespace TTOS0300_UI_Programming_Collaboration
         //20180422
         private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
         {
-            RecreateCanvas();
-
-            try
+            //20180423 HO
+            //warns the player if she hasn't moved
+            if (players[currentPlayer].DieRolled == false)
             {
-                BLMethod.NextTurn(ref currentPlayer, ref players);
-                //shows player's name in ui
-                lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
-                //reset notifications
-                lblNotification.Content = "Notifications";
-                //btnDice.IsHitTestVisible = true;
-
-                //20180423 HO
-                //updates cash field to match current player
-                lblCash.Content = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
-
+                lblNotification.Content = "You haven't rolled the die yet!";
             }
-            catch (Exception ex)
+
+            else
             {
-                MessageBox.Show(ex.Message);
+                RecreateCanvas();
+
+                try
+                {
+                    BLMethod.NextTurn(ref currentPlayer, ref players);
+                    //shows player's name in ui
+                    lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
+                    //reset notifications
+                    lblNotification.Content = "Notifications";
+                    //btnDice.IsHitTestVisible = true;
+
+                    //20180423 HO
+                    //updates cash field to match current player
+                    lblCash.Content = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                } 
             }
         }
 
