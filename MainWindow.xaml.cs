@@ -268,9 +268,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 
 
                     //20180422
-                    //    shows current player's cash in ui
-                    //players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
-                    //lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
+                    //shows current player's cash in ui
+                    players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+                    lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
 
                     Storyboard story = new Storyboard();
 
@@ -772,6 +772,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //reset notifications
                 lblNotification.Content = "Notifications";
                 //btnDice.IsHitTestVisible = true;
+
+                //20180423 HO
+                //updates cash field to match current player
+                lblCash.Content = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
 
             }
             catch (Exception ex)
