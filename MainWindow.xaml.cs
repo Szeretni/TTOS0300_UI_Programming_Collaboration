@@ -439,6 +439,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             Canvas.SetLeft(buyStack, 250);
             Canvas.SetTop(buyStack, 250);
             canvasObj.Children.Add(buyStack);
+            try
+            {
+                BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Price);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("BuyProperty: " + ex.Message);
+            }
         }
 
         private void btnBuyProperty_Click(object sender, RoutedEventArgs e)
