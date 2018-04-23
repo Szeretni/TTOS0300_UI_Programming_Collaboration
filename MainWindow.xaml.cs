@@ -326,7 +326,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblNotification.Content = "You have already rolled the die.";
                 }
 
-
+                ActionAfterMove();
             }
             catch (Exception ex)
             {
@@ -387,6 +387,65 @@ namespace TTOS0300_UI_Programming_Collaboration
         //        k += 2;
         //    }
         //}
+
+        private void ActionAfterMove()
+        {
+            if (cells[players[currentPlayer].Position].Owner != null && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Name && cells[players[currentPlayer].Position].Price != 0)
+            {
+                players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
+
+                foreach (Player p in players)
+                {
+                    if (cells[players[currentPlayer].Position].Owner == p.Name)
+                    {
+                        p.Cash += cells[players[currentPlayer].Position].Rent;
+                        lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
+                    }
+                }
+            }
+
+            else if (cells[players[currentPlayer].Position].Owner == null && cells[players[currentPlayer].Position].Price != 0 )
+            {
+                BuyProperty();
+            }
+        }
+
+        private void BuyProperty()
+        {
+            StackPanel buyStack = new StackPanel();
+            buyStack.Orientation = Orientation.Vertical;
+
+            Button btnBuyProperty = new Button();
+            btnBuyProperty.Background = Brushes.White;
+            btnBuyProperty.Height = 20;
+            btnBuyProperty.Width = 200;
+            btnBuyProperty.Content = "Buy property for " + cells[players[currentPlayer].Position].Price + "$";
+            btnBuyProperty.Click += new RoutedEventHandler(btnBuyProperty_Click);
+
+            Button btnPassProperty = new Button();
+            btnPassProperty.Background = Brushes.White;
+            btnPassProperty.Height = 20;
+            btnPassProperty.Width = 200;
+            btnPassProperty.Content = "Pass";
+            btnPassProperty.Click += new RoutedEventHandler(btnPassProperty_Click);
+
+            buyStack.Children.Add(btnPassProperty);
+            buyStack.Children.Add(btnBuyProperty);
+
+            Canvas.SetLeft(buyStack, 250);
+            Canvas.SetTop(buyStack, 250);
+            canvasObj.Children.Add(buyStack);
+        }
+
+        private void btnBuyProperty_Click(object sender, RoutedEventArgs e)
+        {
+            cells[players[currentPlayer].Position].Owner = players[currentPlayer].Name;
+        }
+
+        private void btnPassProperty_Click(object sender, RoutedEventArgs e)
+        {
+            RecreateCanvas();
+        }
 
         private void AddGrid(double x, double y, string side)
         {
@@ -703,6 +762,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         //20180422
         private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
         {
+            RecreateCanvas();
+
             try
             {
                 BLMethod.NextTurn(ref currentPlayer, ref players);
@@ -872,6 +933,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
                 canvasObj.Children.Add(image);
 
+                cells[propertyId].Rent += 200;
                 cells[propertyId].HotelCount++;
             }
             else
@@ -896,6 +958,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].Y);
                 canvasObj.Children.Add(image);
 
+                cells[propertyId].Rent += 100;
                 cells[propertyId].HouseCount++;
             }
             else
