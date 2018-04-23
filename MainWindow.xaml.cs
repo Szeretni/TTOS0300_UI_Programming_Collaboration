@@ -63,18 +63,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
 
-            cells[5].HouseCount = 3;
-            cells[6].HouseCount = 3;
-            cells[12].HouseCount = 3;
-            cells[7].HotelCount = 3;
-            cells[20].HotelCount = 3;
-            cells[34].HotelCount = 3;
+            CollectionViewSource itemCollectionViewSource;
+            itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
+            itemCollectionViewSource.Source = players;
 
-            cells[5].Owner = "Antti";
-            cells[6].Owner = "Antti";
-            cells[12].Owner = "Antti";
+            //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
+            //be.UpdateSource();
         }
-
         private void LoadPlayers()
         {
             try
@@ -444,6 +439,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void btnBuyProperty_Click(object sender, RoutedEventArgs e)
         {
             cells[players[currentPlayer].Position].Owner = players[currentPlayer].Name;
+            lblNotification.Content = "You bought " + cells[players[currentPlayer].Position].Name;
+            RecreateCanvas();
         }
 
         private void btnPassProperty_Click(object sender, RoutedEventArgs e)

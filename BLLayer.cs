@@ -18,6 +18,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 List<Player> players = new List<Player>();
                 DataTable dt = DBLayer.GetPlayersFromMySQL();
+
                 foreach (DataRow dr in dt.Rows)
                 {
                     Player player = new Player
