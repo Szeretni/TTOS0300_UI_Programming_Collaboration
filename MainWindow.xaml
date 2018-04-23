@@ -8,14 +8,12 @@
         Title="MainWindow" MinHeight="400" Height="750" MinWidth="400" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Background="{x:Null}">
     <Grid x:Name="gridObj" Background="White">
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Button x:Name="buttonMoveToken" Content="Move token" HorizontalAlignment="Left" Margin="351,220,0,0" VerticalAlignment="Top" Width="75" Click="buttonMoveToken_Click"/>
-        <Label x:Name="lblCurrentPlayer" Content="Player" HorizontalAlignment="Left" Margin="263,341,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnNextPlayer" Content="End of Turn" HorizontalAlignment="Left" Margin="267,403,0,0" VerticalAlignment="Top" Width="75" Click="btnNextPlayer_Click"/>
-        <Label x:Name="lblCell" Content="CellId" HorizontalAlignment="Left" Margin="426,315,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCurrPlrId" Content="PlayerId" HorizontalAlignment="Left" Margin="263,315,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblDieResult" Content="DieResult" HorizontalAlignment="Left" Margin="267,289,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPreviousPosition" Content="PreviousPosition" HorizontalAlignment="Left" Margin="434,354,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="267,372,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
+        <Label x:Name="lblCurrentPlayer" Content="Player" HorizontalAlignment="Left" Margin="152,331,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCell" Content="CellId" HorizontalAlignment="Left" Margin="490,305,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCurrPlrId" Content="PlayerId" HorizontalAlignment="Left" Margin="152,305,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblDieResult" Content="DieResult" HorizontalAlignment="Left" Margin="156,279,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblPreviousPosition" Content="PreviousPosition" HorizontalAlignment="Left" Margin="498,344,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="156,362,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
         <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" Margin="351,175,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>
