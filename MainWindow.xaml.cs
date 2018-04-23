@@ -393,12 +393,16 @@ namespace TTOS0300_UI_Programming_Collaboration
             if (cells[players[currentPlayer].Position].Owner != null && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Name && cells[players[currentPlayer].Position].Price != 0)
             {
                 players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
+                //db update
+                BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
 
                 foreach (Player p in players)
                 {
                     if (cells[players[currentPlayer].Position].Owner == p.Name)
                     {
                         p.Cash += cells[players[currentPlayer].Position].Rent;
+                        //db update
+                        BLLayer.SetPlayerCashToMySQL(p.Id, p.Cash);
                         lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
                     }
                 }
