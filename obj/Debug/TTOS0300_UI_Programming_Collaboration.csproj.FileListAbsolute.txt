@@ -174,3 +174,4 @@ C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Colla
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Collaboration.csproj.CopyComplete
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Collaboration.exe
 C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Collaboration.pdb
+C:\Users\MakeMervi\Source\Repos\Monopoli\obj\Debug\TTOS0300_UI_Programming_Collaboration.csprojResolveAssemblyReference.cache

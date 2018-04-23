@@ -60,7 +60,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             if (players.Count() != 0)
             {
                 lblCurrentPlayer.Content = "Player " + players[0].Name;
-                currentPlayer = 0;
+                currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL() - 1; //-1 to avoid out of index
             }
             cells[5].HouseCount = 3;
             cells[6].HouseCount = 3;
@@ -80,15 +80,15 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 players = BLLayer.GetAllPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
-                //init player's hasn't rolled die yet
+                //init player's die rolled status
                 for (int i = 0; i < players.Count(); i++)
                 {
-                    players[i].DieRolled = false;
+                    players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("LoadPlayers " + ex.Message);
             }
         }
 
@@ -222,6 +222,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
+                int temp = currentPlayer;
                 //if die rolled, cannot roll again
                 if (players[currentPlayer].DieRolled != true)
                 {
@@ -317,6 +318,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //20180422
                     players[currentPlayer].DieRolled = true;
+                    //20180423 HO
+                    //updates die rolled to db
+                    BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
                 }
 
                 //20180422
@@ -330,7 +334,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("storyboard " + ex.Message);
+                MessageBox.Show("Storyboard: " + ex.Message);
                 //throw;
             }
         }

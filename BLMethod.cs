@@ -24,6 +24,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 //die rolled, cannot roll again
                 players[currentPlayer].DieRolled = false;
+                DBLayer.SetCurrentPlayerIdToMySQL(players[currentPlayer].Id);
             }
             catch
             {

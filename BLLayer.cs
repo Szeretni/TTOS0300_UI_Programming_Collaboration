@@ -117,6 +117,60 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180423 HO
+        //gets current player id from db
+        public static int GetCurrentPlayerIdFromMySQL()
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetCurrentPlayerIdFromMySQL();
+                int pid = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    pid = int.Parse(dr[0].ToString());
+                }
+                return pid;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
+        //gets players die rolled status from db
+        public static bool GetDieRolledFlagFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetPlayersDieRolledFlagFromMySQL(playerid);
+                bool rolled = false;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    rolled = bool.Parse(dr[0].ToString());
+                }
+                return rolled;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
+        //set players die rolled status to db
+        public static void SetDieRolledFlagToMySQL(int playerid, bool dieRolled)
+        {
+            try
+            {
+                DBLayer.SetPlayerDieRolledFlagToMySQL(playerid, dieRolled);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style obsolete
         public static List<Player> GetPlayerList()
         {

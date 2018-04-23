@@ -114,6 +114,104 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180423 HO
+        //updates current player to db
+        //GameSessionId not dynamic yet
+        public static void SetCurrentPlayerIdToMySQL(int playerid)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = 1";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
+        //gets current player id from db
+        //gamesessionid not dynamic
+        public static DataTable GetCurrentPlayerIdFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT CurrentPlayerId FROM GameSession WHERE GameSessionId = 1";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
+        //gets player's die rolled flag from db
+        //gamesessionid not dynamic
+        public static DataTable GetPlayersDieRolledFlagFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT DieRolled FROM GameSession_has_player WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180423 HO
+        //updates players die rolled flag to db
+        //GameSessionId not dynamic yet
+        public static void SetPlayerDieRolledFlagToMySQL(int playerid, bool dieRolled)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE GameSession_has_player SET DieRolled = " + dieRolled.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
         {
