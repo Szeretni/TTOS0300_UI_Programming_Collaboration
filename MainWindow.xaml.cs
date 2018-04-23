@@ -40,7 +40,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         int temp = 0;
         int DieResult = 0;
         int propertyId = 0;
-        int truetemp = 0;
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -272,7 +271,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //20180422
                     //shows current player's cash in ui
                     players[currentPlayer].Cash = BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
-                    lblCash.Content = "Player's Cash: " + players[currentPlayer].Cash;
+                    lblCash.Content = "Cash: " + players[currentPlayer].Cash;
 
                     Storyboard story = new Storyboard();
 
