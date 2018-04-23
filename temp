@@ -1,15 +1,20 @@
+2018-04-23
+DONE cash value correct in ui
+current player can move indefinately by reloading game. current player count to db
+nuget: updating mysql.data brokes raspi connection bc of ssl
+
+
 2018-04-22
 SetPlayerPositionToMySQL implement GameSession. Now hard coded 1
 turn object?
 window loaded size changed: incorrect token position
 show every player's cash in ui
 is there a way to have ui element interactions in other files? Besides return
-warning when end turn but haven't rolled die
+DONE warns when end turn but haven't rolled die
 
 2018-04-19
 DONE die roll result view
 DONE notification if go to jail
-git 
 DONE modify db cash
 modify db building
 cards
