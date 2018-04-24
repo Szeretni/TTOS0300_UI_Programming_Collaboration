@@ -199,6 +199,31 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        public static void SetCellBuildingCountsToMySQL(int cellid, int hotelcount, int housecount)
+        {
+            try
+            {
+                DBLayer.SetCellBuildingCountsToMySQL(cellid, hotelcount, housecount);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static void SetCellOwnerToMySQL(int playerid, int cellid)
+        {
+            try
+            {
+                DBLayer.SetCellOwnerToMySQL(playerid, cellid);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        
+
         /* list-style obsolete
         public static List<Player> GetPlayerList()
         {

@@ -238,6 +238,55 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //updates hotel and housecounts to db
+        public static void SetCellBuildingCountsToMySQL(int cellid, int hotelcount, int housecount)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE Player_has_Cell SET HotelCount = " + hotelcount.ToString() + ", HouseCount = " + housecount.ToString() + " WHERE CellId = " + cellid.ToString() + " AND GameSessionId = 1";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static void SetCellOwnerToMySQL(int playerid, int cellid)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "INSERT INTO Player_has_Cell (PlayerId,CellId,GameSessionId) VALUES ('" + playerid.ToString() + "', '" + cellid.ToString() + "'," + "1)";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
         {

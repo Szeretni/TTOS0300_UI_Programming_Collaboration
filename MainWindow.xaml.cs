@@ -34,6 +34,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Point> buildingPoints = new List<Point>();
         List<DoubleAnimation> da = new List<DoubleAnimation>();
         List<Image> buildings = new List<Image>();
+        List<Cell> cellserie = new List<Cell>();
         int[] rents =
         {
             10  ,30     ,90     ,160    ,250,
@@ -108,6 +109,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
                 }
+
+                cells[1].Owner = 5;
+                cells[3].Owner = 5;
             }
             catch (Exception ex)
             {
@@ -443,15 +447,16 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void ActionAfterMove()
         {
-            if (cells[players[currentPlayer].Position].Owner != null && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Name && cells[players[currentPlayer].Position].Price != 0)
+            if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
             {
                 players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
                 //db update
                 BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+                BLLayer.SetCellOwnerToMySQL(players[currentPlayer].Id, cells[players[currentPlayer].Position].Id);
 
                 foreach (Player p in players)
                 {
-                    if (cells[players[currentPlayer].Position].Owner == p.Name)
+                    if (cells[players[currentPlayer].Position].Owner == p.Id)
                     {
                         p.Cash += cells[players[currentPlayer].Position].Rent;
                         //db update
@@ -461,7 +466,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
             }
 
-            else if (cells[players[currentPlayer].Position].Owner == null && cells[players[currentPlayer].Position].Price != 0 )
+            else if (cells[players[currentPlayer].Position].Owner == 0 && cells[players[currentPlayer].Position].Price != 0 )
             {
                 BuyProperty();
             }
@@ -496,7 +501,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void btnBuyProperty_Click(object sender, RoutedEventArgs e)
         {
-            cells[players[currentPlayer].Position].Owner = players[currentPlayer].Name;
+            cells[players[currentPlayer].Position].Owner = players[currentPlayer].Id;
             lblNotification.Content = "You bought " + cells[players[currentPlayer].Position].Name;
             BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash- cells[players[currentPlayer].Position].Price);
             RecreateCanvas();
@@ -720,10 +725,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 bordernumber++;
             }
 
-            catch (Exception ex)
+            catch (Exception)
             {
-                //throw;
-                MessageBox.Show("AddGrid: " + ex.Message);
+                throw;
             }
         }
 
@@ -874,7 +878,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 foreach (Cell c in cells)
                 {
-                    if (players[currentPlayer].Name == c.Owner)
+                    if (players[currentPlayer].Id == c.Owner)
                     {
                         Button btn = new Button();
                         btn.Height = 20;
@@ -892,16 +896,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 TextBlock t = new TextBlock();
                 if (i == 0)
                 {
-                    t.Text = "You do not own any properties";
+                    lblNotification.Content = "You do not own any properties";
                 }
                 else
                 {
-                    t.Text = "Select property to build on";
+                    lblNotification.Content = "Select property to build on";
                 }
-
-                t.Height = 20;
-                t.Width = 200;
-                stack.Children.Add(t);
 
                 g.Children.Add(stack);
                 Canvas.SetLeft(g, 250);
@@ -917,10 +917,10 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void btnBuyForCell_Click(object sender, RoutedEventArgs e)
         {
-            RecreateCanvas();
-
             try
             {
+                RecreateCanvas();
+
                 List<Button> buttons = new List<Button>();
                 Grid g = new Grid();
                 StackPanel stack = new StackPanel();
@@ -929,9 +929,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 propertyId = 0;
 
-                TextBlock t = new TextBlock();
-
-                foreach(Cell c in cells)
+                foreach (Cell c in cells)
                 {
                     if (c.Name == btn.Content.ToString())
                     {
@@ -939,42 +937,49 @@ namespace TTOS0300_UI_Programming_Collaboration
                     }
                 }
 
-                if (cells[propertyId].HouseCount == 4)
+                CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
+
+                if (ownsAll == true)
                 {
-                    t.Text = "Property has 4 houses";
-                    stack.Children.Add(t);
-                    buttons.Add(new Button());
-                    buttons[0].Height = 20;
-                    buttons[0].Width = 200;
-                    buttons[0].Content = "Buy a Hotel for 200$";
-                    buttons[0].Background = Brushes.White;
-                    buttons[0].Click += new RoutedEventHandler(btnBuyHotel_Click);
-                    stack.Children.Add(buttons[0]);
+
+                    if (cells[propertyId].HouseCount == 4)
+                    {
+                        lblNotification.Content = "Property has 4 houses";
+                        buttons.Add(new Button());
+                        buttons[0].Height = 20;
+                        buttons[0].Width = 200;
+                        buttons[0].Content = "Buy a Hotel";
+                        buttons[0].Background = Brushes.White;
+                        buttons[0].Click += new RoutedEventHandler(btnBuyHotel_Click);
+                        stack.Children.Add(buttons[0]);
+                    }
+                    else if (cells[propertyId].HotelCount == 1)
+                    {
+                        lblNotification.Content = "Property has maximum amount of hotels";
+                    }
+                    else
+                    {
+                        lblNotification.Content = "Property has " + cells[propertyId].HouseCount + " houses";
+                        buttons.Add(new Button());
+                        buttons[0].Height = 20;
+                        buttons[0].Width = 200;
+                        buttons[0].Content = "Buy a House";
+                        buttons[0].Background = Brushes.White;
+                        buttons[0].Click += new RoutedEventHandler(btnBuyHouse_Click);
+                        stack.Children.Add(buttons[0]);
+                    }
+                    g.Children.Add(stack);
+                    Canvas.SetZIndex(g, 1000);
+                    Canvas.SetLeft(g, 250);
+                    Canvas.SetTop(g, 250);
+                    canvasObj.Children.Add(g);
                 }
-                else if (cells[propertyId].HotelCount == 1)
-                {
-                    lblNotification.Content = "Property has maximum amount of hotels";
-                }
+
                 else
                 {
-                    lblNotification.Content = "Property has " + cells[propertyId].HouseCount + " houses";
-                    buttons.Add(new Button());
-                    buttons[0].Height = 20;
-                    buttons[0].Width = 200;
-                    buttons[0].Content = "Buy a House for 100$";
-                    buttons[0].Background = Brushes.White;
-                    buttons[0].Click += new RoutedEventHandler(btnBuyHouse_Click);
-                    stack.Children.Add(buttons[0]);
+                    lblNotification.Content = "You need to own every property with the same color to build";
                 }
 
-                t.Height = 20;
-                t.Width = 200;
-
-                g.Children.Add(stack);
-                Canvas.SetZIndex(g, 1000);
-                Canvas.SetLeft(g, 250);
-                Canvas.SetTop(g, 250);
-                canvasObj.Children.Add(g);
             }
 
             catch (Exception ex)
@@ -985,12 +990,12 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void CheckIfPlayerOwnsAllOfSameColorProperties(int serie)
         {
-            var cellserie = cells.FindAll(x => x.SerieId.Equals(serie));
+            cellserie = cells.FindAll(x => x.SerieId.Equals(serie));
             int i = 0;
 
             foreach (Cell c in cellserie)
             {
-                if (c.Owner == players[currentPlayer].Name)
+                if (c.Owner == players[currentPlayer].Id)
                 {
                     i++;
                     serieId = c.SerieId;
@@ -1009,30 +1014,42 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void SetPlayerCashAndCellRent()
         {
-            if (cells[propertyId].HouseCount == 1)
+            //set cell rent to what it should be after buying buildings
+            try
             {
-                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
-                cells[propertyId].Rent = rents[propertyId - 1 * 5];
+                if (cells[propertyId].HouseCount == 1)
+                {
+                    players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                    cells[propertyId].Rent = rents[propertyId * 5];
+                }
+                else if (cells[propertyId].HouseCount == 2)
+                {
+                    players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                    cells[propertyId].Rent = rents[propertyId * 5 + 1];
+                }
+                else if (cells[propertyId].HouseCount == 3)
+                {
+                    players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                    cells[propertyId].Rent = rents[propertyId * 5 + 2];
+                }
+                else if (cells[propertyId].HouseCount == 4)
+                {
+                    players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                    cells[propertyId].Rent = rents[propertyId * 5 + 3];
+                }
+                else if (cells[propertyId].HotelCount == 1)
+                {
+                    players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                    cells[propertyId].Rent = rents[propertyId * 5 + 4];
+                }
+
+                BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+
+                lblCash.Content = "Cash: " + BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
             }
-            else if (cells[propertyId].HouseCount == 2)
+            catch (Exception ex)
             {
-                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
-                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 1];
-            }
-            else if (cells[propertyId].HouseCount == 3)
-            {
-                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
-                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 2];
-            }
-            else if (cells[propertyId].HouseCount == 4)
-            {
-                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
-                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 3];
-            }
-            else if (cells[propertyId].HotelCount == 1)
-            {
-                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
-                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 4];
+                MessageBox.Show("SetPlayerCashAndCellRent: " + ex.Message);
             }
         }
 
@@ -1052,38 +1069,34 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void btnBuyHotel_Click(object sender, RoutedEventArgs e)
         {
-            CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
+            cells[propertyId].HouseCount = 0;
 
-            if (ownsAll == true)
-            {
-                cells[propertyId].HouseCount = 0;
+            RecreateCanvas();
 
-                RecreateCanvas();
+            AddImageToCanvas("/hotel.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4].X, buildingPoints[propertyId * 4].Y);
 
-                AddImageToCanvas("/hotel.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4].X, buildingPoints[propertyId * 4].Y);
+            cells[propertyId].HotelCount++;
 
-                cells[propertyId].HotelCount++;
+            BLLayer.SetCellBuildingCountsToMySQL(cells[propertyId].Id, cells[propertyId].HotelCount, cells[propertyId].HouseCount);
 
-                SetPlayerCashAndCellRent();
-            }
-
-            else
-            {
-                lblNotification.Content = "You need to own every property with the same color to build";
-            }
+            SetPlayerCashAndCellRent();
         }
 
         private void btnBuyHouse_Click(object sender, RoutedEventArgs e)
         {
             CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
 
-            if (ownsAll == true)
+            try
             {
                 if (cells[propertyId].HouseCount < 4)
                 {
                     AddImageToCanvas("/house.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].Y);
 
                     cells[propertyId].HouseCount++;
+
+                    lblNotification.Content = "Property has " + cells[propertyId].HouseCount + " houses";
+
+                    BLLayer.SetCellBuildingCountsToMySQL(cells[propertyId].Id, cells[propertyId].HotelCount, cells[propertyId].HouseCount);
 
                     SetPlayerCashAndCellRent();
                 }
@@ -1092,10 +1105,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                     lblNotification.Content = "Maximum number of houses on property.";
                 }
             }
-
-            else
+            catch (Exception ex)
             {
-                lblNotification.Content = "You need to own every property with the same color to build";
+                MessageBox.Show("btnBuyHouse_Click: " + ex.Message);
             }
         }
     }
