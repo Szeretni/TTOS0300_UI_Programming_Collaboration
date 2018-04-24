@@ -34,11 +34,42 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Point> buildingPoints = new List<Point>();
         List<DoubleAnimation> da = new List<DoubleAnimation>();
         List<Image> buildings = new List<Image>();
+        int[] rents =
+        {
+            10  ,30     ,90     ,160    ,250,
+            20  ,60     ,180    ,320    ,450,
+            30  ,90     ,270    ,400    ,550,
+            30  ,90     ,270    ,400    ,550,
+            40  ,100    ,300    ,450    ,600,
+            50  ,150    ,450    ,625    ,750,
+            50  ,150    ,450    ,625    ,750,
+            60  ,180    ,500    ,700    ,900,
+            70  ,200    ,550    ,750    ,950,
+            70  ,200    ,550    ,750    ,950,
+            80  ,220    ,600    ,800    ,1000,
+            90  ,250    ,700    ,875    ,1050,
+            90  ,250    ,700    ,875    ,1050,
+            100 ,300    ,750    ,925    ,1100,
+            110 ,330    ,800    ,975    ,1150,
+            110 ,330    ,800    ,975    ,1150,
+            120 ,360    ,850    ,1025   ,1200,
+            130 ,390    ,900    ,1100   ,1275,
+            130 ,390    ,900    ,1100   ,1275,
+            150 ,450    ,1000   ,1200   ,1400,
+            175 ,500    ,1100   ,1300   ,1500,
+            200 ,600    ,1400   ,1700   ,2000,
+        };
+
+        int[] buildingcosts = { 50, 50, 100, 100, 150, 150, 200, 200 };
+        
         //List<Cell> player0Cells = new List<Cell>();
         int bordernumber = 0;
         int currentPlayer; //20180422;
         int DieResult = 0;
         int propertyId = 0;
+        int serieId = 0;
+        bool ownsAll = false;
+
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -63,8 +94,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
             //be.UpdateSource();
-
-            
         }
 
         private void LoadPlayers()
@@ -101,6 +130,10 @@ namespace TTOS0300_UI_Programming_Collaboration
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
             RecreateCanvas();
+        }
+
+        private void CreateHandlersForGrids()
+        {
             //20180424
             for (int i = 0; i < bordernumber; i++)
             {
@@ -139,6 +172,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 buildingPoints.Clear();
                 buildings.Clear();
                 PrintGrid();
+                CreateHandlersForGrids();
                 CreatePlayerTokens();
                 CreateBuildings();
             }
@@ -164,7 +198,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     bi.EndInit();
                     string name = "asdf" + i;
                     // add player tokens into list
-                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi});
+                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi });
                     tokens[i].Name = name;
                     canvasObj.RegisterName(tokens[i].Name, tokens[i]);
                     Canvas.SetLeft(tokens[i], points[players[i].Position * 4 + i].X);
@@ -243,7 +277,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //20180422 players[0] -> players[currentPlayer]
                     //also token[0] -> token[currentPlayer]
-                    DieResult = rnd.Next(2, 12);
+                    DieResult = 1;
 
                     lblDieResult.Content = "Die Result: " + DieResult.ToString();
 
@@ -914,28 +948,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                     buttons[0].Click += new RoutedEventHandler(btnBuyHotel_Click);
                     stack.Children.Add(buttons[0]);
                 }
-                else if (cells[propertyId].HotelCount > 0)
+                else if (cells[propertyId].HotelCount == 1)
                 {
-                    t.Text = "Property has " + cells[propertyId].HotelCount + " hotels.";
-                    stack.Children.Add(t);
-                    buttons.Add(new Button());
-                    buttons[0].Height = 20;
-                    buttons[0].Width = 200;
-                    buttons[0].Content = "Buy a Hotel for 200$";
-                    buttons[0].Background = Brushes.White;
-                    buttons[0].Click += new RoutedEventHandler(btnBuyHotel_Click);
-
-                    stack.Children.Add(buttons[0]);
-                }
-                else if (cells[propertyId].HotelCount == 4)
-                {
-                    t.Text = "Property has maximum amount of hotels";
-                    stack.Children.Add(t);
+                    lblNotification.Content = "Property has maximum amount of hotels";
                 }
                 else
                 {
-                    t.Text = "Property has " + cells[propertyId].HouseCount + " houses";
-                    stack.Children.Add(t);
+                    lblNotification.Content = "Property has " + cells[propertyId].HouseCount + " houses";
                     buttons.Add(new Button());
                     buttons[0].Height = 20;
                     buttons[0].Width = 200;
@@ -961,54 +980,119 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void btnBuyHotel_Click(object sender, RoutedEventArgs e)
+        private void CheckIfPlayerOwnsAllOfSameColorProperties(int serie)
         {
-            cells[propertyId].HouseCount = 0;
-            if (cells[propertyId].HotelCount < 4)
-            {
-                BitmapImage bi = new BitmapImage();
-                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                string path = "/hotel.png";
-                bi.BeginInit();
-                bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                bi.EndInit();
-                // add player tokens into list
-                Image image = new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi };
-                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X);
-                Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
-                canvasObj.Children.Add(image);
+            var cellserie = cells.FindAll(x => x.SerieId.Equals(serie));
+            int i = 0;
 
-                cells[propertyId].Rent += 200;
-                cells[propertyId].HotelCount++;
+            foreach (Cell c in cellserie)
+            {
+                if (c.Owner == players[currentPlayer].Name)
+                {
+                    i++;
+                    serieId = c.SerieId;
+                }
+            }
+
+            if (i == cellserie.Count)
+            {
+                ownsAll = true;
             }
             else
             {
-                lblNotification.Content = "Maximum number of houses on property.";
+                ownsAll = false;
+            }
+        }
+
+        private void SetPlayerCashAndCellRent()
+        {
+            if (cells[propertyId].HouseCount == 1)
+            {
+                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                cells[propertyId].Rent = rents[propertyId - 1 * 5];
+            }
+            else if (cells[propertyId].HouseCount == 2)
+            {
+                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 1];
+            }
+            else if (cells[propertyId].HouseCount == 3)
+            {
+                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 2];
+            }
+            else if (cells[propertyId].HouseCount == 4)
+            {
+                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 3];
+            }
+            else if (cells[propertyId].HotelCount == 1)
+            {
+                players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
+                cells[propertyId].Rent = rents[propertyId - 1 * 5 + 4];
+            }
+        }
+
+        private void AddImageToCanvas(string path, double width, double height, double left, double top)
+        {
+            BitmapImage bi = new BitmapImage();
+            // BitmapImage.UriSource must be in a BeginInit/EndInit block.
+            bi.BeginInit();
+            bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
+            bi.EndInit();
+            // add player tokens into list
+            Image image = new Image { Width = width, Height = height, Source = bi };
+            Canvas.SetLeft(image, left);
+            Canvas.SetTop(image, top);
+            canvasObj.Children.Add(image);
+        }
+
+        private void btnBuyHotel_Click(object sender, RoutedEventArgs e)
+        {
+            CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
+
+            if (ownsAll == true)
+            {
+                cells[propertyId].HouseCount = 0;
+
+                RecreateCanvas();
+
+                AddImageToCanvas("/hotel.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
+
+                cells[propertyId].HotelCount++;
+
+                SetPlayerCashAndCellRent();
+            }
+
+            else
+            {
+                lblNotification.Content = "You need to own every property with the same color to build";
             }
         }
 
         private void btnBuyHouse_Click(object sender, RoutedEventArgs e)
         {
-            if (cells[propertyId].HouseCount < 4)
-            {
-                BitmapImage bi = new BitmapImage();
-                // BitmapImage.UriSource must be in a BeginInit/EndInit block.
-                string path = "/house.png";
-                bi.BeginInit();
-                bi.UriSource = new Uri(path, UriKind.RelativeOrAbsolute);
-                bi.EndInit();
-                // add player tokens into list
-                Image image = new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi };
-                Canvas.SetLeft(image, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].X);
-                Canvas.SetTop(image, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].Y);
-                canvasObj.Children.Add(image);
+            CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
 
-                cells[propertyId].Rent += 100;
-                cells[propertyId].HouseCount++;
+            if (ownsAll == true)
+            {
+                if (cells[propertyId].HouseCount < 4)
+                {
+                    AddImageToCanvas("/house.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
+
+                    cells[propertyId].HouseCount++;
+
+                    SetPlayerCashAndCellRent();
+                }
+                else
+                {
+                    lblNotification.Content = "Maximum number of houses on property.";
+                }
             }
+
             else
             {
-                lblNotification.Content = "Maximum number of houses on property.";
+                lblNotification.Content = "You need to own every property with the same color to build";
             }
         }
     }

@@ -19,6 +19,6 @@
         <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="156,362,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
         <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" Margin="351,175,0,0" VerticalAlignment="Top"/>
         <DataGrid x:Name="dataGrid1" DataContext="{StaticResource ItemCollectionViewSource}" ItemsSource="{Binding}" Margin="230,423,173,122"/>
-        <DataGrid x:Name="dgCellTest" Margin="112,201,72,445"/>
+        <DataGrid x:Name="dgCellTest" Margin="112,201,72,462"/>
     </Grid>
 </Window>
