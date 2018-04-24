@@ -109,9 +109,12 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void Child_MouseEnter(object sender, MouseEventArgs e)
         {
-            var jotain = sender as Grid; //nn grid
-            var asfd = 
-            lblNotification.Content = "Border Child MouseEnter ";
+            //how to get datacontext
+            var gr = sender as Grid;
+            var grch = gr.Children;
+            var tb = grch[2] as TextBlock;
+            var tbValueName = tb.Text;
+            lblNotification.Content = tbValueName;
         }
 
         private void RecreateCanvas()
