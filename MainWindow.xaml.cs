@@ -123,7 +123,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             catch (Exception ex)
             {
-                MessageBox.Show("1" + ex.Message);
+                MessageBox.Show("RecreateCanvas: " + ex.Message);
             }
         }
 
@@ -152,7 +152,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("asdf" + ex.Message);
+                MessageBox.Show("CreatePlayerTokens: " + ex.Message);
             }
         }
 
@@ -205,7 +205,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Buildings" + ex.Message);
+                MessageBox.Show("CreateBuildings" + ex.Message);
             }
         }
 
@@ -325,7 +325,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Storyboard: " + ex.Message);
+                MessageBox.Show("buttonMoveToken_Click: " + ex.Message);
                 //throw;
             }
         }
@@ -664,7 +664,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             catch (Exception ex)
             {
                 //throw;
-                MessageBox.Show("2 " + ex.Message);
+                MessageBox.Show("AddGrid: " + ex.Message);
             }
         }
 
@@ -791,7 +791,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message);
+                    MessageBox.Show("btnNextPlayer_Click: " + ex.Message);
                 } 
             }
         }
@@ -845,7 +845,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("btnBuyBuildings_Click: " + ex.Message);
             }
         }
 
@@ -928,7 +928,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("btnBuyForCell_Click: " + ex.Message);
             }
         }
 
