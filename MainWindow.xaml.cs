@@ -89,6 +89,16 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
 
+            Player p = new Player { Name = "Kalle" };
+
+            Binding b = new Binding
+            {
+                Source = p,
+
+                Path = new PropertyPath("Name")
+            };
+            txtTest.SetBinding(TextBlock.TextProperty, b);
+
             CollectionViewSource itemCollectionViewSource;
             itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
             itemCollectionViewSource.Source = players;
@@ -109,6 +119,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
                 }
+
+
 
                 cells[1].Owner = 5;
                 cells[3].Owner = 5;

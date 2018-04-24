@@ -28,6 +28,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                         Name = dr[1].ToString(),
                         Cash = int.Parse(dr[2].ToString()),
                         Position = int.Parse(dr[3].ToString())
+                        
                     };
                     players.Add(player);
                 }
