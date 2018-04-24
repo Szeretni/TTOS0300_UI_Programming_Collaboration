@@ -101,20 +101,22 @@ namespace TTOS0300_UI_Programming_Collaboration
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
             RecreateCanvas();
+            //20180424
             for (int i = 0; i < bordernumber; i++)
             {
                 borders[i].Child.MouseEnter += Child_MouseEnter;
             }
         }
 
+        //20180424
         private void Child_MouseEnter(object sender, MouseEventArgs e)
         {
-            //how to get datacontext
             var gr = sender as Grid;
             var grch = gr.Children;
-            var tb = grch[2] as TextBlock;
+            var tb = grch[2] as TextBlock; // this child contains cells name
             var tbValueName = tb.Text;
-            lblNotification.Content = tbValueName;
+            Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
+            lblNotification.Content = cellCopy.Id;
         }
 
         private void RecreateCanvas()
