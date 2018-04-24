@@ -63,7 +63,10 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
             //be.UpdateSource();
+
+            
         }
+
         private void LoadPlayers()
         {
             try
@@ -98,6 +101,17 @@ namespace TTOS0300_UI_Programming_Collaboration
             windowWidth = (double)client.ActualWidth;
             windowHeight = (double)client.ActualHeight;
             RecreateCanvas();
+            for (int i = 0; i < bordernumber; i++)
+            {
+                borders[i].Child.MouseEnter += Child_MouseEnter;
+            }
+        }
+
+        private void Child_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var jotain = sender as Grid; //nn grid
+            var asfd = 
+            lblNotification.Content = "Border Child MouseEnter ";
         }
 
         private void RecreateCanvas()
