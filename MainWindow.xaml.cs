@@ -748,6 +748,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     btnEndturn.Content = "End turn";
                     btnEndturn.Background = Brushes.Coral;
                     btnEndturn.Click += new RoutedEventHandler(btnNextPlayer_Click);
+                    btnEndturn.MouseEnter += new MouseEventHandler(btnEndTurn_MouseEnter); //MouseEnter testing
 
 
                     stack.Children.Add(btnDice);
@@ -759,6 +760,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                     canvasObj.Children.Add(stack);
                 }
             }
+        }
+
+        //MouseEnter testing
+        private void btnEndTurn_MouseEnter(object sender, RoutedEventArgs e)
+        {
+            lblNotification.Content = "You are about to end your turn";
         }
 
         //20180422
