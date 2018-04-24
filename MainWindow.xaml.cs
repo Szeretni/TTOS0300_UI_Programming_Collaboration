@@ -117,6 +117,9 @@ namespace TTOS0300_UI_Programming_Collaboration
             var tbValueName = tb.Text;
             Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
             lblNotification.Content = cellCopy.Id;
+            List<Cell> tempCellList = new List<Cell>();
+            tempCellList.Add(cellCopy);
+            dgCellTest.ItemsSource = tempCellList; // temp, just to verify
         }
 
         private void RecreateCanvas()
