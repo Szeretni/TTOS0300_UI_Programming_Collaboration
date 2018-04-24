@@ -292,8 +292,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //players moves through start position
                     if (players[currentPlayer].Position > 35)
                     {
+                        players[currentPlayer].Cash += 200;
                         players[currentPlayer].Position -= maxposition;
                         BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash += 300);
+                        lblNotification.Content = "You collected 200$ in income by passing start";
                     }
                     else if (players[currentPlayer].Position == 36)
                     {
@@ -576,6 +578,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                             r.Fill = Brushes.Brown;
                             break;
                         }
+                    case 2:
+                        {
+                            r.Fill = Brushes.DarkBlue;
+                            break;
+                        }
                     case 3:
                         {
                             r.Fill = Brushes.SkyBlue;
@@ -606,11 +613,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                             r.Fill = Brushes.DarkGreen;
                             break;
                         }
-                    case 9:
-                        {
-                            r.Fill = Brushes.DarkBlue;
-                            break;
-                        }
+
                 }
                 
                 Grid.SetRow(r, 0);
@@ -1057,7 +1060,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 RecreateCanvas();
 
-                AddImageToCanvas("/hotel.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
+                AddImageToCanvas("/hotel.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4].X, buildingPoints[propertyId * 4].Y);
 
                 cells[propertyId].HotelCount++;
 
@@ -1078,7 +1081,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 if (cells[propertyId].HouseCount < 4)
                 {
-                    AddImageToCanvas("/house.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HotelCount].Y);
+                    AddImageToCanvas("/house.png", windowWidth / 100 * 3, windowWidth / 100 * 3, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].X, buildingPoints[propertyId * 4 + cells[propertyId].HouseCount].Y);
 
                     cells[propertyId].HouseCount++;
 
