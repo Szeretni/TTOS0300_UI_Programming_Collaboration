@@ -25,6 +25,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //reset die roll for next turn
                 players[currentPlayer].DieRolled = false;
                 BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
+                //update next player to db
+                BLLayer.SetCurrentPlayerIdToMySQL(players[currentPlayer].Id);
             }
             catch
             {

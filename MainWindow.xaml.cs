@@ -85,11 +85,21 @@ namespace TTOS0300_UI_Programming_Collaboration
             LoadPlayers();
 
             //20180422
-            //first player has first turn
             if (players.Count() != 0)
             {
-                currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL();
-                lblCurrentPlayer.Content = "Player " + players[2].Name;
+                int currentPlayerId = BLLayer.GetCurrentPlayerIdFromMySQL();
+                int i = 0;
+                foreach (Player pl in players)
+                {
+                    if (currentPlayerId == pl.Id)
+                    {
+                        currentPlayer = i;
+                        break;
+                    }
+                    i++;
+                }
+                
+                lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
 
             Player p = new Player { Name = "Kalle" };
