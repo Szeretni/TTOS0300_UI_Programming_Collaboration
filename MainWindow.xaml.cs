@@ -73,6 +73,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         int propertyId = 0;
         int serieId = 0;
         bool ownsAll = false;
+        int temp = 0;
+        string pname;
 
 
         public static double windowWidth = 0;
@@ -163,15 +165,69 @@ namespace TTOS0300_UI_Programming_Collaboration
         //20180424
         private void Child_MouseEnter(object sender, MouseEventArgs e)
         {
-            var gr = sender as Grid;
-            var grch = gr.Children;
-            var tb = grch[2] as TextBlock; // this child contains cell's name
-            var tbValueName = tb.Text;
-            Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
-            lblNotification.Content = cellCopy.Id;
-            List<Cell> tempCellList = new List<Cell>();
-            tempCellList.Add(cellCopy);
-            dgCellTest.ItemsSource = tempCellList; // temp, just to verify
+            RecreateCanvas();
+            try
+            {
+                List<TextBlock> txtBlocks = new List<TextBlock>();
+                StackPanel stack = new StackPanel();
+                var gr = sender as Grid;
+                var grch = gr.Children;
+                var tb = grch[2] as TextBlock; // this child contains cell's name
+                var tbValueName = tb.Text;
+                Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
+                lblNotification.Content = cellCopy.Id;
+                List<Cell> tempCellList = new List<Cell>();
+                tempCellList.Add(cellCopy);
+
+                foreach (Player p in players)
+                {
+                    if (tempCellList[0].Owner == p.Id)
+                    {
+                        pname = p.Name;
+                    }
+                    else
+                    {
+                        pname = "No owner";
+                    }
+                }
+                //Owner Rent
+
+                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text = pname, Background = Brushes.White });
+                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = tempCellList[0].Rent.ToString(), Background = Brushes.White });
+
+                stack.Children.Add(txtBlocks[0]);
+                stack.Children.Add(txtBlocks[1]);
+                int cellPosition = tempCellList[0].Id - 1;
+
+                if (cellPosition != 0 && cellPosition < 9)
+                {
+                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
+                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                }
+                else if (cellPosition != 9 && cellPosition > 9 && cellPosition < 19)
+                {
+                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
+                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                }
+                else if (cellPosition != 18 && cellPosition > 18 && cellPosition < 28)
+                {
+                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
+                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                }
+                else if (cellPosition != 27 && cellPosition > 27 && cellPosition < 36)
+                {
+                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
+                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                }
+
+                canvasObj.Children.Add(stack);
+
+                dgCellTest.ItemsSource = tempCellList; // temp, just to verify
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Hover: " + ex.Message);
+            }
         }
 
         private void RecreateCanvas()
@@ -288,7 +344,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                int temp = currentPlayer;
+                temp = currentPlayer;
                 //if die rolled, cannot roll again
                 if (players[currentPlayer].DieRolled != true)
                 {
@@ -296,7 +352,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //20180422 players[0] -> players[currentPlayer]
                     //also token[0] -> token[currentPlayer]
-                    DieResult = 1;
+                    DieResult = rnd.Next(2,12);
 
                     lblDieResult.Content = "Die Result: " + DieResult.ToString();
 
