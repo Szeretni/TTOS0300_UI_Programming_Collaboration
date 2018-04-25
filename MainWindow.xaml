@@ -30,7 +30,7 @@
         </DataGrid>
         <DataGrid x:Name="dgCellTest" Margin="667,232,72,462" SelectionChanged="dgCellTest_SelectionChanged" />
         <Label x:Name="lblPosition" Content="Label" HorizontalAlignment="Left" Margin="156,257,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtTest" DataContext="this" HorizontalAlignment="Left" Height="23" Margin="296,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtTest" DataContext="this" Text="{Binding Path=this.Name}" HorizontalAlignment="Left" Height="23" Margin="296,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnNewGame" Content="New Game" Height="23" Width="80" Margin="124,126,548,573" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btnNewGame_Click"/>
         <Button x:Name="btnConfirm" Content="Commit" Height="23" Width="80" Margin="209,126,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btnConfirm_Click"/>
         <Button x:Name="btnNameChange" Content="Button" HorizontalAlignment="Left" Margin="184,429,0,0" VerticalAlignment="Top" Width="74" Click="btnNameChange_Click"/>

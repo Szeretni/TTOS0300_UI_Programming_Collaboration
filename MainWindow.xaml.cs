@@ -75,8 +75,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         int serieId = 0;
         bool ownsAll = false;
         int temp = 0;
-        string pname;
-
+        string pname = "";
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -107,24 +106,10 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             Binding b = new Binding
             {
-                Source = players[0],
-
-                Path = new PropertyPath("Name")
+                Source = players[0]
             };
 
-            Button btnTest = new Button();
-            btnTest.Background = Brushes.White;
-            btnTest.Height = 20;
-            btnTest.Width = 200;
-            btnTest.Content = "change name";
-            btnTest.Click += new RoutedEventHandler(btnTest_Click);
-
-            Canvas.SetLeft(btnTest, 250);
-            Canvas.SetTop(btnTest, 259);
-
-            canvasObj.Children.Add(btnTest);
-
-            txtTest.SetBinding(TextBlock.TextProperty, b);
+            txtTest.SetBinding(TextBlock.DataContextProperty, b);
 
             CollectionViewSource itemCollectionViewSource;
             itemCollectionViewSource = (CollectionViewSource)(FindResource("ItemCollectionViewSource"));
@@ -133,10 +118,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
             //be.UpdateSource();
         }
-        private void btnTest_Click(object sender, RoutedEventArgs e)
-        {
-            players[0].Name = "Veijari";
-        }
+
         private void LoadPlayers()
         {
             try
@@ -184,7 +166,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             for (int i = 0; i < bordernumber; i++)
             {
                 borders[i].Child.MouseEnter += Child_MouseEnter;
+                borders[i].Child.MouseLeave += Child_MouseLeave;
             }
+        }
+
+        private void Child_MouseLeave (object sender, MouseEventArgs e)
+        {
+            RecreateCanvas();
         }
 
         //20180424
@@ -200,7 +188,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 var tb = grch[2] as TextBlock; // this child contains cell's name
                 var tbValueName = tb.Text;
                 Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
-                lblNotification.Content = cellCopy.Id;
                 List<Cell> tempCellList = new List<Cell>();
                 tempCellList.Add(cellCopy);
 
@@ -215,44 +202,51 @@ namespace TTOS0300_UI_Programming_Collaboration
                         pname = "No owner";
                     }
                 }
-                //Owner Rent
-
-                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text = pname, Background = Brushes.White });
+                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text = "Owner:", Background = Brushes.White });
+                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text =  pname, Background = Brushes.White });
+                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = "Rent:", Background = Brushes.White });
                 txtBlocks.Add(new TextBlock { Name = "cellRent", Text = tempCellList[0].Rent.ToString(), Background = Brushes.White });
 
                 stack.Children.Add(txtBlocks[0]);
                 stack.Children.Add(txtBlocks[1]);
+                stack.Children.Add(txtBlocks[2]);
+                stack.Children.Add(txtBlocks[3]);
+
                 int cellPosition = tempCellList[0].Id - 1;
 
-                if (cellPosition == 0 || cellPosition == 9 || cellPosition == 18 || cellPosition == 27)
+                if (cellPosition == 2 ||cellPosition == 6)
+                {
+                }
+                else if (cellPosition == 0 || cellPosition == 9 || cellPosition == 18 || cellPosition == 27)
                 {
                     Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
                     Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(stack);
                 }
                 else if (cellPosition != 0 && cellPosition < 9)
                 {
                     Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
                     Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(stack);
                 }
                 else if (cellPosition != 9 && cellPosition > 9 && cellPosition < 19)
                 {
                     Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
                     Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(stack);
                 }
                 else if (cellPosition != 18 && cellPosition > 18 && cellPosition < 28)
                 {
                     Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
                     Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(stack);
                 }
                 else if (cellPosition != 27 && cellPosition > 27 && cellPosition < 36)
                 {
                     Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
                     Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(stack);
                 }
-
-                canvasObj.Children.Add(stack);
-
-                dgCellTest.ItemsSource = tempCellList; // temp, just to verify
             }
             catch (Exception ex)
             {
@@ -276,8 +270,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 points.Clear();
                 buildingPoints.Clear();
                 buildings.Clear();
+                hoverPoints.Clear();
                 PrintGrid();
-                //hoverPoints.Clear();
                 CreateHandlersForGrids();
                 CreatePlayerTokens();
                 CreateBuildings();
@@ -769,7 +763,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     if (bordernumber == 0)
                     {
-                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = windowHeight - (windowHeight * 0.26 )});
                     }
                     else if (bordernumber == 9)
                     {
@@ -777,11 +771,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                     }
                     else if (bordernumber == 18)
                     {
-                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = y + (windowHeight * 0.17) });
                     }
                     else if (bordernumber == 27)
                     {
-                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = windowHeight - (windowHeight * 0.26) });
                     }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.05) });
@@ -796,7 +790,20 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.085) });
+                    if (bordernumber == 1)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = windowHeight - (windowHeight * 0.26) });
+                    }
+
+                    else if (bordernumber == 8)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.01) });
+                    }
+
+                    else
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y });
+                    }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
@@ -810,7 +817,15 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.085), Y = y + (windowHeight * 0.20) });
+                    if (bordernumber == 17)
+                    {
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = y + (windowHeight * 0.17) });
+                    }
+
+                    else
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.01), Y = y + (windowHeight * 0.17) });
+                    }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.05) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.05) });
@@ -824,7 +839,20 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.085) });
+                    if (bordernumber == 19)
+                    {
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = y + (windowHeight * 0.01) });
+                    }
+
+                    else if (bordernumber == 26)
+                    {
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = windowHeight - (windowHeight * 0.26) });
+                    }
+
+                    else
+                    {
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = y });
+                    }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
@@ -838,7 +866,20 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.085), Y = y + (windowHeight * 0.20) });
+                    if (bordernumber == 28)
+                    {
+                        hoverPoints.Add(new Point { X = windowWidth - (windowWidth * 0.24), Y = windowHeight - (windowHeight * 0.26) });
+                    }
+
+                    else if (bordernumber == 35)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.01), Y = windowHeight - (windowHeight * 0.26) });
+                    }
+
+                    else
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.01), Y = windowHeight - (windowHeight * 0.26) });
+                    }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.05) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.05) });
