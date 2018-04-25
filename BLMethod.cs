@@ -93,13 +93,16 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                //new gamesession
+                //new gamesessionid to db
                 BLLayer.SetNewGameIdToMySQL(newGame.GameId);
                 //players to gamesession
                 foreach (Player p in newGame.NewPlayers)
                 {
                     BLLayer.SetPlayerToNewGameToMySQL(p.Id, newGame.GameId);
                 }
+                //set first player as current player
+                BLLayer.SetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id);
+
             }
             catch (Exception)
             {

@@ -89,7 +89,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             if (players.Count() != 0)
             {
                 currentPlayer = BLLayer.GetCurrentPlayerIdFromMySQL();
-                lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
+                lblCurrentPlayer.Content = "Player " + players[2].Name;
             }
 
             Player p = new Player { Name = "Kalle" };

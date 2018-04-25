@@ -82,5 +82,14 @@ namespace TTOS0300_UI_Programming_Collaboration.Properties {
                 this["user"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int settingsCurrentGameId {
+            get {
+                return ((int)(this["settingsCurrentGameId"]));
+            }
+        }
     }
 }
