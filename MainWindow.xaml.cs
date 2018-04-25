@@ -162,7 +162,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             var gr = sender as Grid;
             var grch = gr.Children;
-            var tb = grch[2] as TextBlock; // this child contains cells name
+            var tb = grch[2] as TextBlock; // this child contains cell's name
             var tbValueName = tb.Text;
             Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
             lblNotification.Content = cellCopy.Id;
@@ -1121,6 +1121,22 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 MessageBox.Show("btnBuyHouse_Click: " + ex.Message);
             }
+        }
+
+        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        {
+            //  IMPROVEMENT IDEAS
+            //  Should create new dg or other element to show players
+            //  Should create Done-button
+            //  Clicking dg selects player id and removes that row
+            //  Destroy elemenents after players selected
+
+            //generate new game id
+            int newGameId = BLMethod.NewGameId();
+            BLLayer.SetNewGameIdToMySQL(newGameId);
+
+            //get players from db
+            dgCellTest.ItemsSource = BLMethod.ShowPlayers();
         }
     }
 }

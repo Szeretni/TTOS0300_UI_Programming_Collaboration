@@ -223,7 +223,65 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
-        
+
+        //20180425 HO
+        //gets gameid from db
+        public static List<int> GetGameIdsFromMySQL()
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetGameIdsFromMySQL();
+                List<int> ids = new List<int>();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    ids.Add(int.Parse(dr[0].ToString()));
+                }
+                return ids;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static List<Player> GetPlayerIdsFromMySQL()
+        {
+            try
+            {
+                List<Player> players = new List<Player>();
+                DataTable dt = DBLayer.GetPlayerIdsFromMySQL();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Player player = new Player
+                    {
+                        //PlayerId,PlayerName
+                        Id = int.Parse(dr[0].ToString()),
+                        Name = dr[1].ToString()
+                    };
+                    players.Add(player);
+                }
+                return players;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180425 HO
+        //set new game id to db
+        public static void SetNewGameIdToMySQL(int gamesessionid)
+        {
+            try
+            {
+                DBLayer.SetNewGameIdToMySQL(gamesessionid);
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         /* list-style obsolete
         public static List<Player> GetPlayerList()

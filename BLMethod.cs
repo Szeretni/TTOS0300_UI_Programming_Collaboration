@@ -31,5 +31,36 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+
+        //20180425 HO
+        //generate new game id
+        static public int NewGameId()
+        {
+            //get game id's from db
+            List<int> gameIds = BLLayer.GetGameIdsFromMySQL();
+            //generates new gameid
+            int i = 0;
+            while (true)
+            {
+                if ((i != gameIds[i]))
+                {
+                    break;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return i;
+        }
+
+        //20180425 HO
+        //show players from db
+        static public List<Player> ShowPlayers()
+        {
+            //get players id,name from db
+            List<Player> players = BLLayer.GetPlayerIdsFromMySQL();
+            return players;
+        }
     }
 }

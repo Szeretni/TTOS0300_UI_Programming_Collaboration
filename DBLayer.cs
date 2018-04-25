@@ -287,6 +287,71 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180425 HO
+        public static DataTable GetGameIdsFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT GameSessionId FROM GameSession;";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180425 HO
+        public static void SetNewGameIdToMySQL(int gamesessionid)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "INSERT INTO GameSession (GameSessionId) VALUES (" + gamesessionid + ")";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static DataTable GetPlayerIdsFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT PlayerId,PlayerName FROM Player";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
         {
