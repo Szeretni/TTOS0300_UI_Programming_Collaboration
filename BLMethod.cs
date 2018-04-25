@@ -103,8 +103,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     BLLayer.SetPlayerToNewGameToMySQL(p.Id, newGame.GameId);
                 }
                 //set first player as current player
-                BLLayer.SetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id);
-
+                BLLayer.DynamicSetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id, newGame.GameId);
             }
             catch (Exception)
             {
