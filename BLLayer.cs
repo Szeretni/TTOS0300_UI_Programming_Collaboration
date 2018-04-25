@@ -23,12 +23,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Player player = new Player
                     {
-                        //PlayerId,PlayerName,SUM(Value) as TotalCash
+                        //PlayerId,PlayerName,SUM(Value) as TotalCash 20180425T2000
+                        //20180425T2000
+                        //PlayerId,PlayerName
                         Id = int.Parse(dr[0].ToString()),
-                        Name = dr[1].ToString(),
-                        Cash = int.Parse(dr[2].ToString()),
-                        Position = int.Parse(dr[3].ToString())
-                        
+                        Name = dr[1].ToString()
+                        //Cash = int.Parse(dr[2].ToString()), 20180425T2000
+                        //Position = int.Parse(dr[3].ToString()) 20180425T2000
                     };
                     players.Add(player);
                 }

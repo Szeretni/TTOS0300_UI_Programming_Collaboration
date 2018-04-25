@@ -19,10 +19,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     //string sql = "SELECT PlayerId,PlayerName FROM Player";
                     //string sql = "SELECT Player.PlayerId,PlayerName,SUM(Value), CellId FROM Player INNER JOIN Player_has_Cash ON Player.PlayerId = Player_has_Cash.PlayerId INNER JOIN Cash ON Player_has_Cash.CashId = Cash.CashId INNER JOIN GameSession_has_player ON Player.PlayerId = GameSession_has_player.PlayerId GROUP BY PlayerName";
-                    string sql = "SELECT Player.PlayerId,PlayerName,PlayerCash, CellId FROM Player INNER JOIN Player_has_Cash ON Player.PlayerId = Player_has_Cash.PlayerId INNER JOIN Cash ON Player_has_Cash.CashId = Cash.CashId INNER JOIN GameSession_has_player ON Player.PlayerId = GameSession_has_player.PlayerId GROUP BY PlayerName";
+                    //string sql = "SELECT Player.PlayerId,PlayerName,PlayerCash, CellId FROM Player INNER JOIN Player_has_Cash ON Player.PlayerId = Player_has_Cash.PlayerId INNER JOIN Cash ON Player_has_Cash.CashId = Cash.CashId INNER JOIN GameSession_has_player ON Player.PlayerId = GameSession_has_player.PlayerId GROUP BY PlayerName"; 20180425T2000
+                    string sql = "SELECT PlayerId,PlayerName FROM Player"; //20180425T2000
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
-
                     return dt;
                 }
             }
