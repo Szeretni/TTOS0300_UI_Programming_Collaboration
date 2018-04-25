@@ -1143,13 +1143,25 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //new players
+        //IMPROVEMENT IDEAS
+        //if (alreadySelected) change bgcolor or something
         List<Player> newPlayers = new List<Player>();
         private void dgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Player selected = dgCellTest.SelectedItem as Player;
             if (selected != null)
             {
-                
+                int selId = selected.Id;
+                bool alreadySelected = newPlayers.Exists(x => x.Id.ToString().Contains(selId.ToString()));
+                if (alreadySelected)
+                {
+                    MessageBox.Show("Already selected");
+                }
+                else
+                {
+                    lblNotification.Content = "Player " + selected.Name + " added to new game";
+                    newPlayers.Add(selected);
+                }
             }
             
         }
