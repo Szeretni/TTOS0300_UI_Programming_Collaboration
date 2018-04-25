@@ -115,6 +115,26 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180425
+        public static DataTable DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         //20180423
         public static void SetPlayerCashToMySQL(int playerid, int cash)
         {

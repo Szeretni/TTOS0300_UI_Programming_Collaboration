@@ -1172,7 +1172,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     //20180423 HO
                     //updates cash field to match current player
-                    lblCash.Content = "Cash: " + BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+                    lblCash.Content = "Cash: " + BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id); //20180425T2000
+                    //lblCash.Content = "Cash: " + BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id,Properties.Settings.Default.settingsCurrentGameId);
 
                 }
                 catch (Exception ex)
@@ -1363,7 +1364,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
 
-                lblCash.Content = "Cash: " + BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id);
+                lblCash.Content = "Cash: " + BLLayer.GetPlayerCashFromMySQL(players[currentPlayer].Id); //20180425T2000
+                //lblCash.Content = "Cash: " + BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
             }
             catch (Exception ex)
             {

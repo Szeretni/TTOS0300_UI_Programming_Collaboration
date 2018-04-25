@@ -119,6 +119,25 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+        
+        //20180425
+        public static int DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
+        {
+            try
+            {
+                DataTable dt = DBLayer.DynamicGetPlayerCashFromMySQL(playerId,gameSessionId);
+                int cash = 0;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    cash = int.Parse(dr[0].ToString());
+                }
+                return cash;
+            }
+            catch
+            {
+                throw;
+            }
+        }
 
         //20180423 HO
         public static void SetPlayerCashToMySQL(int playerid, int cash)
