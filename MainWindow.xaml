@@ -7,32 +7,12 @@
         mc:Ignorable="d"
         Title="MainWindow" MinHeight="400" Height="750" MinWidth="400" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Background="{x:Null}">
     <Window.Resources>
-        <CollectionViewSource x:Key="ItemCollectionViewSource" CollectionViewType="ListCollectionView"/>
     </Window.Resources>
     <Grid x:Name="gridObj" Background="#FF787EFF">
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <Label x:Name="lblCurrentPlayer" Content="Player" HorizontalAlignment="Left" Margin="152,331,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCell" Content="CellId" HorizontalAlignment="Left" Margin="490,305,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCurrPlrId" Content="PlayerId" HorizontalAlignment="Left" Margin="152,305,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblDieResult" Content="DieResult" HorizontalAlignment="Left" Margin="156,279,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblPreviousPosition" Content="PreviousPosition" HorizontalAlignment="Left" Margin="498,344,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="156,362,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
-        <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" Margin="241,352,0,0" VerticalAlignment="Top"/>
-        <DataGrid x:Name="dataGrid1" DataContext="{StaticResource ItemCollectionViewSource}" ItemsSource="{Binding}" Margin="569,597,155,72" RenderTransformOrigin="0.5,0.5">
-            <DataGrid.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1" ScaleX="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </DataGrid.RenderTransform>
-        </DataGrid>
         <DataGrid x:Name="dgCellTest" Margin="667,232,72,462" SelectionChanged="OndgCellTest_SelectionChanged" />
-        <Label x:Name="lblPosition" Content="Label" HorizontalAlignment="Left" Margin="156,257,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtTest" DataContext="this" Text="{Binding Path=Name}" HorizontalAlignment="Left" Height="23" Margin="296,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btnNewGame" Content="New Game" Height="23" Width="80" Margin="450,375,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="OnbtnNewGame_Click"/>
-        <Button x:Name="btnConfirm" Content="Commit" Height="23" Width="80" Margin="347,355,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Click="OnbtnConfirm_Click"/>
-        <Button x:Name="btnNameChange" Content="Button" HorizontalAlignment="Left" Margin="184,429,0,0" VerticalAlignment="Top" Width="74" Click="OnbtnNameChange_Click"/>
+        <Border x:Name="brNotifications" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="27" Margin="104,130,0,0" VerticalAlignment="Top" Width="87" Background="White">
+            <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-1,-1,0,0" FontSize="16"/>
+        </Border>
     </Grid>
 </Window>

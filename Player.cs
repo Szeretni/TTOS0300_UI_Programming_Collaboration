@@ -19,6 +19,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         public int cash;
         public int position;
         public bool DieRolled { get; set; }
+        public int dieResult;
 
         public string Name
         {
@@ -70,6 +71,24 @@ namespace TTOS0300_UI_Programming_Collaboration
                     position = value;
                     // Call Changed whenever the property is updated
                     Changed("position");
+                }
+            }
+        }
+
+        public int DieResult
+        {
+            get
+            {
+                return dieResult;
+            }
+
+            set
+            {
+                if (dieResult != value)
+                {
+                    dieResult = value;
+                    // Call Changed whenever the property is updated
+                    Changed("dieResult");
                 }
             }
         }
