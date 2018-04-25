@@ -182,14 +182,19 @@ namespace TTOS0300_UI_Programming_Collaboration
             try
             {
                 List<TextBlock> txtBlocks = new List<TextBlock>();
+                Border b = new Border();
+                b.BorderBrush = Brushes.Black;
+                b.BorderThickness = new Thickness(1, 1, 1, 1);
                 StackPanel stack = new StackPanel();
                 var gr = sender as Grid;
                 var grch = gr.Children;
                 var tb = grch[2] as TextBlock; // this child contains cell's name
                 var tbValueName = tb.Text;
                 Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
-                List<Cell> tempCellList = new List<Cell>();
-                tempCellList.Add(cellCopy);
+                List<Cell> tempCellList = new List<Cell>
+                {
+                    cellCopy
+                };
 
                 foreach (Player p in players)
                 {
@@ -202,15 +207,17 @@ namespace TTOS0300_UI_Programming_Collaboration
                         pname = "No owner";
                     }
                 }
-                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text = "Owner:", Background = Brushes.White });
-                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text =  pname, Background = Brushes.White });
-                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = "Rent:", Background = Brushes.White });
-                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = tempCellList[0].Rent.ToString(), Background = Brushes.White });
+                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text = "Owner:", Background = Brushes.White, Padding = new Thickness(2, 1, 2, 0) });
+                txtBlocks.Add(new TextBlock { Name = "cellOwner", Text =  pname, Background = Brushes.White, Padding = new Thickness(2, 0, 2, 0) });
+                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = "Rent:", Background = Brushes.White, Padding = new Thickness(2, 0, 2, 0) });
+                txtBlocks.Add(new TextBlock { Name = "cellRent", Text = tempCellList[0].Rent.ToString(), Background = Brushes.White, Padding = new Thickness(2, 0, 2, 1) });
 
                 stack.Children.Add(txtBlocks[0]);
                 stack.Children.Add(txtBlocks[1]);
                 stack.Children.Add(txtBlocks[2]);
                 stack.Children.Add(txtBlocks[3]);
+
+                b.Child = stack;
 
                 int cellPosition = tempCellList[0].Id - 1;
 
@@ -219,33 +226,33 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (cellPosition == 0 || cellPosition == 9 || cellPosition == 18 || cellPosition == 27)
                 {
-                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
-                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
-                    canvasObj.Children.Add(stack);
+                    Canvas.SetLeft(b, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(b, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(b);
                 }
                 else if (cellPosition != 0 && cellPosition < 9)
                 {
-                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
-                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
-                    canvasObj.Children.Add(stack);
+                    Canvas.SetLeft(b, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(b, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(b);
                 }
                 else if (cellPosition != 9 && cellPosition > 9 && cellPosition < 19)
                 {
-                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
-                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
-                    canvasObj.Children.Add(stack);
+                    Canvas.SetLeft(b, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(b, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(b);
                 }
                 else if (cellPosition != 18 && cellPosition > 18 && cellPosition < 28)
                 {
-                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
-                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
-                    canvasObj.Children.Add(stack);
+                    Canvas.SetLeft(b, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(b, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(b);
                 }
                 else if (cellPosition != 27 && cellPosition > 27 && cellPosition < 36)
                 {
-                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
-                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
-                    canvasObj.Children.Add(stack);
+                    Canvas.SetLeft(b, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(b, hoverPoints[cellPosition].Y);
+                    canvasObj.Children.Add(b);
                 }
             }
             catch (Exception ex)
@@ -365,7 +372,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void buttonMoveToken_Click(object sender, RoutedEventArgs e)
+        private void OnbuttonMoveToken_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -572,22 +579,28 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void BuyProperty()
         {
-            StackPanel buyStack = new StackPanel();
-            buyStack.Orientation = Orientation.Vertical;
+            StackPanel buyStack = new StackPanel
+            {
+                Orientation = Orientation.Vertical
+            };
 
-            Button btnBuyProperty = new Button();
-            btnBuyProperty.Background = Brushes.White;
-            btnBuyProperty.Height = 20;
-            btnBuyProperty.Width = 200;
-            btnBuyProperty.Content = "Buy property for " + cells[players[currentPlayer].Position].Price + "$";
-            btnBuyProperty.Click += new RoutedEventHandler(btnBuyProperty_Click);
+            Button btnBuyProperty = new Button
+            {
+                Background = Brushes.White,
+                Height = 20,
+                Width = 200,
+                Content = "Buy property for " + cells[players[currentPlayer].Position].Price + "$"
+            };
+            btnBuyProperty.Click += new RoutedEventHandler(OnbtnBuyProperty_Click);
 
-            Button btnPassProperty = new Button();
-            btnPassProperty.Background = Brushes.White;
-            btnPassProperty.Height = 20;
-            btnPassProperty.Width = 200;
-            btnPassProperty.Content = "Pass";
-            btnPassProperty.Click += new RoutedEventHandler(btnPassProperty_Click);
+            Button btnPassProperty = new Button
+            {
+                Background = Brushes.White,
+                Height = 20,
+                Width = 200,
+                Content = "Pass"
+            };
+            btnPassProperty.Click += new RoutedEventHandler(OnbtnPassProperty_Click);
 
             buyStack.Children.Add(btnPassProperty);
             buyStack.Children.Add(btnBuyProperty);
@@ -597,7 +610,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             canvasObj.Children.Add(buyStack);
         }
 
-        private void btnBuyProperty_Click(object sender, RoutedEventArgs e)
+        private void OnbtnBuyProperty_Click(object sender, RoutedEventArgs e)
         {
             cells[players[currentPlayer].Position].Owner = players[currentPlayer].Id;
             lblNotification.Content = "You bought " + cells[players[currentPlayer].Position].Name;
@@ -605,7 +618,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             RecreateCanvas();
         }
 
-        private void btnPassProperty_Click(object sender, RoutedEventArgs e)
+        private void OnbtnPassProperty_Click(object sender, RoutedEventArgs e)
         {
             RecreateCanvas();
         }
@@ -614,8 +627,10 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                Grid g = new Grid();
-                g.Background = Brushes.AliceBlue;
+                Grid g = new Grid
+                {
+                    Background = Brushes.AliceBlue
+                };
                 borders.Add(new Border());
                 borders[bordernumber].BorderBrush = Brushes.Black;
                 if (bordernumber != 0 && bordernumber < 9)
@@ -722,11 +737,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 Grid.SetRow(r, 0);
                 Grid.SetColumn(r, 0);
 
-                TextBlock txt1 = new TextBlock();
-                txt1.Text = cells[bordernumber].Name;
-                txt1.FontSize = 12;
-                txt1.TextAlignment = TextAlignment.Center;
-                txt1.TextWrapping = TextWrapping.WrapWithOverflow;
+                TextBlock txt1 = new TextBlock
+                {
+                    Text = cells[bordernumber].Name,
+                    FontSize = 12,
+                    TextAlignment = TextAlignment.Center,
+                    TextWrapping = TextWrapping.WrapWithOverflow
+                };
                 Grid.SetRow(txt1, 1);
                 Grid.SetColumn(txt1, 0);
 
@@ -958,51 +975,180 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 else if (i == 36)
                 {
-                    StackPanel stack = new StackPanel();
-                    stack.Orientation = Orientation.Horizontal;
+                    StackPanel stack = new StackPanel
+                    {
+                        Orientation = Orientation.Horizontal
+                    };
 
-                    Button btnDice = new Button();
-                    btnDice.Height = windowHeight * 0.05;
-                    btnDice.Width = windowWidth * 0.1;
-                    btnDice.Content = "Roll Dice";
-                    btnDice.Background = Brushes.Coral;
-                    btnDice.Click += new RoutedEventHandler(buttonMoveToken_Click);
+                    Button btnDice = new Button
+                    {
+                        Height = windowHeight * 0.05,
+                        Width = windowWidth * 0.1,
+                        Content = "Roll Dice",
+                        Background = Brushes.Coral
+                    };
+                    btnDice.Click += new RoutedEventHandler(OnbuttonMoveToken_Click);
 
-                    Button btnBuyBuildings = new Button();
-                    btnBuyBuildings.Height = windowHeight * 0.05;
-                    btnBuyBuildings.Width = windowWidth * 0.1;
-                    btnBuyBuildings.Content = "Construct Buildings";
-                    btnBuyBuildings.Background = Brushes.Coral;
-                    btnBuyBuildings.Click += new RoutedEventHandler(btnBuyBuildings_Click);
+                    Button btnBuyBuildings = new Button
+                    {
+                        Height = windowHeight * 0.05,
+                        Width = windowWidth * 0.1,
+                        Content = "Construct Buildings",
+                        Background = Brushes.Coral
+                    };
+                    btnBuyBuildings.Click += new RoutedEventHandler(OnbtnBuyBuildings_Click);
 
-                    Button btnEndturn = new Button();
-                    btnEndturn.Height = windowHeight * 0.05;
-                    btnEndturn.Width = windowWidth * 0.1;
-                    btnEndturn.Content = "End turn";
-                    btnEndturn.Background = Brushes.Coral;
-                    btnEndturn.Click += new RoutedEventHandler(btnNextPlayer_Click);
-                    btnEndturn.MouseEnter += new MouseEventHandler(btnEndTurn_MouseEnter); //MouseEnter testing
+                    Button btnEndturn = new Button
+                    {
+                        Height = windowHeight * 0.05,
+                        Width = windowWidth * 0.1,
+                        Content = "End turn",
+                        Background = Brushes.Coral
+                    };
+                    btnEndturn.Click += new RoutedEventHandler(OnbtnNextPlayer_Click);
+
+                    Button btnMenu = new Button
+                    {
+                        Height = windowHeight * 0.05,
+                        Width = windowWidth * 0.1,
+                        Content = "Menu",
+                        Background = Brushes.Coral
+                    };
+                    btnMenu.Click += new RoutedEventHandler(OnbtnMenu_Click);
 
 
                     stack.Children.Add(btnDice);
                     stack.Children.Add(btnBuyBuildings);
                     stack.Children.Add(btnEndturn);
+                    stack.Children.Add(btnMenu);
 
-                    Canvas.SetLeft(stack, windowWidth * 0.5);
-                    Canvas.SetTop(stack, windowHeight * 0.2);
+                    Canvas.SetLeft(stack, windowWidth * 0.4);
+                    Canvas.SetTop(stack, windowHeight * 0.23);
                     canvasObj.Children.Add(stack);
+
+                    Label tbNotifications = new Label
+                    {
+                        Name = "tbNotifications",
+
+                        FontSize = 12,
+
+                        Foreground = Brushes.White,
+
+                        Padding = new Thickness(2, 2, 2, 2),
+
+                        Content = "Notifications"
+                    };
+
+                    Label lbPlayerName = new Label
+                    {
+                        Name = "lbPlayerName",
+
+                        FontSize = 12,
+
+                        Foreground = Brushes.White,
+
+                        Padding = new Thickness(2, 2, 2, 2),
+
+                        Content = "Current player: "
+                    };
+
+                    Label lbPlayerCash = new Label
+                    {
+                        Name = "lbPlayerCash",
+
+                        FontSize = 12,
+
+                        Foreground = Brushes.White,
+
+                        Padding = new Thickness(2,2,2,2),
+
+                        Content = "Player cash: "
+                    };
+
+                    Binding b = new Binding
+                    {
+                        Source = players[currentPlayer]
+                    };
+
+                    Binding bCash = new Binding
+                    {
+                        Path = new PropertyPath("Cash")
+                    };
+
+                    Binding bName = new Binding
+                    {
+                        Path = new PropertyPath("Name")
+                    };
+
+                    lbPlayerName.SetBinding(Label.DataContextProperty, b);
+                    lbPlayerCash.SetBinding(Label.DataContextProperty, b);
+
+                    lbPlayerName.SetBinding(Label.ContentProperty, bName);
+                    lbPlayerCash.SetBinding(Label.ContentProperty, bCash);
+
+                    Border br = new Border
+                    {
+                        BorderBrush = Brushes.Black,
+                        BorderThickness = new Thickness(2, 2, 2, 2)
+                    };
+
+                    StackPanel infoStack = new StackPanel();
+
+                    infoStack.Children.Add(tbNotifications);
+                    infoStack.Children.Add(lbPlayerName);
+                    infoStack.Children.Add(lbPlayerCash);
+
+                    br.Child = infoStack;
+
+                    Canvas.SetLeft(br, windowWidth * 0.2);
+                    Canvas.SetTop(br, windowHeight * 0.17);
+                    canvasObj.Children.Add(br);
                 }
             }
         }
 
-        //MouseEnter testing
-        private void btnEndTurn_MouseEnter(object sender, RoutedEventArgs e)
+        private void OnbtnMenu_Click(object sender, RoutedEventArgs e)
         {
-            lblNotification.Content = "You are about to end your turn";
+            StackPanel stack = new StackPanel();
+
+            Button btnNewGame = new Button
+            {
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.1,
+                Content = "New Game",
+                Background = Brushes.Coral
+            };
+            btnNewGame.Click += new RoutedEventHandler(OnbtnNewGame_Click);
+
+            Button btnConfirm = new Button
+            {
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.1,
+                Content = "Confirm",
+                Background = Brushes.Coral
+            };
+            btnConfirm.Click += new RoutedEventHandler(OnbtnConfirm_Click);
+
+            Button btnLoadGame = new Button
+            {
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.1,
+                Content = "Load Game",
+                Background = Brushes.Coral
+            };
+            btnLoadGame.Click += new RoutedEventHandler(OnbtnLoadGame_Click);
+
+            stack.Children.Add(btnNewGame);
+            stack.Children.Add(btnConfirm);
+            stack.Children.Add(btnLoadGame);
+
+            Canvas.SetLeft(stack, windowWidth * 0.4 + (btnConfirm.Width * 3));
+            Canvas.SetTop(stack, windowHeight * 0.23 + btnConfirm.Height);
+            canvasObj.Children.Add(stack);
         }
 
         //20180422
-        private void btnNextPlayer_Click(object sender, RoutedEventArgs e)
+        private void OnbtnNextPlayer_Click(object sender, RoutedEventArgs e)
         {
             //20180423 HO
             //warns the player if she hasn't moved
@@ -1036,7 +1182,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void btnBuyBuildings_Click(object sender, RoutedEventArgs e)
+        private void OnbtnBuyBuildings_Click(object sender, RoutedEventArgs e)
         {
             RecreateCanvas();
 
@@ -1050,13 +1196,15 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     if (players[currentPlayer].Id == c.Owner)
                     {
-                        Button btn = new Button();
-                        btn.Height = 20;
-                        btn.Width = 200;
-                        btn.Content = c.Name;
-                        btn.Name = c.Name.ToString();
-                        btn.Background = Brushes.White;
-                        btn.Click += new RoutedEventHandler(btnBuyForCell_Click);
+                        Button btn = new Button
+                        {
+                            Height = 20,
+                            Width = 200,
+                            Content = c.Name,
+                            Name = c.Name.ToString(),
+                            Background = Brushes.White
+                        };
+                        btn.Click += new RoutedEventHandler(OnbtnBuyForCell_Click);
                         stack.Children.Add(btn);
 
                         i++;
@@ -1085,7 +1233,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void btnBuyForCell_Click(object sender, RoutedEventArgs e)
+        private void OnbtnBuyForCell_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1120,7 +1268,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                         buttons[0].Width = 200;
                         buttons[0].Content = "Buy a Hotel";
                         buttons[0].Background = Brushes.White;
-                        buttons[0].Click += new RoutedEventHandler(btnBuyHotel_Click);
+                        buttons[0].Click += new RoutedEventHandler(OnbtnBuyHotel_Click);
                         stack.Children.Add(buttons[0]);
                     }
                     else if (cells[propertyId].HotelCount == 1)
@@ -1135,7 +1283,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                         buttons[0].Width = 200;
                         buttons[0].Content = "Buy a House";
                         buttons[0].Background = Brushes.White;
-                        buttons[0].Click += new RoutedEventHandler(btnBuyHouse_Click);
+                        buttons[0].Click += new RoutedEventHandler(OnbtnBuyHouse_Click);
                         stack.Children.Add(buttons[0]);
                     }
                     g.Children.Add(stack);
@@ -1237,7 +1385,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             canvasObj.Children.Add(image);
         }
 
-        private void btnBuyHotel_Click(object sender, RoutedEventArgs e)
+        private void OnbtnBuyHotel_Click(object sender, RoutedEventArgs e)
         {
             cells[propertyId].HouseCount = 0;
 
@@ -1252,7 +1400,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             SetPlayerCashAndCellRent();
         }
 
-        private void btnBuyHouse_Click(object sender, RoutedEventArgs e)
+        private void OnbtnBuyHouse_Click(object sender, RoutedEventArgs e)
         {
             CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
 
@@ -1281,8 +1429,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        private void OnbtnLoadGame_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
         //20180425 HO
-        private void btnNewGame_Click(object sender, RoutedEventArgs e)
+        private void OnbtnNewGame_Click(object sender, RoutedEventArgs e)
         {
             //  IMPROVEMENT IDEAS
             //  New window?
@@ -1302,11 +1455,10 @@ namespace TTOS0300_UI_Programming_Collaboration
         //new players
         //IMPROVEMENT IDEAS
         //if (alreadySelected) change bgcolor or something
-        private void dgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OndgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             //get selected player
-            Player selected = dgCellTest.SelectedItem as Player;
-            if (selected != null)
+            if (dgCellTest.SelectedItem is Player selected)
             {
                 //is player already selected? -check
                 int selId = selected.Id;
@@ -1330,7 +1482,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        private void OnbtnConfirm_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -1347,7 +1499,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void btnNameChange_Click(object sender, RoutedEventArgs e)
+        private void OnbtnNameChange_Click(object sender, RoutedEventArgs e)
         {
             players[0].Name = "Veijo";
         }

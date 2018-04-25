@@ -15,9 +15,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         public int Id { get; set; }
-        private string name;
-        public int Cash { get; set; }
-        public int Position { get; set; }
+        public string name;
+        public int cash;
+        public int position;
         public bool DieRolled { get; set; }
 
         public string Name
@@ -34,6 +34,42 @@ namespace TTOS0300_UI_Programming_Collaboration
                     name = value;
                     // Call Changed whenever the property is updated
                     Changed("name");
+                }
+            }
+        }
+
+        public int Cash
+        {
+            get
+            {
+                return cash;
+            }
+
+            set
+            {
+                if (cash != value)
+                {
+                    cash = value;
+                    // Call Changed whenever the property is updated
+                    Changed("cash");
+                }
+            }
+        }
+
+        public int Position
+        {
+            get
+            {
+                return position;
+            }
+
+            set
+            {
+                if (position != value)
+                {
+                    position = value;
+                    // Call Changed whenever the property is updated
+                    Changed("position");
                 }
             }
         }
