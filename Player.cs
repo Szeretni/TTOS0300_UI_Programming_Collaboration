@@ -11,33 +11,29 @@ namespace TTOS0300_UI_Programming_Collaboration
     {
         protected virtual void Changed(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public int Id { get; set; }
-        public string Name;
+        private string name;
         public int Cash { get; set; }
         public int Position { get; set; }
         public bool DieRolled { get; set; }
 
-        public string PlayerName
+        public string Name
         {
             get
             {
-                return Name;
+                return name;
             }
 
             set
             {
-                if (Name != value)
+                if (name != value)
                 {
-                    Name = value;
+                    name = value;
                     // Call Changed whenever the property is updated
-                    Changed("Name");
+                    Changed("name");
                 }
             }
         }

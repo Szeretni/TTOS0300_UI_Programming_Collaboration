@@ -105,14 +105,25 @@ namespace TTOS0300_UI_Programming_Collaboration
                 lblCurrentPlayer.Content = "Player " + players[currentPlayer].Name;
             }
 
-            Player p = new Player { Name = "Kalle" };
-
             Binding b = new Binding
             {
-                Source = p,
+                Source = players[0],
 
                 Path = new PropertyPath("Name")
             };
+
+            Button btnTest = new Button();
+            btnTest.Background = Brushes.White;
+            btnTest.Height = 20;
+            btnTest.Width = 200;
+            btnTest.Content = "change name";
+            btnTest.Click += new RoutedEventHandler(btnTest_Click);
+
+            Canvas.SetLeft(btnTest, 250);
+            Canvas.SetTop(btnTest, 259);
+
+            canvasObj.Children.Add(btnTest);
+
             txtTest.SetBinding(TextBlock.TextProperty, b);
 
             CollectionViewSource itemCollectionViewSource;
@@ -122,7 +133,10 @@ namespace TTOS0300_UI_Programming_Collaboration
             //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
             //be.UpdateSource();
         }
-
+        private void btnTest_Click(object sender, RoutedEventArgs e)
+        {
+            players[0].Name = "Veijari";
+        }
         private void LoadPlayers()
         {
             try
@@ -210,25 +224,30 @@ namespace TTOS0300_UI_Programming_Collaboration
                 stack.Children.Add(txtBlocks[1]);
                 int cellPosition = tempCellList[0].Id - 1;
 
-                if (cellPosition != 0 && cellPosition < 9)
+                if (cellPosition == 0 || cellPosition == 9 || cellPosition == 18 || cellPosition == 27)
                 {
-                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
-                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
+                }
+                else if (cellPosition != 0 && cellPosition < 9)
+                {
+                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
                 }
                 else if (cellPosition != 9 && cellPosition > 9 && cellPosition < 19)
                 {
-                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
-                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
                 }
                 else if (cellPosition != 18 && cellPosition > 18 && cellPosition < 28)
                 {
-                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
-                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
                 }
                 else if (cellPosition != 27 && cellPosition > 27 && cellPosition < 36)
                 {
-                    Canvas.SetLeft(stack, points[cellPosition * 4].X);
-                    Canvas.SetTop(stack, points[cellPosition * 4].Y);
+                    Canvas.SetLeft(stack, hoverPoints[cellPosition].X);
+                    Canvas.SetTop(stack, hoverPoints[cellPosition].Y);
                 }
 
                 canvasObj.Children.Add(stack);
@@ -258,6 +277,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 buildingPoints.Clear();
                 buildings.Clear();
                 PrintGrid();
+                //hoverPoints.Clear();
                 CreateHandlersForGrids();
                 CreatePlayerTokens();
                 CreateBuildings();
@@ -371,8 +391,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     int maxposition = 35;
 
-                    TokenAnimation();
-
                     players[currentPlayer].Position += DieResult;
 
                     
@@ -412,48 +430,48 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //shows current player's cash in ui
                     lblCash.Content = "Cash: " + players[currentPlayer].Cash;
 
-                    //Storyboard story = new Storyboard();
+                    Storyboard story = new Storyboard();
 
-                    ////send to prison animation
-                    //DoubleAnimation dbCanvasX = new DoubleAnimation();
-                    //if (players[currentPlayer].Position == 27)
-                    //{
-                    //    dbCanvasX.From = points[temp * 4].X;
-                    //    dbCanvasX.To = points[36].X;
-                    //    players[currentPlayer].Position = 9;
-                    //    lblNotification.Content = "You were sent to the prison!";
-                    //    //update position to db instead of only to canvas
-                    //    //otherwise when game loaded player would be at "go to jail"-cell
-                    //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-                    //}
-                    //else
-                    //{
-                    //    dbCanvasX.From = points[temp * 4 + currentPlayer].X;
-                    //    dbCanvasX.To = points[players[currentPlayer].Position * 4 + currentPlayer].X;
-                    //}
-                    //dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
+                    //send to prison animation
+                    DoubleAnimation dbCanvasX = new DoubleAnimation();
+                    if (players[currentPlayer].Position == 27)
+                    {
+                        dbCanvasX.From = points[temp * 4].X;
+                        dbCanvasX.To = points[36].X;
+                        players[currentPlayer].Position = 9;
+                        lblNotification.Content = "You were sent to the prison!";
+                        //update position to db instead of only to canvas
+                        //otherwise when game loaded player would be at "go to jail"-cell
+                        BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+                    }
+                    else
+                    {
+                        dbCanvasX.From = points[temp * 4 + currentPlayer].X;
+                        dbCanvasX.To = points[players[currentPlayer].Position * 4 + currentPlayer].X;
+                    }
+                    dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
 
-                    //DoubleAnimation dbCanvasY = new DoubleAnimation();
-                    //if (players[currentPlayer].Position == 27)
-                    //{
-                    //    dbCanvasY.From = points[temp * 4].Y;
-                    //    dbCanvasY.To = points[36].Y;
-                    //}
-                    //else
-                    //{
-                    //    dbCanvasY.From = points[temp * 4 + currentPlayer].Y;
-                    //    dbCanvasY.To = points[players[currentPlayer].Position * 4 + currentPlayer].Y;
-                    //}
+                    DoubleAnimation dbCanvasY = new DoubleAnimation();
+                    if (players[currentPlayer].Position == 27)
+                    {
+                        dbCanvasY.From = points[temp * 4].Y;
+                        dbCanvasY.To = points[36].Y;
+                    }
+                    else
+                    {
+                        dbCanvasY.From = points[temp * 4 + currentPlayer].Y;
+                        dbCanvasY.To = points[players[currentPlayer].Position * 4 + currentPlayer].Y;
+                    }
 
-                    //story.Children.Add(dbCanvasX);
-                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    //Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
+                    story.Children.Add(dbCanvasX);
+                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
 
-                    //story.Children.Add(dbCanvasY);
-                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    //Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
+                    story.Children.Add(dbCanvasY);
+                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
 
-                    //story.Begin(tokens[currentPlayer]);
+                    story.Begin(tokens[currentPlayer]);
 
                     //20180422
                     players[currentPlayer].DieRolled = true;
@@ -478,59 +496,59 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void TokenAnimation()
-        {
-            Storyboard story = new Storyboard();
-            //send to prison animation
-            for (int i = 0, j = -2, k = -1; i < DieResult; i++)
-            {
-                da.Add(new DoubleAnimation());
-                if (players[currentPlayer].Position == 27)
-                {
-                    da[j + 2].From = points[temp * 4].X;
-                    da[j + 2].To = points[36].X;
-                    players[currentPlayer].Position = 9;
-                    lblNotification.Content = "You were sent to the prison!";
-                    //update position to db instead of only to canvas
-                    //otherwise when game loaded player would be at "go to jail"-cell
-                    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-                }
-                else
-                {
-                    da[j + 2].From = points[(temp + i) * 4].X;
-                    da[j + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].X;
-                    da[j + 2].BeginTime = TimeSpan.FromSeconds(i);
-                }
-                da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
+        //private void TokenAnimation()
+        //{
+        //    Storyboard story = new Storyboard();
+        //    //send to prison animation
+        //    for (int i = 0, j = -2, k = -1; i < DieResult; i++)
+        //    {
+        //        da.Add(new DoubleAnimation());
+        //        if (players[currentPlayer].Position == 27)
+        //        {
+        //            da[j + 2].From = points[temp * 4].X;
+        //            da[j + 2].To = points[36].X;
+        //            players[currentPlayer].Position = 9;
+        //            lblNotification.Content = "You were sent to the prison!";
+        //            //update position to db instead of only to canvas
+        //            //otherwise when game loaded player would be at "go to jail"-cell
+        //            BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+        //        }
+        //        else
+        //        {
+        //            da[j + 2].From = points[(temp + i) * 4].X;
+        //            da[j + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].X;
+        //            da[j + 2].BeginTime = TimeSpan.FromSeconds(i);
+        //        }
+        //        da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
-                da.Add(new DoubleAnimation());
-                if (players[currentPlayer].Position == 27)
-                {
-                    da[k + 2].From = points[(temp + i) * 4].Y;
-                    da[k + 2].To = points[36].Y;
-                }
-                else
-                {
-                    da[k + 2].From = points[(temp + i) * 4].Y;
-                    da[k + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].Y;
-                    da[k + 2].BeginTime = TimeSpan.FromSeconds(i);
-                }
-                da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
+        //        da.Add(new DoubleAnimation());
+        //        if (players[currentPlayer].Position == 27)
+        //        {
+        //            da[k + 2].From = points[(temp + i) * 4].Y;
+        //            da[k + 2].To = points[36].Y;
+        //        }
+        //        else
+        //        {
+        //            da[k + 2].From = points[(temp + i) * 4].Y;
+        //            da[k + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].Y;
+        //            da[k + 2].BeginTime = TimeSpan.FromSeconds(i);
+        //        }
+        //        da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
 
-                story.Children.Add(da[j + 2]);
-                Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(da[j + 2], new PropertyPath(Canvas.LeftProperty));
+        //        story.Children.Add(da[j + 2]);
+        //        Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
+        //        Storyboard.SetTargetProperty(da[j + 2], new PropertyPath(Canvas.LeftProperty));
 
-                story.Children.Add(da[k + 2]);
-                Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
+        //        story.Children.Add(da[k + 2]);
+        //        Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
+        //        Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
 
-                story.Begin(tokens[currentPlayer]);
+        //        story.Begin(tokens[currentPlayer]);
 
-                j += 2;
-                k += 2;
-            }
-        }
+        //        j += 2;
+        //        k += 2;
+        //    }
+        //}
 
         private void ActionAfterMove()
         {
@@ -749,7 +767,22 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.45), Y = y + (windowHeight * 0.16 * 0.7) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.16 * 0.7) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.20), Y = y + (windowHeight * 0.20) });
+                    if (bordernumber == 0)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                    }
+                    else if (bordernumber == 9)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.17) });
+                    }
+                    else if (bordernumber == 18)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                    }
+                    else if (bordernumber == 27)
+                    {
+                        hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.15) });
+                    }
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.05) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.05) });
@@ -763,7 +796,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.20), Y = y + (windowHeight * 0.20) });
+                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.085) });
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
@@ -777,7 +810,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.20), Y = y + (windowHeight * 0.20) });
+                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.085), Y = y + (windowHeight * 0.20) });
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.05) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.05) });
@@ -791,7 +824,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.05), Y = y + (windowHeight * 0.085 * 0.65) });
                     points.Add(new Point { X = x + (windowWidth * 0.16 * 0.65), Y = y + (windowHeight * 0.085 * 0.65) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.20), Y = y + (windowHeight * 0.20) });
+                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.17), Y = y + (windowHeight * 0.085) });
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.10), Y = y + (windowHeight * 0.16 * 0.01) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.16 * 0.30), Y = y + (windowHeight * 0.16 * 0.01) });
@@ -805,7 +838,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.45), Y = y + (windowHeight * 0.16 * 0.55) });
                     points.Add(new Point { X = x + (windowWidth * 0.085 * 0.65), Y = y + (windowHeight * 0.16 * 0.55) });
 
-                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.20), Y = y + (windowHeight * 0.20) });
+                    hoverPoints.Add(new Point { X = x + (windowWidth * 0.085), Y = y + (windowHeight * 0.20) });
 
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.05), Y = y + (windowHeight * 0.16 * 0.05) });
                     buildingPoints.Add(new Point { X = x + (windowWidth * 0.085 * 0.25), Y = y + (windowHeight * 0.16 * 0.05) });
@@ -1271,6 +1304,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 MessageBox.Show("btnConfirm_Click: " + ex.Message);
             }
+        }
+
+        private void btnNameChange_Click(object sender, RoutedEventArgs e)
+        {
+            players[0].Name = "Veijo";
         }
 
         //var gr = sender as Grid;
