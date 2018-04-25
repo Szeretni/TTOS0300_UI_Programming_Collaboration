@@ -34,33 +34,78 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         //20180425 HO
         //generate new game id
+        //insted of loop get last
         static public int NewGameId()
         {
-            //get game id's from db
-            List<int> gameIds = BLLayer.GetGameIdsFromMySQL();
-            //generates new gameid
-            int i = 0;
-            while (true)
+            try
             {
-                if ((i != gameIds[i]))
+                //get game id's from db
+                List<int> gameIds = BLLayer.GetGameIdsFromMySQL();
+                //generates new gameid
+                int i = 1;
+                foreach (int id in gameIds)
                 {
-                    break;
+                    if (id == i)
+                    {
+                        i++;
+                    }
                 }
-                else
-                {
-                    i++;
-                }
+                //while (true)
+                //{
+                //    if ((i != (gameIds[0]-1)))
+                //    {
+                //        break;
+                //    }
+                //    else
+                //    {
+                //        i++;
+                //    }
+                //}
+                return i;
             }
-            return i;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //20180425 HO
         //show players from db
         static public List<Player> ShowPlayers()
         {
-            //get players id,name from db
-            List<Player> players = BLLayer.GetPlayerIdsFromMySQL();
-            return players;
+            try
+            {
+                //get players id,name from db
+                List<Player> players = BLLayer.GetPlayerIdsFromMySQL();
+                return players;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        //20180425
+        //create new game to db
+        static public void NewGame(NewGame newGame)
+        {
+            try
+            {
+                //new gamesession
+                BLLayer.SetNewGameIdToMySQL(newGame.GameId);
+                //players to gamesession
+                foreach (Player p in newGame.NewPlayers)
+                {
+                    BLLayer.SetPlayerToNewGameToMySQL(p.Id, newGame.GameId);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
     }
 }

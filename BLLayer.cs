@@ -283,6 +283,19 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        
+        public static void SetPlayerToNewGameToMySQL(int newPlayerId, int gameSessionId)
+        {
+            try
+            {
+                DBLayer.SetPlayerToNewGameToMySQL(gameSessionId,newPlayerId);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style obsolete
         public static List<Player> GetPlayerList()
         {

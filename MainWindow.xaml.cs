@@ -35,6 +35,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<DoubleAnimation> da = new List<DoubleAnimation>();
         List<Image> buildings = new List<Image>();
         List<Cell> cellserie = new List<Cell>();
+        List<Player> newplayers = new List<Player>(); //20180425 HO used to manage new game's players
+        NewGame newgame = new NewGame(); //20180425 HO used to manage new game
+        
         int[] rents =
         {
             10  ,30     ,90     ,160    ,250,
@@ -1135,8 +1138,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             //  All info to one class and one db insert using that class
 
             //generate new game id
-            int newGameId = BLMethod.NewGameId();
-            BLLayer.SetNewGameIdToMySQL(newGameId);
+            newgame.GameId = BLMethod.NewGameId();
 
             //get players from db
             dgCellTest.ItemsSource = BLMethod.ShowPlayers();
@@ -1145,25 +1147,49 @@ namespace TTOS0300_UI_Programming_Collaboration
         //new players
         //IMPROVEMENT IDEAS
         //if (alreadySelected) change bgcolor or something
-        List<Player> newPlayers = new List<Player>();
         private void dgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //get selected player
             Player selected = dgCellTest.SelectedItem as Player;
             if (selected != null)
             {
+                //is player already selected? -check
                 int selId = selected.Id;
-                bool alreadySelected = newPlayers.Exists(x => x.Id.ToString().Contains(selId.ToString()));
+                bool alreadySelected = newplayers.Exists(x => x.Id.ToString().Contains(selId.ToString()));
+                //player already selected for new game
                 if (alreadySelected)
                 {
-                    MessageBox.Show("Already selected");
+                    string allselected = null;
+                    foreach (Player p in newplayers)
+                    {
+                        allselected += p.Name + " ";
+                    }
+                    MessageBox.Show("Already selected players: " + allselected);
                 }
+                //add player to new game
                 else
                 {
                     lblNotification.Content = "Player " + selected.Name + " added to new game";
-                    newPlayers.Add(selected);
+                    newplayers.Add(selected);
                 }
             }
-            
+        }
+
+        private void btnConfirm_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                newgame.NewPlayers = newplayers;
+                //newgame to db
+                BLMethod.NewGame(newgame);
+                //clear newplayers for new new game
+                newplayers = new List<Player>();
+                MessageBox.Show("New Game Id: " + newgame.GameId.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("btnConfirm_Click: " + ex.Message);
+            }
         }
 
         //var gr = sender as Grid;

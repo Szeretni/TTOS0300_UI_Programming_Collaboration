@@ -352,6 +352,31 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180425 HO
+        public static void SetPlayerToNewGameToMySQL(int gameSessionId, int playerId)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "INSERT INTO GameSession_has_player (GameSessionId,PlayerId,CellId,PlayerCash,DieRolled) VALUES (" + gameSessionId + "," + playerId + ",1,1500,0)";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
         {

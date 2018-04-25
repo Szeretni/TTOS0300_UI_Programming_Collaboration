@@ -78,6 +78,7 @@
     <Compile Include="CommunityChest.cs" />
     <Compile Include="DBLayer.cs" />
     <Compile Include="IGameObject.cs" />
+    <Compile Include="NewGame.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Text.cs" />
     <Page Include="MainWindow.xaml">
