@@ -19,7 +19,7 @@
         <Label x:Name="lblCash" Content="Cash" HorizontalAlignment="Left" Margin="156,362,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.143,0.538"/>
         <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" Margin="351,175,0,0" VerticalAlignment="Top"/>
         <DataGrid x:Name="dataGrid1" DataContext="{StaticResource ItemCollectionViewSource}" ItemsSource="{Binding}" Margin="230,423,173,122"/>
-        <DataGrid x:Name="dgCellTest" Margin="112,201,72,462"/>
+        <DataGrid x:Name="dgCellTest" Margin="112,201,72,462" SelectionChanged="dgCellTest_SelectionChanged"/>
         <Label x:Name="lblPosition" Content="Label" HorizontalAlignment="Left" Margin="156,257,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtTest" DataContext="this" HorizontalAlignment="Left" Height="23" Margin="296,317,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btnNewGame" Content="New Game" Height="23" Width="80" Margin="124,126,548,573" VerticalAlignment="Top" HorizontalAlignment="Left" Click="btnNewGame_Click"/>

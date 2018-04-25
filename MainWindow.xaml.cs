@@ -1123,13 +1123,16 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180425 HO
         private void btnNewGame_Click(object sender, RoutedEventArgs e)
         {
             //  IMPROVEMENT IDEAS
+            //  New window?
             //  Should create new dg or other element to show players
             //  Should create Done-button
             //  Clicking dg selects player id and removes that row
             //  Destroy elemenents after players selected
+            //  All info to one class and one db insert using that class
 
             //generate new game id
             int newGameId = BLMethod.NewGameId();
@@ -1138,5 +1141,28 @@ namespace TTOS0300_UI_Programming_Collaboration
             //get players from db
             dgCellTest.ItemsSource = BLMethod.ShowPlayers();
         }
+
+        //new players
+        List<Player> newPlayers = new List<Player>();
+        private void dgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Player selected = dgCellTest.SelectedItem as Player;
+            if (selected != null)
+            {
+                
+            }
+            
+        }
+
+        //var gr = sender as Grid;
+        //var grch = gr.Children;
+        //var tb = grch[2] as TextBlock; // this child contains cell's name
+        //var tbValueName = tb.Text;
+        //Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
+        //lblNotification.Content = cellCopy.Id;
+        //List<Cell> tempCellList = new List<Cell>();
+        //tempCellList.Add(cellCopy);
+        //dgCellTest.ItemsSource = tempCellList; // temp, just to verify
+
     }
 }
