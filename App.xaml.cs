@@ -13,5 +13,10 @@ namespace TTOS0300_UI_Programming_Collaboration
     /// </summary>
     public partial class App : Application
     {
+        //https://blogs.msdn.microsoft.com/patrickdanino/2008/07/23/user-settings-in-wpf/
+        private void OnExit(object sender, ExitEventArgs e)
+        {
+            TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.Save();
+        }
     }
 }

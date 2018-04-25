@@ -82,6 +82,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         public MainWindow()
         {
+            MessageBox.Show(Properties.Settings.Default.settingsCurrentGameId.ToString());
+            Properties.Settings.Default.settingsCurrentGameId = 1;
             InitializeComponent();
             //20180422
             LoadPlayers();

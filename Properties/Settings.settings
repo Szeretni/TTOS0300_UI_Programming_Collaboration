@@ -17,7 +17,7 @@
     <Setting Name="user" Type="System.String" Scope="User">
       <Value Profile="(Default)">user</Value>
     </Setting>
-    <Setting Name="settingsCurrentGameId" Type="System.Int32" Scope="Application">
+    <Setting Name="settingsCurrentGameId" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
