@@ -101,6 +101,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //20180426rent
+        //mysql to implement this change:
+        //alter table GameSession_has_player add column RentPaid bool default false;
         public static DataTable GetPlayerRentPaidFromMySQL(int playerId)
         {
             try
