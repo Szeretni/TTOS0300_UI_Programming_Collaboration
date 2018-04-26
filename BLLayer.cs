@@ -49,6 +49,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = DBLayer.GetCellsFromMySQL();
                 foreach (DataRow dr in dt.Rows)
                 {
+                    int i = 0;
+                    bool ownerNotNull = int.TryParse(dr[6].ToString(), out i);
                     Cell cell = new Cell
                     {
                         //CellId,Name,Rent,Price,SerieId,CellTypeId
@@ -57,8 +59,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                         Rent = int.Parse(dr[2].ToString()),
                         Price = int.Parse(dr[3].ToString()),
                         SerieId = int.Parse(dr[4].ToString()),
-                        CellTypeId = int.Parse(dr[5].ToString())
+                        CellTypeId = int.Parse(dr[5].ToString()),
                     };
+                    if (i != 0)
+                    {
+                        cell.Owner = i;
+                    }
                     cells.Add(cell);
                 }
                 return cells;
@@ -324,6 +330,32 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+
+        //20180426 HO INPROGRESS is this necessary?
+        //public static List<Cell> GetCellOwnerFromMySQL()
+        //{
+        //    try
+        //    {
+        //        List<Player> players = new List<Player>();
+        //        DataTable dt = DBLayer.GetCellOwnerFromMySQL();
+
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            Cell cell = new Cell
+        //            {
+        //                //PlayerId,CellId
+        //                Id = int.Parse(dr[0].ToString()),
+        //                Name = int.Parse(dr[1].ToString())
+        //            };
+        //            players.Add(player);
+        //        }
+        //        return players;
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
 
         //obsoleted 20180426
         //20180422

@@ -38,6 +38,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Cell> cellserie = new List<Cell>();
         List<Player> newplayers = new List<Player>(); //20180425 HO used to manage new game's players
         NewGame newgame = new NewGame(); //20180425 HO used to manage new game
+        bool rentPaid = false; //20180426 HO
 
         int[] rents =
         {
@@ -110,6 +111,12 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 players = BLLayer.GetAllPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
+
+                //owner debugging 
+                MessageBox.Show(cells[0].Owner.ToString());
+                MessageBox.Show(cells[1].Owner.ToString());
+                MessageBox.Show(cells[2].Owner.ToString());
+
                 //init player's die rolled status
                 for (int i = 0; i < players.Count(); i++)
                 {
@@ -583,6 +590,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
             {
                 players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
+                rentPaid = true; //20180426 HO
                 //db update
                 BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
 

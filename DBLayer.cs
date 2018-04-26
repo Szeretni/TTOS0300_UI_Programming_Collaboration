@@ -38,7 +38,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell";
+                    //string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell";
+                    //string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell"; //HO20180426 obsoleted
+                    //owner added
+                    string sql = "SELECT Cell.CellId,Name,Rent,Price,SerieId,CellTypeId,Player_has_Cell.PlayerId AS Owner FROM Cell LEFT OUTER JOIN Player_has_Cell ON Cell.CellId = Player_has_Cell.CellId";
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -59,7 +62,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
+                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -79,7 +82,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
+                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -105,7 +108,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
+                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -123,7 +126,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET PlayerCash = " + cash.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString() +"";
+                    string sql = "UPDATE GameSession_has_player SET PlayerCash = " + cash.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -176,7 +179,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = " + gamesessionid + "";
+                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = " + gamesessionid;
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -396,6 +399,27 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     }
                     conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180426 HO INPROGRESS is this necessary?
+        public static DataTable GetCellOwnerFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT PlayerId,CellId FROM Player_has_Cell WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+
+                    return dt;
                 }
             }
             catch
