@@ -1,3 +1,20 @@
+2018-04-26
+Rows with these tags should be removed from final version: debug inprogress todo improvement idea 2018 HO
+DONE rent payment updates cash
+DONE buy property updates cash
+DONE buy cell updates cash and owner 
+DONE prevent infinite pay rent issue
+DONE Players position cellid updates correctly to db
+DONE token draws corretly to ui
+DONE ui shows correctly current player's cash in every case
+DONE cash updates correctly between ui and db
+DONE rent pay and receive works
+start cell bypass issue critical
+clean db interactions which use settings
+hovering doens't always show cell's owner
+load game
+new game
+
 2018-04-24
 selling cells=properties=shares to other players and bank
 selling buildings to bank
@@ -7,8 +24,7 @@ move code from main to business logic
 clean source files
 comment code
 token selection
-finalize ui element positions
-
+DONE finalize ui element positions
 
 2018-04-23
 we have to use classes more in order to avoid repeat. ie. cash: main should update player's cash-property and player handles db update 
