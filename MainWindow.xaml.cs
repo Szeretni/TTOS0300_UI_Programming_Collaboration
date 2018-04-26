@@ -102,9 +102,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                     i++;
                 }
             }
-
-            //BindingExpression be = dataGrid1.GetBindingExpression(DataGrid.DataContextProperty);
-            //be.UpdateSource();
         }
 
         private void LoadPlayers()
@@ -276,9 +273,42 @@ namespace TTOS0300_UI_Programming_Collaboration
                 CreateHandlersForGrids();
                 CreatePlayerTokens();
                 CreateBuildings();
+
+                Binding b = new Binding
+                {
+                    Source = players[currentPlayer]
+                };
+
+                Binding bCash = new Binding
+                {
+                    Path = new PropertyPath("Cash")
+                };
+
+                Binding bName = new Binding
+                {
+                    Path = new PropertyPath("Name")
+                };
+
+                Binding bDiceResult = new Binding
+                {
+                    Path = new PropertyPath("DieResult")
+                };
+
+                txtPlayerName.SetBinding(TextBlock.DataContextProperty, b);
+                txtPlayerCash.SetBinding(TextBlock.DataContextProperty, b);
+                txtPlayerDiceRoll.SetBinding(TextBlock.DataContextProperty, b);
+
+                txtPlayerName.SetBinding(TextBlock.TextProperty, bName);
+                txtPlayerCash.SetBinding(TextBlock.TextProperty, bCash);
+                txtPlayerDiceRoll.SetBinding(TextBlock.TextProperty, bDiceResult);
+
                 brNotifications.Width = windowWidth * 0.5;
-                brNotifications.Height = windowWidth * 0.05;
+                brNotifications.Height = windowHeight * 0.05;
                 brNotifications.Margin = new Thickness(windowWidth * 0.25, windowHeight * 0.27, windowWidth * 0.25, windowHeight * 0.25);
+
+                brInfo.Width = windowWidth * 0.23;
+                brInfo.Height = windowHeight * 0.08;
+                brInfo.Margin = new Thickness(windowWidth * 0.25, windowHeight * 0.65, 0,0);
             }
 
             catch (Exception ex)
@@ -302,7 +332,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     bi.EndInit();
                     string name = "asdf" + i;
                     // add player tokens into list
-                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowWidth / 100 * 3, Source = bi });
+                    tokens.Add(new Image { Width = windowWidth / 100 * 3, Height = windowHeight / 100 * 3, Source = bi });
                     tokens[i].Name = name;
                     canvasObj.RegisterName(tokens[i].Name, tokens[i]);
                     Canvas.SetLeft(tokens[i], points[players[i].Position * 4 + i].X);
@@ -387,22 +417,28 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     int maxposition = 35;
 
-                    players[currentPlayer].Position += rnd.Next(2,12);
-
                     //TokenAnimation();
 
-                    //players moves through start position
+                    players[currentPlayer].Position += rnd.Next(2,12);
+
                     if (players[currentPlayer].Position > 35)
                     {
                         players[currentPlayer].Cash += 200;
                         players[currentPlayer].Position -= maxposition;
-                        BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash += 300);
+                        BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
                         lblNotification.Content = "You collected 200$ in income by passing start";
                     }
                     else if (players[currentPlayer].Position == 36)
                     {
                         players[currentPlayer].Position = 0;
                     }
+
+
+
+                    //TokenAnimation();
+
+                    //players moves through start position
+
 
                     //20180422
                     //sets player's new position to db
@@ -477,41 +513,41 @@ namespace TTOS0300_UI_Programming_Collaboration
         //private void TokenAnimation()
         //{
         //    Storyboard story = new Storyboard();
-        //    //send to prison animation
-        //    for (int i = 0, j = -2, k = -1; i < DieResult; i++)
+        //    // dicerollin mukaan animaatioita yksi ruutu kerrallaan
+        //    for (int i = 0, j = -2, k = -1; i < players[currentPlayer].dieResult; i++)
         //    {
         //        da.Add(new DoubleAnimation());
-        //        if (players[currentPlayer].Position == 27)
-        //        {
-        //            da[j + 2].From = points[temp * 4].X;
-        //            da[j + 2].To = points[36].X;
-        //            players[currentPlayer].Position = 9;
-        //            lblNotification.Content = "You were sent to the prison!";
-        //            //update position to db instead of only to canvas
-        //            //otherwise when game loaded player would be at "go to jail"-cell
-        //            BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-        //        }
-        //        else
-        //        {
-        //            da[j + 2].From = points[(temp + i) * 4].X;
-        //            da[j + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].X;
-        //            da[j + 2].BeginTime = TimeSpan.FromSeconds(i);
-        //        }
-        //        da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
+        //        //if (players[currentPlayer].Position == 27)
+        //        //{
+        //        //    da[j + 2].From = points[temp * 4].X;
+        //        //    da[j + 2].To = points[36].X;
+        //        //    players[currentPlayer].Position = 9;
+        //        //    lblNotification.Content = "You were sent to the prison!";
+        //        //    //update position to db instead of only to canvas
+        //        //    //otherwise when game loaded player would be at "go to jail"-cell
+        //        //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+        //        //}
+        //        //else
+        //        //{
+        //            da[j + 2].From = points[(temp + i) * 4 + currentPlayer].X;
+        //            da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
+        //            da[j + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
+        //        //}
+        //        da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
 
         //        da.Add(new DoubleAnimation());
-        //        if (players[currentPlayer].Position == 27)
-        //        {
-        //            da[k + 2].From = points[(temp + i) * 4].Y;
-        //            da[k + 2].To = points[36].Y;
-        //        }
-        //        else
-        //        {
-        //            da[k + 2].From = points[(temp + i) * 4].Y;
-        //            da[k + 2].To = points[(players[currentPlayer].Position + i + 1) * 4].Y;
-        //            da[k + 2].BeginTime = TimeSpan.FromSeconds(i);
-        //        }
-        //        da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(500));
+        //        //if (players[currentPlayer].Position == 27)
+        //        //{
+        //        //    da[k + 2].From = points[(temp + i) * 4].Y;
+        //        //    da[k + 2].To = points[36].Y;
+        //        //}
+        //        //else
+        //        //{
+        //            da[k + 2].From = points[(temp + i) * 4 + currentPlayer].Y;
+        //            da[k + 2].To = points[(temp + i + 1) * 4 + currentPlayer].Y;
+        //            da[k + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
+        //        //}
+        //        da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
 
         //        story.Children.Add(da[j + 2]);
         //        Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
@@ -521,11 +557,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         //        Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
         //        Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
 
-        //        story.Begin(tokens[currentPlayer]);
-
         //        j += 2;
         //        k += 2;
         //    }
+
+        //    story.Begin(tokens[currentPlayer]);
         //}
 
         private void ActionAfterMove()
@@ -556,6 +592,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void BuyProperty()
         {
+            Color c = Color.FromRgb(185, 214, 191);
+
             StackPanel buyStack = new StackPanel
             {
                 Orientation = Orientation.Vertical
@@ -563,27 +601,31 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             Button btnBuyProperty = new Button
             {
-                Background = Brushes.White,
-                Height = 40,
-                Width = 200,
+                Background = new SolidColorBrush(c),
+                FontSize = 14,
+                FontWeight = FontWeights.UltraBold,
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.25,
                 Content = "Buy property for " + cells[players[currentPlayer].Position].Price + "$"
             };
             btnBuyProperty.Click += new RoutedEventHandler(OnbtnBuyProperty_Click);
 
             Button btnPassProperty = new Button
             {
-                Background = Brushes.White,
-                Height = 40,
-                Width = 200,
+                Background = new SolidColorBrush(c),
+                FontSize = 14,
+                FontWeight = FontWeights.UltraBold,
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.25,
                 Content = "Pass"
             };
             btnPassProperty.Click += new RoutedEventHandler(OnbtnPassProperty_Click);
 
-            buyStack.Children.Add(btnPassProperty);
             buyStack.Children.Add(btnBuyProperty);
+            buyStack.Children.Add(btnPassProperty);
 
-            Canvas.SetLeft(buyStack, 250);
-            Canvas.SetTop(buyStack, 250);
+            Canvas.SetLeft(buyStack, windowWidth * 0.37);
+            Canvas.SetTop(buyStack, windowHeight * 0.35);
             canvasObj.Children.Add(buyStack);
         }
 
@@ -606,27 +648,26 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                Grid g = new Grid
-                {
-                    Background = Brushes.AliceBlue
-                };
+                Grid g = new Grid();
+
                 borders.Add(new Border());
                 borders[bordernumber].BorderBrush = Brushes.Black;
+
                 if (bordernumber != 0 && bordernumber < 9)
                 {
-                    borders[bordernumber].BorderThickness = new Thickness(0,2,2,2);
+                    borders[bordernumber].BorderThickness = new Thickness(0, 1, 1, 1);
                 }
                 else if (bordernumber != 9 && bordernumber > 9 && bordernumber < 19)
                 {
-                    borders[bordernumber].BorderThickness = new Thickness(2, 0, 2, 2);
+                    borders[bordernumber].BorderThickness = new Thickness(1, 0, 1, 1);
                 }
                 else if (bordernumber != 18 && bordernumber > 18 && bordernumber < 28)
                 {
-                    borders[bordernumber].BorderThickness = new Thickness(2, 2, 0, 2);
+                    borders[bordernumber].BorderThickness = new Thickness(1, 1, 0, 1);
                 }
                 else if (bordernumber != 27 && bordernumber > 27 && bordernumber < 36)
                 {
-                    borders[bordernumber].BorderThickness = new Thickness(2, 2, 2, 0);
+                    borders[bordernumber].BorderThickness = new Thickness(1, 1, 1, 0);
                 }
 
                 //grid dimension
@@ -666,8 +707,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 g.RowDefinitions.Add(rowDef3);
                 g.RowDefinitions.Add(rowDef4);
 
-                Rectangle r = new Rectangle();
                 
+
+                Rectangle r = new Rectangle();
+
+                r.Height = windowHeight / 100 * 16;
+
                 switch (cells[bordernumber].SerieId)
                 {
                     case 1:
@@ -677,42 +722,42 @@ namespace TTOS0300_UI_Programming_Collaboration
                         }
                     case 2:
                         {
-                            r.Fill = Brushes.DarkBlue;
+                            r.Fill = Brushes.SkyBlue;
                             break;
                         }
                     case 3:
                         {
-                            r.Fill = Brushes.SkyBlue;
+                            r.Fill = Brushes.Purple;
                             break;
                         }
                     case 4:
                         {
-                            r.Fill = Brushes.Pink;
+                            r.Fill = Brushes.Orange;
                             break;
                         }
                     case 5:
                         {
-                            r.Fill = Brushes.Orange;
+                            r.Fill = Brushes.Red;
                             break;
                         }
                     case 6:
                         {
-                            r.Fill = Brushes.Red;
+                            r.Fill = Brushes.Yellow;
                             break;
                         }
                     case 7:
                         {
-                            r.Fill = Brushes.Yellow;
+                            r.Fill = Brushes.ForestGreen;
                             break;
                         }
                     case 8:
                         {
-                            r.Fill = Brushes.DarkGreen;
+                            r.Fill = Brushes.DarkBlue;
                             break;
                         }
 
                 }
-                
+
                 Grid.SetRow(r, 0);
                 Grid.SetColumn(r, 0);
 
@@ -720,11 +765,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Text = cells[bordernumber].Name,
                     FontSize = 12,
+                    FontWeight = FontWeights.Bold,
                     TextAlignment = TextAlignment.Center,
                     TextWrapping = TextWrapping.WrapWithOverflow
                 };
                 Grid.SetRow(txt1, 1);
                 Grid.SetColumn(txt1, 0);
+
 
                 StackPanel stack = new StackPanel();
                 Grid.SetRow(stack, 2);
@@ -1010,151 +1057,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                         Canvas.SetLeft(stack, windowWidth * 0.18);
                         Canvas.SetTop(stack, windowHeight * 0.18);
                         canvasObj.Children.Add(stack);
-
-                        Label lbName = new Label
-                        {
-                            Name = "lbName",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-
-                            Content = "Current player: "
-                        };
-
-                        Label lbPlayerName = new Label
-                        {
-                            Name = "lbPlayerName",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-                        };
-
-                        Label lbCash = new Label
-                        {
-                            Name = "lbCash",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-
-                            Content = "Player cash: "
-                        };
-
-                        Label lbPlayerCash = new Label
-                        {
-                            Name = "lbPlayerCash",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-                        };
-
-                        Label lbDiceResult = new Label
-                        {
-                            Name = "lbDiceResult",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-
-                            Content = "Your dice result: "
-                        };
-
-                        Label lbDice = new Label
-                        {
-                            Name = "lbDice",
-
-                            FontSize = 14,
-
-                            Foreground = Brushes.White,
-
-                            Padding = new Thickness(2, 2, 2, 2),
-
-                            Content = "Your dice roll: "
-                        };
-
-                        Binding b = new Binding
-                        {
-                            Source = players[currentPlayer]
-                        };
-
-                        Binding bCash = new Binding
-                        {
-                            Path = new PropertyPath("Cash")
-                        };
-
-                        Binding bName = new Binding
-                        {
-                            Path = new PropertyPath("Name")
-                        };
-
-                        Binding bDiceResult = new Binding
-                        {
-                            Path = new PropertyPath("DiceResult")
-                        };
-
-                        lbPlayerName.SetBinding(Label.DataContextProperty, b);
-                        lbPlayerCash.SetBinding(Label.DataContextProperty, b);
-                        lbDiceResult.SetBinding(Label.DataContextProperty, b);
-
-                        lbPlayerName.SetBinding(Label.ContentProperty, bName);
-                        lbPlayerCash.SetBinding(Label.ContentProperty, bCash);
-                        lbDiceResult.SetBinding(Label.ContentProperty, bDiceResult);
-
-                        Border br = new Border
-                        {
-                            BorderBrush = Brushes.Black,
-                            BorderThickness = new Thickness(2, 2, 2, 2)
-                        };
-
-                        StackPanel infoStack = new StackPanel();
-                        StackPanel infoStackNames = new StackPanel();
-
-                        Grid g = new Grid();
-
-                        ColumnDefinition colDef1 = new ColumnDefinition();
-                        ColumnDefinition colDef2 = new ColumnDefinition();
-                        g.ColumnDefinitions.Add(colDef1);
-                        g.ColumnDefinitions.Add(colDef2);
-
-                        // Define the Rows
-                        RowDefinition rowDef1 = new RowDefinition();
-                        g.RowDefinitions.Add(rowDef1);
-
-                        infoStack.Children.Add(lbPlayerName);
-                        infoStack.Children.Add(lbPlayerCash);
-                        infoStack.Children.Add(lbDiceResult);
-
-                        infoStackNames.Children.Add(lbName);
-                        infoStackNames.Children.Add(lbCash);
-                        infoStackNames.Children.Add(lbDice);
-
-                        Grid.SetRow(infoStackNames, 0);
-                        Grid.SetColumn(infoStackNames, 0);
-
-                        Grid.SetRow(infoStack, 0);
-                        Grid.SetColumn(infoStack, 1);
-
-                        g.Children.Add(infoStack);
-                        g.Children.Add(infoStackNames);
-
-                        br.Child = g;
-
-                        Canvas.SetLeft(br, windowWidth * 0.3);
-                        Canvas.SetTop(br, windowHeight * 0.65);
-                        canvasObj.Children.Add(br);
                     }
                 }
             }
@@ -1165,47 +1067,59 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        bool menuClickFlag = true;
         private void OnbtnMenu_Click(object sender, RoutedEventArgs e)
         {
-            StackPanel stack = new StackPanel();
-
-            Button btnNewGame = new Button
+            if (menuClickFlag)
             {
-                Height = windowHeight * 0.05,
-                Width = windowWidth * 0.1,
-                FontSize = 14,
-                Content = "New Game",
-                Background = Brushes.Coral
-            };
-            btnNewGame.Click += new RoutedEventHandler(OnbtnNewGame_Click);
+                menuClickFlag = false;
 
-            Button btnConfirm = new Button
+                StackPanel stack = new StackPanel();
+
+                Button btnNewGame = new Button
+                {
+                    Height = windowHeight * 0.05,
+                    Width = windowWidth * 0.16,
+                    FontSize = 14,
+                    Content = "New Game",
+                    Background = Brushes.Coral
+                };
+                btnNewGame.Click += new RoutedEventHandler(OnbtnNewGame_Click);
+
+                Button btnConfirm = new Button
+                {
+                    Height = windowHeight * 0.05,
+                    Width = windowWidth * 0.16,
+                    FontSize = 14,
+                    Content = "Confirm",
+                    Background = Brushes.Coral
+                };
+                btnConfirm.Click += new RoutedEventHandler(OnbtnConfirm_Click);
+
+                Button btnLoadGame = new Button
+                {
+                    Height = windowHeight * 0.05,
+                    Width = windowWidth * 0.16,
+                    FontSize = 14,
+                    Content = "Load Game",
+                    Background = Brushes.Coral
+                };
+                btnLoadGame.Click += new RoutedEventHandler(OnbtnLoadGame_Click);
+
+                stack.Children.Add(btnNewGame);
+                stack.Children.Add(btnConfirm);
+                stack.Children.Add(btnLoadGame);
+
+                Canvas.SetLeft(stack, windowWidth * 0.18 + (btnConfirm.Width * 3));
+                Canvas.SetTop(stack, windowHeight * 0.18 + btnConfirm.Height);
+                canvasObj.Children.Add(stack);
+            }
+
+            else
             {
-                Height = windowHeight * 0.05,
-                Width = windowWidth * 0.1,
-                FontSize = 14,
-                Content = "Confirm",
-                Background = Brushes.Coral
-            };
-            btnConfirm.Click += new RoutedEventHandler(OnbtnConfirm_Click);
-
-            Button btnLoadGame = new Button
-            {
-                Height = windowHeight * 0.05,
-                Width = windowWidth * 0.1,
-                FontSize = 14,
-                Content = "Load Game",
-                Background = Brushes.Coral
-            };
-            btnLoadGame.Click += new RoutedEventHandler(OnbtnLoadGame_Click);
-
-            stack.Children.Add(btnNewGame);
-            stack.Children.Add(btnConfirm);
-            stack.Children.Add(btnLoadGame);
-
-            Canvas.SetLeft(stack, windowWidth * 0.4 + (btnConfirm.Width * 3));
-            Canvas.SetTop(stack, windowHeight * 0.23 + btnConfirm.Height);
-            canvasObj.Children.Add(stack);
+                RecreateCanvas();
+                menuClickFlag = true;
+            }
         }
 
         //20180422
@@ -1227,8 +1141,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     RecreateCanvas();
 
-                    //lblCash.Content = "Cash: " + BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id,Properties.Settings.Default.settingsCurrentGameId);
-
+                    lblNotification.Content = "Current player: " + players[currentPlayer].Name;
                 }
                 catch (Exception ex)
                 {

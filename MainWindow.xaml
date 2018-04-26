@@ -5,14 +5,35 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TTOS0300_UI_Programming_Collaboration"
         mc:Ignorable="d"
-        Title="MainWindow" MinHeight="400" Height="750" MinWidth="400" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged" Background="{x:Null}">
+        Title="MainWindow" MinHeight="720" Height="750" MinWidth="720" Width="750" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Loaded="Window_Loaded" SizeChanged="Window_SizeChanged">
     <Window.Resources>
     </Window.Resources>
-    <Grid x:Name="gridObj" Background="#FF787EFF">
+    <Grid x:Name="gridObj" Background="#FFB9D6BF">
+        <Border x:Name="brNotifications" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="27" Margin="104,130,0,0" VerticalAlignment="Top" Width="87">
+            <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-1,-1,0,0" FontSize="16" FontWeight="Bold"/>
+        </Border>
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <DataGrid x:Name="dgCellTest" Margin="667,232,72,462" SelectionChanged="OndgCellTest_SelectionChanged" />
-        <Border x:Name="brNotifications" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="27" Margin="104,130,0,0" VerticalAlignment="Top" Width="87" Background="White">
-            <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-1,-1,0,0" FontSize="16"/>
+        <DataGrid x:Name="dgCellTest" Margin="667,232,72,462" SelectionChanged="OndgCellTest_SelectionChanged" Visibility="Hidden"/>
+        <Border x:Name="brInfo"  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="54" Margin="134,296,0,0" VerticalAlignment="Top" Width="167">
+            <Grid Margin="0,0,78,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="124" Grid.ColumnSpan="2" Margin="0,0,-37,0">
+                    <TextBlock x:Name="txtpName"  Text="Current player name:" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtpCash" Text="Total cash:" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtpDiceRoll" Text="Dice roll result:" FontWeight="Bold"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Width="51" Margin="0,0,-78,0" Height="48">
+                    <TextBlock x:Name="txtPlayerName" TextAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtPlayerCash" TextAlignment="Center" FontWeight="Bold"/>
+                    <TextBlock x:Name="txtPlayerDiceRoll" TextAlignment="Center" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>
