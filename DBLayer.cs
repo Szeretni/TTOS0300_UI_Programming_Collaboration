@@ -605,11 +605,18 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private static string GetConnectionString()
         {
-            string dbIpAddress = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.ip;
+            //string dbIpAddress = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.ip;
+            //string dbPort = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.port;
+            //string dbSchema = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.database;
+            //string dbPassword = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.password;
+            //string dbUser = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.user;
+            //return string.Format("Data source={0};Port={1};Initial catalog={2};user={3};password={4}", dbIpAddress, dbPort, dbSchema, dbUser, dbPassword);
+
+            string dbIpAddress = "mysql.labranet.jamk.fi";
             string dbPort = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.port;
-            string dbSchema = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.database;
-            string dbPassword = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.password;
-            string dbUser = TTOS0300_UI_Programming_Collaboration.Properties.Settings.Default.user;
+            string dbSchema = "L2912_2";
+            string dbPassword = "q4ARIboJAkdZeErWozcP13NbCCtojxx6";
+            string dbUser = "L2912";
             return string.Format("Data source={0};Port={1};Initial catalog={2};user={3};password={4}", dbIpAddress, dbPort, dbSchema, dbUser, dbPassword);
         }
     }

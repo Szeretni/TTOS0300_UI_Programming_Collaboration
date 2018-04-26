@@ -74,7 +74,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         int serieId = 0;
         bool ownsAll = false;
         int temp = 0;
-        string pname = "";
+        string pname = "No owner";
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -200,10 +200,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                     if (tempCellList[0].Owner == p.Id)
                     {
                         pname = p.Name;
-                    }
-                    else
-                    {
-                        pname = "No owner";
                     }
                 }
 
