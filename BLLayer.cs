@@ -251,7 +251,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetCellOwnerToMySQL(playerid, cellid);
+                DBLayer.SetCellOwnerToMySQL(playerid, cellid+1); //20180604position
             }
             catch
             {

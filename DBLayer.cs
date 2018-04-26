@@ -299,7 +299,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "INSERT INTO Player_has_Cell (PlayerId,CellId,GameSessionId) VALUES ('" + playerid.ToString() + "', '" + cellid.ToString() + "'," + "1)";
+                    string sql = "INSERT INTO Player_has_Cell (PlayerId,CellId,GameSessionId) VALUES (" + playerid.ToString() + "," + cellid.ToString() + "," + Properties.Settings.Default.settingsCurrentGameId + ")";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();

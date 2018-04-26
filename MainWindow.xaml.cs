@@ -113,8 +113,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 cells = BLLayer.GetAllCellsFromDt();
 
                 //owner debugging 
+                string hannutest = players.Find(x => x.Id == 1).Name;
                 MessageBox.Show(cells[0].Owner.ToString());
-                MessageBox.Show(cells[1].Owner.ToString());
+                MessageBox.Show(cells[1].Owner.ToString() + cells[1].Name + hannutest);
                 MessageBox.Show(cells[2].Owner.ToString());
 
                 //init more player data todo 
@@ -655,10 +656,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void OnbtnBuyProperty_Click(object sender, RoutedEventArgs e)
         {
             cells[players[currentPlayer].Position].Owner = players[currentPlayer].Id;
+            BLLayer.SetCellOwnerToMySQL(players[currentPlayer].Id, cells[players[currentPlayer].Position].Id); //20180604position
             lblNotification.Content = "You bought " + cells[players[currentPlayer].Position].Name;
             players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Price;
-            //db update
-            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
             RecreateCanvas();
         }
 
