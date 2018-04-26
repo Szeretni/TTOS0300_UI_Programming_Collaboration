@@ -17,8 +17,21 @@ namespace TTOS0300_UI_Programming_Collaboration
         public int Id { get; set; }
         public string name;
         private int cash = 0;
+        private bool rentPaid = false; //20180426rent
         public int position = 0;
         public bool DieRolled { get; set; }
+        public bool RentPaid //20180426rent
+        {
+            get
+            {
+                return rentPaid;
+            }
+            set
+            {
+                rentPaid = value;
+                BLLayer.SetRentPaidToMySQL(Id, rentPaid);
+            }
+        }
         public int dieResult;
 
         public string Name

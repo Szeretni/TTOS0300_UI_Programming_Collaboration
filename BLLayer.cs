@@ -235,6 +235,38 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180426rent 
+        public static bool GetPlayerRentPaidFromMySQL(int playerid)
+        {
+            try
+            {
+                DataTable dt = DBLayer.GetPlayerRentPaidFromMySQL(playerid);
+                bool rolled = false;
+                foreach (DataRow dr in dt.Rows)
+                {
+                    rolled = bool.Parse(dr[0].ToString());
+                }
+                return rolled;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180426rent
+        public static void SetRentPaidToMySQL(int playerid, bool dieRolled)
+        {
+            try
+            {
+                DBLayer.SetRentPaidToMySQL(playerid, dieRolled);
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public static void SetCellBuildingCountsToMySQL(int cellid, int hotelcount, int housecount)
         {
             try
@@ -251,7 +283,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetCellOwnerToMySQL(playerid, cellid+1); //20180604position
+                DBLayer.SetCellOwnerToMySQL(playerid, cellid+1); //20180604position +1 bc cell[x] = cellid x+1
             }
             catch
             {

@@ -38,7 +38,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Cell> cellserie = new List<Cell>();
         List<Player> newplayers = new List<Player>(); //20180425 HO used to manage new game's players
         NewGame newgame = new NewGame(); //20180425 HO used to manage new game
-        bool rentPaid = false; //20180426 HO
 
         int[] rents =
         {
@@ -122,6 +121,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 for (int i = 0; i < players.Count(); i++)
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
+                    players[i].RentPaid = BLLayer.GetPlayerRentPaidFromMySQL(players[i].Id);
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
                     players[i].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[i].Id, Properties.Settings.Default.settingsCurrentGameId);
                 }
@@ -184,6 +184,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 };
 
                 StackPanel stack = new StackPanel();
+                //using sender to get hovered cell's information
                 var gr = sender as Grid;
                 var grch = gr.Children;
                 var tb = grch[2] as TextBlock; // this child contains cell's name
@@ -591,21 +592,27 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
             {
-                players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
-                rentPaid = true; //20180426 HO
-                //db update
-                //BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
-
-                foreach (Player p in players)
+                //20180426rent
+                //prevent unlimited rent issue by clickin roll
+                if (players[currentPlayer].RentPaid)
                 {
-                    if (cells[players[currentPlayer].Position].Owner == p.Id)
-                    {
-                        p.Cash += cells[players[currentPlayer].Position].Rent;
-                        //db update
-                        BLLayer.DynamicSetPlayerCashToMySQL(p.Id, p.Cash,Properties.Settings.Default.settingsCurrentGameId);
-                        lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
-                    }
+                    lblNotification.Content = "You've already moved and paid rent.";
                 }
+                else
+                {
+                    players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
+                    players[currentPlayer].RentPaid = true; //20180426 HO
+                    foreach (Player p in players)
+                    {
+                        if (cells[players[currentPlayer].Position].Owner == p.Id)
+                        {
+                            p.Cash += cells[players[currentPlayer].Position].Rent;
+                            //db update
+                            BLLayer.DynamicSetPlayerCashToMySQL(p.Id, p.Cash, Properties.Settings.Default.settingsCurrentGameId);
+                            lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
+                        }
+                    }
+                }                
             }
 
             else if (cells[players[currentPlayer].Position].Owner == 0 && cells[players[currentPlayer].Position].Price != 0 )

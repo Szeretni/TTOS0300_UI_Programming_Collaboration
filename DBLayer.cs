@@ -100,6 +100,51 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180426rent
+        public static DataTable GetPlayerRentPaidFromMySQL(int playerId)
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT RentPaid FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        //20180426rent
+        public static void SetRentPaidToMySQL(int playerId, bool rentPaid)
+        {
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "UPDATE GameSession_has_player SET RentPaid = " + rentPaid.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    MySqlDataReader mysqldr;
+                    conn.Open();
+                    mysqldr = cmd.ExecuteReader();
+                    while (mysqldr.Read())
+                    {
+
+                    }
+                    conn.Close();
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         //20180425
         public static DataTable DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
         {
