@@ -16,7 +16,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         public int Id { get; set; }
         public string name;
-        private int cash;
+        private int cash = 0;
         public int position;
         public bool DieRolled { get; set; }
         public int dieResult;
@@ -50,7 +50,9 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 if (cash != value)
                 {
+                    //updates cash and db 20180426
                     cash = value;
+                    BLLayer.DynamicSetPlayerCashToMySQL(Id, cash, Properties.Settings.Default.settingsCurrentGameId);
                     // Call Changed whenever the property is updated
                     Changed("cash");
                 }

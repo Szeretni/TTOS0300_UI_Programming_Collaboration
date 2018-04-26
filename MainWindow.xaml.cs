@@ -115,6 +115,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
+                    players[i].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[i].Id, Properties.Settings.Default.settingsCurrentGameId);
                 }
 
                 cells[1].Owner = 5;
@@ -294,7 +295,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 //20180426 HO
                 //get current players cash from db
-                players[currentPlayer].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
+                //players[currentPlayer].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
                 //MessageBox.Show(players[currentPlayer].Cash.ToString()); debug
 
                 txtPlayerName.SetBinding(TextBlock.DataContextProperty, b);
