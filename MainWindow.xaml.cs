@@ -529,7 +529,18 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //else
                 //{
                 da[j + 2].From = points[(temp + i) * 4 + currentPlayer].X;
-                da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
+                
+                //20180426 HO hard coded to avoid OoI
+                if ((temp + i + 1) > 35) 
+                {
+                    MessageBox.Show((36 - (temp + i + 1)).ToString());
+                    da[j + 2].To = points[36-((temp + i + 1) * 4 + currentPlayer)].X;
+                }
+                else
+                {
+                    da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
+                }
+
                 da[j + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
                 //}
                 da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
