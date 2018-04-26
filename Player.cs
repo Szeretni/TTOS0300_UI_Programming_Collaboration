@@ -17,7 +17,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         public int Id { get; set; }
         public string name;
         private int cash = 0;
-        public int position;
+        public int position = 0;
         public bool DieRolled { get; set; }
         public int dieResult;
 
@@ -63,14 +63,16 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             get
             {
-                return position;
+                //cellid1 = cell[0]
+                return position; 
             }
 
             set
             {
                 if (position != value)
                 {
-                    position = value;
+                    position = value; //20180426T1300
+                    BLLayer.SetPlayerPositionToMySQL(Id, position);
                     // Call Changed whenever the property is updated
                     Changed("position");
                 }

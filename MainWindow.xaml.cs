@@ -113,11 +113,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 cells = BLLayer.GetAllCellsFromDt();
 
                 //owner debugging 
-                MessageBox.Show(cells[0].Owner.ToString());
-                MessageBox.Show(cells[1].Owner.ToString());
-                MessageBox.Show(cells[2].Owner.ToString());
+                //MessageBox.Show(cells[0].Owner.ToString());
+                //MessageBox.Show(cells[1].Owner.ToString());
+                //MessageBox.Show(cells[2].Owner.ToString());
 
-                //init player's die rolled status
+                //init more player data todo 
                 for (int i = 0; i < players.Count(); i++)
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
@@ -125,8 +125,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[i].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[i].Id, Properties.Settings.Default.settingsCurrentGameId);
                 }
 
-                cells[1].Owner = 5;
-                cells[3].Owner = 5;
+                //temp antin
+                //cells[1].Owner = 5;
+                //cells[3].Owner = 5;
             }
             catch (Exception ex)
             {
@@ -592,7 +593,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
                 rentPaid = true; //20180426 HO
                 //db update
-                BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
+                //BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
 
                 foreach (Player p in players)
                 {
