@@ -113,9 +113,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 cells = BLLayer.GetAllCellsFromDt();
 
                 //owner debugging 
-                //MessageBox.Show(cells[0].Owner.ToString());
-                //MessageBox.Show(cells[1].Owner.ToString());
-                //MessageBox.Show(cells[2].Owner.ToString());
+                MessageBox.Show(cells[0].Owner.ToString());
+                MessageBox.Show(cells[1].Owner.ToString());
+                MessageBox.Show(cells[2].Owner.ToString());
 
                 //init more player data todo 
                 for (int i = 0; i < players.Count(); i++)
@@ -217,7 +217,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                 b.Child = stack;
 
-                int cellPosition = tempCellList[0].Id - 1;
+                int cellPosition = tempCellList[0].Id; //20180604position -1
 
                 if (cellPosition == 2 ||cellPosition == 6)
                 {

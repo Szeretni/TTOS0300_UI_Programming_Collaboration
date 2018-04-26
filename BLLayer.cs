@@ -54,7 +54,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     Cell cell = new Cell
                     {
                         //CellId,Name,Rent,Price,SerieId,CellTypeId
-                        Id = int.Parse(dr[0].ToString())-1,
+                        Id = int.Parse(dr[0].ToString())-1, //20180604position
                         Name = dr[1].ToString(),
                         Rent = int.Parse(dr[2].ToString()),
                         Price = int.Parse(dr[3].ToString()),
@@ -85,7 +85,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 int position = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
-                    position = int.Parse(dr[0].ToString())-1; //20180426 -1 bc return cellid 1-36, should draw cell[0-35]
+                    position = int.Parse(dr[0].ToString())-1; //20180604position -1 bc return cellid 1-36, should draw cell[0-35]
                 }
                 return position;
             }
@@ -99,7 +99,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetPlayerPositionToMySQL(playerid, position+1,Properties.Settings.Default.settingsCurrentGameId); //20180426 +1 cell[0-35] => cellid 1-35
+                DBLayer.SetPlayerPositionToMySQL(playerid, position+1,Properties.Settings.Default.settingsCurrentGameId); //20180604position +1 cell[0-35] => cellid 1-35
             }
             catch (Exception)
             {
