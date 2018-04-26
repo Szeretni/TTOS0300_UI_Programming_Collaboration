@@ -417,23 +417,21 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     int maxposition = 35;
 
-                    //TokenAnimation();
+                    TokenAnimation();
 
-                    players[currentPlayer].Position += rnd.Next(2,12);
+                    //players[currentPlayer].Position += players[currentPlayer].DieResult;
 
-                    if (players[currentPlayer].Position > 35)
-                    {
-                        players[currentPlayer].Cash += 200;
-                        players[currentPlayer].Position -= maxposition;
-                        BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
-                        lblNotification.Content = "You collected 200$ in income by passing start";
-                    }
-                    else if (players[currentPlayer].Position == 36)
-                    {
-                        players[currentPlayer].Position = 0;
-                    }
-
-
+                    //if (players[currentPlayer].Position > 35)
+                    //{
+                    //    players[currentPlayer].Cash += 200;
+                    //    players[currentPlayer].Position -= maxposition;
+                    //    BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+                    //    lblNotification.Content = "You collected 200$ in income by passing start";
+                    //}
+                    //else if (players[currentPlayer].Position == 36)
+                    //{
+                    //    players[currentPlayer].Position = 0;
+                    //}
 
                     //TokenAnimation();
 
@@ -444,48 +442,48 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //sets player's new position to db
                     BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
 
-                    Storyboard story = new Storyboard();
+                    //Storyboard story = new Storyboard();
 
-                    //send to prison animation
-                    DoubleAnimation dbCanvasX = new DoubleAnimation();
-                    if (players[currentPlayer].Position == 27)
-                    {
-                        dbCanvasX.From = points[temp * 4].X;
-                        dbCanvasX.To = points[36].X;
-                        players[currentPlayer].Position = 9;
-                        lblNotification.Content = "You were sent to the prison!";
-                        //update position to db instead of only to canvas
-                        //otherwise when game loaded player would be at "go to jail"-cell
-                        BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-                    }
-                    else
-                    {
-                        dbCanvasX.From = points[temp * 4 + currentPlayer].X;
-                        dbCanvasX.To = points[players[currentPlayer].Position * 4 + currentPlayer].X;
-                    }
-                    dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
+                    ////send to prison animation
+                    //DoubleAnimation dbCanvasX = new DoubleAnimation();
+                    //if (players[currentPlayer].Position == 27)
+                    //{
+                    //    dbCanvasX.From = points[temp * 4].X;
+                    //    dbCanvasX.To = points[36].X;
+                    //    players[currentPlayer].Position = 9;
+                    //    lblNotification.Content = "You were sent to the prison!";
+                    //    //update position to db instead of only to canvas
+                    //    //otherwise when game loaded player would be at "go to jail"-cell
+                    //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+                    //}
+                    //else
+                    //{
+                    //    dbCanvasX.From = points[temp * 4 + currentPlayer].X;
+                    //    dbCanvasX.To = points[players[currentPlayer].Position * 4 + currentPlayer].X;
+                    //}
+                    //dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
 
-                    DoubleAnimation dbCanvasY = new DoubleAnimation();
-                    if (players[currentPlayer].Position == 27)
-                    {
-                        dbCanvasY.From = points[temp * 4].Y;
-                        dbCanvasY.To = points[36].Y;
-                    }
-                    else
-                    {
-                        dbCanvasY.From = points[temp * 4 + currentPlayer].Y;
-                        dbCanvasY.To = points[players[currentPlayer].Position * 4 + currentPlayer].Y;
-                    }
+                    //DoubleAnimation dbCanvasY = new DoubleAnimation();
+                    //if (players[currentPlayer].Position == 27)
+                    //{
+                    //    dbCanvasY.From = points[temp * 4].Y;
+                    //    dbCanvasY.To = points[36].Y;
+                    //}
+                    //else
+                    //{
+                    //    dbCanvasY.From = points[temp * 4 + currentPlayer].Y;
+                    //    dbCanvasY.To = points[players[currentPlayer].Position * 4 + currentPlayer].Y;
+                    //}
 
-                    story.Children.Add(dbCanvasX);
-                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
+                    //story.Children.Add(dbCanvasX);
+                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    //Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
 
-                    story.Children.Add(dbCanvasY);
-                    Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
+                    //story.Children.Add(dbCanvasY);
+                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
+                    //Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
 
-                    story.Begin(tokens[currentPlayer]);
+                    //story.Begin(tokens[currentPlayer]);
 
                     //20180422
                     players[currentPlayer].DieRolled = true;
@@ -510,59 +508,60 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //private void TokenAnimation()
-        //{
-        //    Storyboard story = new Storyboard();
-        //    // dicerollin mukaan animaatioita yksi ruutu kerrallaan
-        //    for (int i = 0, j = -2, k = -1; i < players[currentPlayer].dieResult; i++)
-        //    {
-        //        da.Add(new DoubleAnimation());
-        //        //if (players[currentPlayer].Position == 27)
-        //        //{
-        //        //    da[j + 2].From = points[temp * 4].X;
-        //        //    da[j + 2].To = points[36].X;
-        //        //    players[currentPlayer].Position = 9;
-        //        //    lblNotification.Content = "You were sent to the prison!";
-        //        //    //update position to db instead of only to canvas
-        //        //    //otherwise when game loaded player would be at "go to jail"-cell
-        //        //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-        //        //}
-        //        //else
-        //        //{
-        //            da[j + 2].From = points[(temp + i) * 4 + currentPlayer].X;
-        //            da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
-        //            da[j + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
-        //        //}
-        //        da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
+        // works fine if player doesnt pass startline, needs fix
+        private void TokenAnimation()
+        {
+            Storyboard story = new Storyboard();
+            // dicerollin mukaan animaatioita yksi ruutu kerrallaan
+            for (int i = 0, j = -2, k = -1; i < players[currentPlayer].dieResult; i++)
+            {
+                da.Add(new DoubleAnimation());
+                //if (players[currentPlayer].Position == 27)
+                //{
+                //    da[j + 2].From = points[temp * 4].X;
+                //    da[j + 2].To = points[36].X;
+                //    players[currentPlayer].Position = 9;
+                //    lblNotification.Content = "You were sent to the prison!";
+                //    //update position to db instead of only to canvas
+                //    //otherwise when game loaded player would be at "go to jail"-cell
+                //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+                //}
+                //else
+                //{
+                da[j + 2].From = points[(temp + i) * 4 + currentPlayer].X;
+                da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
+                da[j + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
+                //}
+                da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
 
-        //        da.Add(new DoubleAnimation());
-        //        //if (players[currentPlayer].Position == 27)
-        //        //{
-        //        //    da[k + 2].From = points[(temp + i) * 4].Y;
-        //        //    da[k + 2].To = points[36].Y;
-        //        //}
-        //        //else
-        //        //{
-        //            da[k + 2].From = points[(temp + i) * 4 + currentPlayer].Y;
-        //            da[k + 2].To = points[(temp + i + 1) * 4 + currentPlayer].Y;
-        //            da[k + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
-        //        //}
-        //        da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
+                da.Add(new DoubleAnimation());
+                //if (players[currentPlayer].Position == 27)
+                //{
+                //    da[k + 2].From = points[(temp + i) * 4].Y;
+                //    da[k + 2].To = points[36].Y;
+                //}
+                //else
+                //{
+                da[k + 2].From = points[(temp + i) * 4 + currentPlayer].Y;
+                da[k + 2].To = points[(temp + i + 1) * 4 + currentPlayer].Y;
+                da[k + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
+                //}
+                da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
 
-        //        story.Children.Add(da[j + 2]);
-        //        Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
-        //        Storyboard.SetTargetProperty(da[j + 2], new PropertyPath(Canvas.LeftProperty));
+                story.Children.Add(da[j + 2]);
+                Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
+                Storyboard.SetTargetProperty(da[j + 2], new PropertyPath(Canvas.LeftProperty));
 
-        //        story.Children.Add(da[k + 2]);
-        //        Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
-        //        Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
+                story.Children.Add(da[k + 2]);
+                Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
+                Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
 
-        //        j += 2;
-        //        k += 2;
-        //    }
+                j += 2;
+                k += 2;
+            }
 
-        //    story.Begin(tokens[currentPlayer]);
-        //}
+            story.Begin(tokens[currentPlayer]);
+        }
 
         private void ActionAfterMove()
         {
