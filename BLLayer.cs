@@ -69,12 +69,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180426 HO dynamic gamesessionid
         //20180422
-        public static int GetPlayerPositionFromMySQL(int playerid)
+        public static int GetPlayerPositionFromMySQL(int playerid, int gameSessionId)
         {
             try
             {
-                DataTable dt = DBLayer.GetPlayerPositionFromMySQL(playerid);
+                DataTable dt = DBLayer.GetPlayerPositionFromMySQL(playerid,gameSessionId);
                 int position = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -92,30 +93,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetPlayerPositionToMySQL(playerid, position);
+                DBLayer.SetPlayerPositionToMySQL(playerid, position,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
             }
             catch (Exception)
             {
 
-                throw;
-            }
-        }
-
-        //20180422
-        public static int GetPlayerCashFromMySQL(int playerid)
-        {
-            try
-            {
-                DataTable dt = DBLayer.GetPlayerCashFromMySQL(playerid);
-                int cash = 0;
-                foreach (DataRow dr in dt.Rows)
-                {
-                    cash = int.Parse(dr[0].ToString());
-                }
-                return cash;
-            }
-            catch
-            {
                 throw;
             }
         }
@@ -140,11 +122,24 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //20180423 HO
-        public static void SetPlayerCashToMySQL(int playerid, int cash)
+        //public static void SetPlayerCashToMySQL(int playerid, int cash)
+        //{
+        //    try
+        //    {
+        //        DBLayer.SetPlayerCashToMySQL(playerid, cash);
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        //20180426 HO
+        public static void DynamicSetPlayerCashToMySQL(int playerid, int cash, int gameSessionId)
         {
             try
             {
-                DBLayer.SetPlayerCashToMySQL(playerid, cash);
+                DBLayer.DynamicSetPlayerCashToMySQL(playerid, cash,gameSessionId);
             }
             catch
             {
@@ -329,6 +324,26 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+
+        //obsoleted 20180426
+        //20180422
+        //public static int GetPlayerCashFromMySQL(int playerid)
+        //{
+        //    try
+        //    {
+        //        DataTable dt = DBLayer.GetPlayerCashFromMySQL(playerid);
+        //        int cash = 0;
+        //        foreach (DataRow dr in dt.Rows)
+        //        {
+        //            cash = int.Parse(dr[0].ToString());
+        //        }
+        //        return cash;
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
 
         /* list-style obsolete
         public static List<Player> GetPlayerList()

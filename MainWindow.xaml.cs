@@ -114,7 +114,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 for (int i = 0; i < players.Count(); i++)
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
-                    players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
+                    players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
                 }
 
 
@@ -419,19 +419,19 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     TokenAnimation();
 
-                    //players[currentPlayer].Position += players[currentPlayer].DieResult;
-
-                    //if (players[currentPlayer].Position > 35)
-                    //{
-                    //    players[currentPlayer].Cash += 200;
-                    //    players[currentPlayer].Position -= maxposition;
-                    //    BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
-                    //    lblNotification.Content = "You collected 200$ in income by passing start";
-                    //}
-                    //else if (players[currentPlayer].Position == 36)
-                    //{
-                    //    players[currentPlayer].Position = 0;
-                    //}
+                    //20180426 uncommented this, now position updates to db
+                    players[currentPlayer].Position += players[currentPlayer].DieResult;
+                    if (players[currentPlayer].Position > 35)
+                    {
+                        players[currentPlayer].Cash += 200;
+                        players[currentPlayer].Position -= maxposition;
+                        BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
+                        lblNotification.Content = "You collected 200$ in income by passing start";
+                    }
+                    else if (players[currentPlayer].Position == 36)
+                    {
+                        players[currentPlayer].Position = 0;
+                    }
 
                     //TokenAnimation();
 
@@ -569,7 +569,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
                 //db update
-                BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+                BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
 
                 foreach (Player p in players)
                 {
@@ -577,7 +577,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     {
                         p.Cash += cells[players[currentPlayer].Position].Rent;
                         //db update
-                        BLLayer.SetPlayerCashToMySQL(p.Id, p.Cash);
+                        BLLayer.DynamicSetPlayerCashToMySQL(p.Id, p.Cash,Properties.Settings.Default.settingsCurrentGameId);
                         lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
                     }
                 }
@@ -634,7 +634,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             lblNotification.Content = "You bought " + cells[players[currentPlayer].Position].Name;
             players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Price;
             //db update
-            BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
             RecreateCanvas();
         }
 
@@ -1328,7 +1328,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     cells[propertyId].Rent = rents[propertyId * 5 + 4];
                 }
 
-                BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
+                BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
 
                 //lblCash.Content = "Cash: " + BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
             }

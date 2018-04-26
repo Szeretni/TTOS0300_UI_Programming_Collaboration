@@ -50,15 +50,16 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180426 HO dynamic gamesession
         //20180422
-        public static DataTable GetPlayerPositionFromMySQL(int playerid)
+        public static DataTable GetPlayerPositionFromMySQL(int playerid,int gameSessionId)
         {
             try
             {
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
+                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -70,14 +71,15 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //20180426 HO dynamic gamesessionid
         //20180422
-        public static void SetPlayerPositionToMySQL(int playerid,int position)
+        public static void SetPlayerPositionToMySQL(int playerid,int position, int gameSessionId)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() +  " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1;";
+                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString() + "";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -87,26 +89,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                     }
                     conn.Close();
-                }
-            }
-            catch
-            {
-                throw;
-            }
-        }
-
-        //20180422
-        public static DataTable GetPlayerCashFromMySQL(int playerid)
-        {
-            try
-            {
-                DataTable dt = new DataTable();
-                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
-                {
-                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
-                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
-                    da.Fill(dt);
-                    return dt;
                 }
             }
             catch
@@ -135,14 +117,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423
-        public static void SetPlayerCashToMySQL(int playerid, int cash)
+        public static void DynamicSetPlayerCashToMySQL(int playerId, int cash, int gameSessionId)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET PlayerCash = "  + cash + " WHERE PlayerId = "+ playerid.ToString() + " AND GameSessionId = 1";
+                    string sql = "UPDATE GameSession_has_player SET PlayerCash = " + cash.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString() +"";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -422,6 +403,100 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+
+        //20180426 obsoleted
+        //20180422
+        //public static void SetPlayerPositionToMySQL(int playerid, int position)
+        //{
+        //    try
+        //    {
+        //        using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+        //        {
+        //            string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1;";
+        //            MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //            MySqlDataReader mysqldr;
+        //            conn.Open();
+        //            mysqldr = cmd.ExecuteReader();
+        //            while (mysqldr.Read())
+        //            {
+
+        //            }
+        //            conn.Close();
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        //obsoleted 20180426
+        //20180422
+        //public static DataTable GetPlayerPositionFromMySQL(int playerid)
+        //{
+        //    try
+        //    {
+        //        DataTable dt = new DataTable();
+        //        using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+        //        {
+        //            string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
+        //            MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+        //            da.Fill(dt);
+        //            return dt;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        //obsoleted 20180426
+        //20180423
+        //public static void SetPlayerCashToMySQL(int playerid, int cash)
+        //{
+        //    try
+        //    {
+        //        using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+        //        {
+        //            string sql = "UPDATE GameSession_has_player SET PlayerCash = "  + cash + " WHERE PlayerId = "+ playerid.ToString() + " AND GameSessionId = 1";
+        //            MySqlCommand cmd = new MySqlCommand(sql, conn);
+        //            MySqlDataReader mysqldr;
+        //            conn.Open();
+        //            mysqldr = cmd.ExecuteReader();
+        //            while (mysqldr.Read())
+        //            {
+
+        //            }
+        //            conn.Close();
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        //obsoleted 20180426
+        //20180422
+        //public static DataTable GetPlayerCashFromMySQL(int playerid)
+        //{
+        //    try
+        //    {
+        //        DataTable dt = new DataTable();
+        //        using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+        //        {
+        //            string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = 1";
+        //            MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+        //            da.Fill(dt);
+        //            return dt;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        throw;
+        //    }
+        //}
 
         /* list-style. obsolete
         public static List<Player> GetPlayerListsFromMySQL()
