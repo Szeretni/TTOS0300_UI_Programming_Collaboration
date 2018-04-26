@@ -117,8 +117,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
                 }
 
-
-
                 cells[1].Owner = 5;
                 cells[3].Owner = 5;
             }
@@ -293,6 +291,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Path = new PropertyPath("DieResult")
                 };
+
+                //20180426 HO
+                //get current players cash from db
+                players[currentPlayer].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
+                //MessageBox.Show(players[currentPlayer].Cash.ToString()); debug
 
                 txtPlayerName.SetBinding(TextBlock.DataContextProperty, b);
                 txtPlayerCash.SetBinding(TextBlock.DataContextProperty, b);
