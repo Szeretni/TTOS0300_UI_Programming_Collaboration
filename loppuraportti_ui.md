@@ -1,6 +1,5 @@
 # Loppuraportti: Lautapeli-klooni. (Monopoli)
-Hannu Oksman L2912
-Antti Tarvainen L4623
+Hannu Oksman L2912 ja Antti Tarvainen L4623
 
 ### 1. Asennus
 
@@ -34,6 +33,7 @@ Antti Tarvainen L4623
   8. Pelaaja maksaa toiselle pelaajalle vuokraa, kun menee toisen pelaajan omistamalle tontille.
   9. Pelaaja saa rahaa kun ohittaa lähtöruudun kulkematta vankilan kautta.
   10. Pelaaja joutuu vankilaan, jos joutuu "Go to Jail"-ruutuun.
+  11. Pitämällä kursoria tonttien nimen tai hinnan päällä näkee kuka omistaa tontin.
 
 * Listaa toteuttamatta jääneet toiminnalliset vaatimukset
 
@@ -63,7 +63,6 @@ Antti Tarvainen L4623
   1. Ohjelma käyttää Antin Raspilla olevaa tietokantapalvelinta.
   2. Pelinappulat ovat kuvia, mutta ne ovat exe:ssa.
 
-
 * Kuvaukset tietokannoista ml. tietokanta-kaavio
 
  [Tietokantaraportti](/Docs/loppuraportti.md)
@@ -83,15 +82,32 @@ Antti Tarvainen L4623
 * Toteuttaa toteuttamatta jääneet toiminnallisuudet.
 * Nettimoninpeli eri koneilla.
 * Entity Frameworkin käyttöönotto.
+* Koodia pitäisi aliohjelmoida enemmän.
+* Koodia pitäisi siirtää main:sta enemmän muualle.
 
 ### 6. Mitä opittu, mitkä olivat suurimmat haasteet, mitä kannattaisi tutkia/opiskella lisää jne
 
+* Opittu käyttöliittymän piirtämään elementtejä koodissa.
+* Opittu monikerrosarkkitehtuurin käyttöä ja havaittu siihen liittyviä etuja, kuten jäsentyneempi koodi. Osittain tämä on keksen, main:ssa on vielä paljon mitä voisi siirtää business layer:lle.
+* Opittu käyttämään tietokantaa ohjelmassa.
+* Opittu yksinkertaista Data Binding:a.
+* Opittu kuinka monimutkainen ja monipuolinen suhteellisen yksinkertainenkin sovellus voi olla.
+* Opittu poimimaan useamman kerroksen alla olevaa informaatiota sender:a käyttämällä.
+* Opittu jatkuvasti havaitsemaan miten asiat voisi tehdä paremmin.
+* Haasteet liittyivät oikeastaan kaikki käyttöliittymän piirtämiseen.
+* Haaste oli myös miten työstää yhdessä samanaikaisesti ja välttää merge conflict versionhallinnassa.
 * Kannattaisi tutkia Entity Frameworkia, opintojaksolla siihen käytettiin kymmenisen minuuttia.
 * Kannattaisi tutkia enemmän peruskomponentteja ja niiden käyttöä.
 * Kannattaisi tutkia enemmän eventhandlereita ja niiden käyttöä.
 * Kannattaisi tutkia enemmän delegaatteja ja niiden käyttöä.
+* Kannattaisi tutkia git-versionhallintaa ja kokeilla mm. branch:n käyttöä.
 
 ### 7. Tekijät, vastuiden ja työmäärän jakautuminen
 
+* Hannu Oksman L2912
+* Antti Tarvainen L4623
+* Työmäärä jakautui tasaisesti ja molemmat teki kaikkea. Antti jonkin verran enemmän käyttöliittymän piirtämistä ja Hanne jonkin verran enemmän tietokantaa ja muita tasoja.
 
 ### 8. Tekijöiden ehdotus arvosanaksi, ja perustelut sille
+
+5. Työ on monipuolinen, kattava, käyttää ulkopuolista dataa sekä käsittelee ja näyttää sitä eri tavoin ohjelman sisällä. Työssä on käytetty monikerrosarkkitehtuuria ja useita luokkia selkeyttämään ja helpottamaan tiedon käsittelyä. Käyttöliittymä on selkeä ja skaalautuva. Tunnemme hyvin työmme ja pystymme keskustelemaan siitä, joka kertoo paneutumisesta ja suuresta työmäärästä. Olemme käyttäneet GitHub-palvelua versionhallinnassa, joka osoittautui erittäin hyväksi ratkaisuksi. Tekijät saavat helposti git bash -ohjelman avulla hallittua paikallisia versioita ja työ on valmiiksi työnantajien nähtävillä. Tämä projekti on opettanut paljon ja antaa näkemystä miten seuraavan lukuvuoden projekteja voi tehdä tehokkaammin ja paremmin. Kiitettävää on myös se, että työssä on käytetty muilta opintojaksoilta opittua ja käytetty omaa tietokantapalvelinta.
