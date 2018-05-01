@@ -25,7 +25,7 @@ namespace TTOS0300_UI_Programming_Collaboration.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("91.154.199.251")]
+        [global::System.Configuration.DefaultSettingValueAttribute("91.155.218.44")]
         public string ip {
             get {
                 return ((string)(this["ip"]));
