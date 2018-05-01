@@ -41,6 +41,7 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
   2. Toistaiseksi ei voi ladata peliä tietokannasta käyttöliittymän kautta.
   3. Toistaiseksi uusi animaatio aiheuttaa kaatumisen, jos pelaajan nappula menisi lähtöruutuun ja sen ohi.
   4. Toistaiseksi pelaaja ei voi valita pelinappulaa.
+  5. Uuden pelaajan luonti.
 
 * Listaa toiminnallisuus joka toteuttiin ohi/yli alkuperäisten vaatimusten
 
