@@ -2,7 +2,7 @@
 Hannu Oksman L2912
 Antti Tarvainen L4623
 
-## 1. Asennus
+### 1. Asennus
 
 * Mitä asioita tehtävä ja huomioitava asennuksessa
 
@@ -19,7 +19,7 @@ Antti Tarvainen L4623
    Ei tarvitse tehdä mitään. Palvelin käyttää standardiporttia 3306, jonka pitäisi olla käyttäjän omassa verkossa auki.
 
 
-## 2. Tietoa ohjelmasta (mitä tekee, miksi etc)
+### 2. Tietoa ohjelmasta (mitä tekee, miksi etc)
 
 * Listaa toteutetut toiminnalliset vaatimukset
 
@@ -44,7 +44,7 @@ Antti Tarvainen L4623
 
 * Listaa toiminnallisuus joka toteuttiin ohi/yli alkuperäisten vaatimusten
 
-  1. -
+  Ei ole.
 
 * Listaa ei-toiminnalliset vaatimukset sekä mahdolliset reunaehdot/rajoitukset
   1. Rajapinnat. Käyttää tietokantapalvelinta, koska halusimme yhdistää tämän tietokanta-opintojaksoon.
@@ -55,10 +55,10 @@ Antti Tarvainen L4623
   6. Suorituskyky. Ohjelma ei jatkuvasti piirrä ruutua uudestaan, joten se toimii nopeasti.
 
 
-## 3. Kuvaruutukaappaukset tärkeimmistä käyttöliittymistä + lyhyet käyttöohjeet jollei "ilmiselvää"
-![mainwindow](../Images/mainwindow.PNG)
+### 3. Kuvaruutukaappaukset tärkeimmistä käyttöliittymistä + lyhyet käyttöohjeet jollei "ilmiselvää"
+![mainwindow](/Images/mainwindow.PNG)
 
-## 4. Ohjelman tarvitsemat /mukana tulevat tiedostot/tietokannat
+### 4. Ohjelman tarvitsemat /mukana tulevat tiedostot/tietokannat
 
   1. Ohjelma käyttää Antin Raspilla olevaa tietokantapalvelinta.
   2. Pelinappulat ovat kuvia, mutta ne ovat exe:ssa.
@@ -66,8 +66,8 @@ Antti Tarvainen L4623
 
 * Kuvaukset tietokannoista ml. tietokanta-kaavio
 
- [Tietokantaraportti](../Docs/loppuraportti.md)
-![er](../Images/monopolifinal.PNG)
+ [Tietokantaraportti](/Docs/loppuraportti.md)
+![er](/Images/monopolifinal.PNG)
 
 * Laita tarvittaessa mukaan tietokannan luontiskriptit ja testidatan lisäysskriptit
 
@@ -75,15 +75,23 @@ Antti Tarvainen L4623
 
 * Huomioitavaa käytössä
 
+   Tarvitsee Internet-yhteyden.
+
+### 5. Tiedossa olevat ongelmat ja bugit sekä jatkokehitysideat
+
+* Kaatuu tällä hetkellä, kun nappulan pitäisi mennä lähtöruudun kautta.
+* Toteuttaa toteuttamatta jääneet toiminnallisuudet.
+* Nettimoninpeli eri koneilla.
+* Entity Frameworkin käyttöönotto.
+
+### 6. Mitä opittu, mitkä olivat suurimmat haasteet, mitä kannattaisi tutkia/opiskella lisää jne
+
+* Kannattaisi tutkia Entity Frameworkia, opintojaksolla siihen käytettiin kymmenisen minuuttia.
+* Kannattaisi tutkia enemmän peruskomponentteja ja niiden käyttöä.
+* Kannattaisi tutkia enemmän eventhandlereita ja niiden käyttöä.
+* Kannattaisi tutkia enemmän delegaatteja ja niiden käyttöä.
+
+### 7. Tekijät, vastuiden ja työmäärän jakautuminen
 
 
-## 5. Tiedossa olevat ongelmat ja bugit sekä jatkokehitysideat
-
-
-## 6. Mitä opittu, mitkä olivat suurimmat haasteet, mitä kannattaisi tutkia/opiskella lisää jne
-
-
-## 7. Tekijät, vastuiden ja työmäärän jakautuminen
-
-
-## 8. Tekijöiden ehdotus arvosanaksi, ja perustelut sille
+### 8. Tekijöiden ehdotus arvosanaksi, ja perustelut sille
