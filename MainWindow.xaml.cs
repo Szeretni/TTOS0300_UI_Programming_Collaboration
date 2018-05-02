@@ -73,7 +73,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         int propertyId = 0;
         int serieId = 0;
         bool ownsAll = false;
-        int temp = 0;
         string pname = "No owner";
 
         public static double windowWidth = 0;
@@ -312,9 +311,9 @@ namespace TTOS0300_UI_Programming_Collaboration
                 txtPlayerCash.SetBinding(TextBlock.TextProperty, bCash);
                 txtPlayerDiceRoll.SetBinding(TextBlock.TextProperty, bDiceResult);
 
-                brNotifications.Width = windowWidth * 0.5;
+                brNotifications.Width = windowWidth * 0.64;
                 brNotifications.Height = windowHeight * 0.05;
-                brNotifications.Margin = new Thickness(windowWidth * 0.25, windowHeight * 0.27, windowWidth * 0.25, windowHeight * 0.25);
+                brNotifications.Margin = new Thickness(windowWidth * 0.18, windowHeight * 0.27, windowWidth * 0.18, windowHeight * 0.25);
 
                 brInfo.Width = windowWidth * 0.23;
                 brInfo.Height = windowHeight * 0.08;
@@ -409,107 +408,140 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //player can try to roll doubles 3 times to get out of jail
+        private void OnbtnJailDice_Click(object sender, RoutedEventArgs e)
+        {
+            Random rnd = new Random();
+
+            int firstDice = rnd.Next(1, 6);
+            int scndDice = rnd.Next(1, 6);
+
+            if (firstDice == scndDice)
+            {
+                players[currentPlayer].DieResult = firstDice + scndDice;
+
+                lblNotification.Content = "You were released from prison.";
+
+                players[currentPlayer].JailTime = 0;
+
+                players[currentPlayer].InJail = false;
+            }
+
+            else
+            {
+                players[currentPlayer].JailTime++;
+                EndTurn("Your dice result: " + firstDice.ToString() + ", " + scndDice.ToString());
+            }
+        }
+
+        //player can pay 50$ to get out of jail
+        private void OnbtnPayBail_Click(object sender, RoutedEventArgs e)
+        {
+            players[currentPlayer].Cash -= 50;
+
+            lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
+
+            players[currentPlayer].JailTime = 0;
+
+            players[currentPlayer].InJail = false;
+        }
+
+
         private void OnbuttonMoveToken_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                temp = currentPlayer;
-                //if die rolled, cannot roll again
-                if (players[currentPlayer].DieRolled != true)
+                //if player has been in jail for 3 turns he needs to pay 50$ to get out
+                if (players[currentPlayer].InJail == true)
                 {
-                    Random rnd = new Random();
-
-                    //20180422 players[0] -> players[currentPlayer]
-                    //also token[0] -> token[currentPlayer]
-                    players[currentPlayer].DieResult = rnd.Next(2,12);
-
-                    temp = players[currentPlayer].Position;
-
-                    int maxposition = 35;
-
-                    TokenAnimation();
-
-                    //20180426 uncommented this, now position updates to db
-                    players[currentPlayer].Position += players[currentPlayer].DieResult;
-                    if (players[currentPlayer].Position > 35)
+                    if (players[currentPlayer].JailTime == 3)
                     {
-                        players[currentPlayer].Cash += 200;
-                        players[currentPlayer].Position -= maxposition;
-                        BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
-                        lblNotification.Content = "You collected 200$ in income by passing start";
-                    }
-                    else if (players[currentPlayer].Position == 36)
-                    {
-                        players[currentPlayer].Position = 0;
+                        players[currentPlayer].Cash -= 50;
+
+                        lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
+
+                        players[currentPlayer].JailTime = 0;
+
+                        players[currentPlayer].InJail = false;
                     }
 
-                    //TokenAnimation();
+                    else
+                    {
+                        StackPanel stack = new StackPanel
+                        {
+                            Orientation = Orientation.Horizontal
+                        };
 
-                    //players moves through start position
+                        Button btnJailDice = new Button
+                        {
+                            Height = windowHeight * 0.05,
+                            Width = windowWidth * 0.16,
+                            FontSize = 14,
+                            Content = "Roll Dice",
+                        };
+                        btnJailDice.Click += new RoutedEventHandler(OnbtnJailDice_Click);
 
+                        Button btnPayBail = new Button
+                        {
+                            Height = windowHeight * 0.05,
+                            Width = windowWidth * 0.16,
+                            FontSize = 14,
+                            Content = "Pay 50$ bail",
+                        };
+                        btnPayBail.Click += new RoutedEventHandler(OnbtnPayBail_Click);
 
-                    //20180422
-                    //sets player's new position to db
-                    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+                        stack.Children.Add(btnJailDice);
+                        stack.Children.Add(btnPayBail);
 
-                    //Storyboard story = new Storyboard();
-
-                    ////send to prison animation
-                    //DoubleAnimation dbCanvasX = new DoubleAnimation();
-                    //if (players[currentPlayer].Position == 27)
-                    //{
-                    //    dbCanvasX.From = points[temp * 4].X;
-                    //    dbCanvasX.To = points[36].X;
-                    //    players[currentPlayer].Position = 9;
-                    //    lblNotification.Content = "You were sent to the prison!";
-                    //    //update position to db instead of only to canvas
-                    //    //otherwise when game loaded player would be at "go to jail"-cell
-                    //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-                    //}
-                    //else
-                    //{
-                    //    dbCanvasX.From = points[temp * 4 + currentPlayer].X;
-                    //    dbCanvasX.To = points[players[currentPlayer].Position * 4 + currentPlayer].X;
-                    //}
-                    //dbCanvasX.Duration = new Duration(TimeSpan.FromSeconds(2));
-
-                    //DoubleAnimation dbCanvasY = new DoubleAnimation();
-                    //if (players[currentPlayer].Position == 27)
-                    //{
-                    //    dbCanvasY.From = points[temp * 4].Y;
-                    //    dbCanvasY.To = points[36].Y;
-                    //}
-                    //else
-                    //{
-                    //    dbCanvasY.From = points[temp * 4 + currentPlayer].Y;
-                    //    dbCanvasY.To = points[players[currentPlayer].Position * 4 + currentPlayer].Y;
-                    //}
-
-                    //story.Children.Add(dbCanvasX);
-                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    //Storyboard.SetTargetProperty(dbCanvasX, new PropertyPath(Canvas.LeftProperty));
-
-                    //story.Children.Add(dbCanvasY);
-                    //Storyboard.SetTargetName(dbCanvasX, tokens[currentPlayer].Name);
-                    //Storyboard.SetTargetProperty(dbCanvasY, new PropertyPath(Canvas.TopProperty));
-
-                    //story.Begin(tokens[currentPlayer]);
-
-                    //20180422
-                    players[currentPlayer].DieRolled = true;
-                    //20180423 HO
-                    //updates die rolled to db
-                    BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
+                        Canvas.SetLeft(stack, windowWidth * 0.4);
+                        Canvas.SetTop(stack, windowHeight * 0.3);
+                        canvasObj.Children.Add(stack);
+                    }
                 }
 
-                //20180422
                 else
                 {
-                    //btnDice.IsHitTestVisible = false;
-                    lblNotification.Content = "You have already rolled the die.";
-                }
+                    //if die rolled, cannot roll again
+                    if (players[currentPlayer].DieRolled != true)
+                    {
+                        Random rnd = new Random();
 
-                ActionAfterMove();
+                        //players[currentPlayer].DieResult = rnd.Next(2, 12);
+
+                        players[currentPlayer].DieResult = 1;
+
+                        TokenAnimation();
+
+                        //20180426 uncommented this, now position updates to db
+                        if (players[currentPlayer].Position + players[currentPlayer].DieResult == 27)
+                        {
+                            players[currentPlayer].Position = 9;
+                            EndTurn("You were sent to the prison! Current player: " + players[currentPlayer].Name);
+                        }
+
+                        else
+                        {
+                            players[currentPlayer].Position += players[currentPlayer].DieResult;
+                        }
+
+                        //20180422
+                        //sets player's new position to db
+                        BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+
+                        //20180422
+                        players[currentPlayer].DieRolled = true;
+                        //20180423 HO
+                        //updates die rolled to db
+                        BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
+                    }
+
+                    //20180422
+                    else
+                    {
+                        //btnDice.IsHitTestVisible = false;
+                        lblNotification.Content = "You have already rolled the die.";
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -518,70 +550,112 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        // works fine if player doesnt pass startline, needs fix
         private void TokenAnimation()
         {
-            Storyboard story = new Storyboard();
-            // dicerollin mukaan animaatioita yksi ruutu kerrallaan
-            for (int i = 0, j = -2, k = -1; i < players[currentPlayer].dieResult; i++)
+            try
             {
-                da.Add(new DoubleAnimation());
-                //if (players[currentPlayer].Position == 27)
-                //{
-                //    da[j + 2].From = points[temp * 4].X;
-                //    da[j + 2].To = points[36].X;
-                //    players[currentPlayer].Position = 9;
-                //    lblNotification.Content = "You were sent to the prison!";
-                //    //update position to db instead of only to canvas
-                //    //otherwise when game loaded player would be at "go to jail"-cell
-                //    BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-                //}
-                //else
-                //{
-                da[j + 2].From = points[(temp + i) * 4 + currentPlayer].X;
-                
-                //20180426 HO hard coded to avoid OoI
-                if ((temp + i + 1) > 35) 
+                Storyboard story = new Storyboard();
+                story.Completed += new EventHandler(Story_Completed);
+
+                //animate token one cell at a time for as many times as the diceroll result is
+                for (int i = 0, j = 1, k = 1; i < players[currentPlayer].dieResult; i++, j++, k++)
                 {
-                    MessageBox.Show((36 - (temp + i + 1)).ToString());
-                    da[j + 2].To = points[36-((temp + i + 1) * 4 + currentPlayer)].X;
+                    //if player would go past start, anim normally from player position to cell 35, from cell 35 to cell 0 and then normally again
+                    if (players[currentPlayer].Position + players[currentPlayer].DieResult > 35)
+                    {
+                        if (players[currentPlayer].Position + j == 36)
+                        {
+                            NewDoubleAnimation(points[35 * 4 + currentPlayer].X, points[0 + currentPlayer].X, points[35 * 4 + currentPlayer].Y, points[0 + currentPlayer].Y,  k, story);
+
+                            players[currentPlayer].dieResult -= i;
+
+                            players[currentPlayer].Position = 0;
+
+                            players[currentPlayer].Cash += 200;
+                            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+                            lblNotification.Content = "You collected 200$ in income by passing start";
+                            i = 0;
+                        }
+
+                        else
+                        {
+                            NewDoubleAnimation(points[(players[currentPlayer].Position + i) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i) * 4 + currentPlayer].Y,
+                            points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].Y, k, story);
+                        }
+                    }
+
+                    //if player lands on "go to prison", he'll be sent to prison from cell 27 to cell 9
+                    else if (players[currentPlayer].Position + players[currentPlayer].DieResult == 27)
+                    {
+                        if (players[currentPlayer].Position + j == 27)
+                        {
+                            NewDoubleAnimation(points[108 + currentPlayer].X, points[36 + currentPlayer].X, points[108 + currentPlayer].Y, points[36 + currentPlayer].Y, i, story);
+
+                            players[currentPlayer].InJail = true;
+                        }
+
+                        else
+                        {
+                            NewDoubleAnimation(points[(players[currentPlayer].Position + i) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i) * 4 + currentPlayer].Y,
+                                points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].Y, k, story);
+                        }
+                    }
+
+                    else
+                    {
+                        NewDoubleAnimation(points[(players[currentPlayer].Position + i) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].X, points[(players[currentPlayer].Position + i) * 4 + currentPlayer].Y,
+                            points[(players[currentPlayer].Position + i + 1) * 4 + currentPlayer].Y, k, story);
+                    }
                 }
-                else
-                {
-                    da[j + 2].To = points[(temp + i + 1) * 4 + currentPlayer].X;
-                }
 
-                da[j + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
-                //}
-                da[j + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
-
-                da.Add(new DoubleAnimation());
-                //if (players[currentPlayer].Position == 27)
-                //{
-                //    da[k + 2].From = points[(temp + i) * 4].Y;
-                //    da[k + 2].To = points[36].Y;
-                //}
-                //else
-                //{
-                da[k + 2].From = points[(temp + i) * 4 + currentPlayer].Y;
-                da[k + 2].To = points[(temp + i + 1) * 4 + currentPlayer].Y;
-                da[k + 2].BeginTime = TimeSpan.FromMilliseconds(500 * i);
-                //}
-                da[k + 2].Duration = new Duration(TimeSpan.FromMilliseconds(300));
-
-                story.Children.Add(da[j + 2]);
-                Storyboard.SetTargetName(da[j + 2], tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(da[j + 2], new PropertyPath(Canvas.LeftProperty));
-
-                story.Children.Add(da[k + 2]);
-                Storyboard.SetTargetName(da[k + 2], tokens[currentPlayer].Name);
-                Storyboard.SetTargetProperty(da[k + 2], new PropertyPath(Canvas.TopProperty));
-
-                j += 2;
-                k += 2;
+                story.Begin(tokens[currentPlayer]);
             }
 
-            story.Begin(tokens[currentPlayer]);
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "TokenAnimation");
+                //throw;
+            }
+        }
+
+        private void Story_Completed(object sender, EventArgs e)
+        {
+            ActionAfterMove();
+        }
+
+        private void NewDoubleAnimation(double fromX, double toX, double fromY, double toY, int i, Storyboard story)
+        {
+            try
+            {
+                DoubleAnimation animX = new DoubleAnimation();
+
+                animX.From = fromX;
+                animX.To = toX;
+
+                animX.BeginTime = TimeSpan.FromMilliseconds(500 * i);
+                animX.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+
+                DoubleAnimation animY = new DoubleAnimation();
+
+                animY.From = fromY;
+                animY.To = toY;
+
+                animY.BeginTime = TimeSpan.FromMilliseconds(500 * i);
+                animY.Duration = new Duration(TimeSpan.FromMilliseconds(300));
+
+                story.Children.Add(animX);
+                Storyboard.SetTargetName(animX, tokens[currentPlayer].Name);
+                Storyboard.SetTargetProperty(animX, new PropertyPath(Canvas.LeftProperty));
+
+                story.Children.Add(animY);
+                Storyboard.SetTargetName(animY, tokens[currentPlayer].Name);
+                Storyboard.SetTargetProperty(animY, new PropertyPath(Canvas.TopProperty));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "DoubleAnimation");
+                //throw;
+            }
         }
 
         private void ActionAfterMove()
@@ -1163,17 +1237,22 @@ namespace TTOS0300_UI_Programming_Collaboration
                 
                 try
                 {
-                    BLMethod.NextTurn(ref currentPlayer, ref players);
-
-                    RecreateCanvas();
-
-                    lblNotification.Content = "Current player: " + players[currentPlayer].Name;
+                    EndTurn("Current player: " + players[currentPlayer].Name);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("btnNextPlayer_Click: " + ex.Message);
                 } 
             }
+        }
+
+        private void EndTurn(string notification)
+        {
+            BLMethod.NextTurn(ref currentPlayer, ref players);
+
+            RecreateCanvas();
+
+            lblNotification.Content = notification;
         }
 
         private void OnbtnBuyBuildings_Click(object sender, RoutedEventArgs e)
@@ -1190,18 +1269,21 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     if (players[currentPlayer].Id == c.Owner)
                     {
-                        Button btn = new Button
+                        // cannot build on railwaystations with serie id 9
+                        if (c.SerieId != 9)
                         {
-                            Height = 20,
-                            Width = 200,
-                            Content = c.Name,
-                            Name = c.Name.ToString(),
-                            Background = Brushes.White
-                        };
-                        btn.Click += new RoutedEventHandler(OnbtnBuyForCell_Click);
-                        stack.Children.Add(btn);
+                            Button btn = new Button
+                            {
+                                Height = 20,
+                                Width = 200,
+                                Content = c.Name,
+                                Background = Brushes.White
+                            };
+                            btn.Click += new RoutedEventHandler(OnbtnBuyForCell_Click);
+                            stack.Children.Add(btn);
 
-                        i++;
+                            i++;
+                        }
                     }
                 }
 

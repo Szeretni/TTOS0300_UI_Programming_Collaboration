@@ -16,6 +16,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         public int Id { get; set; }
         public string name;
+        public bool InJail = false;
+        public int JailTime = 0;
         private int cash = 0;
         private bool rentPaid = false; //20180426rent
         public int position = 0;
