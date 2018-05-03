@@ -39,7 +39,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT Player.PlayerId,PlayerName FROM Player INNER JOIN GameSession_has_player ON GameSession_has_player.PlayerId = Player.PlayerId WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
+                    string sql = "SELECT Player.PlayerId,PlayerName FROM Player INNER JOIN GameSession_has_player ON GameSession_has_player.PlayerId = Player.PlayerId WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -62,6 +62,25 @@ namespace TTOS0300_UI_Programming_Collaboration
                     //string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell"; //HO20180426 obsoleted
                     //owner added
                     string sql = "SELECT Cell.CellId,Name,Rent,Price,SerieId,CellTypeId,Player_has_Cell.PlayerId AS Owner FROM Cell LEFT OUTER JOIN Player_has_Cell ON Cell.CellId = Player_has_Cell.CellId";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static DataTable GetGameSessionsFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT GameSessionId FROM GameSession";
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -220,7 +239,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = 1";
+                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -274,7 +293,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CurrentPlayerId FROM GameSession WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
+                    string sql = "SELECT CurrentPlayerId FROM GameSession WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -296,7 +315,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT DieRolled FROM GameSession_has_player WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1";
+                    string sql = "SELECT DieRolled FROM GameSession_has_player WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -317,7 +336,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET DieRolled = " + dieRolled.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = 1";
+                    string sql = "UPDATE GameSession_has_player SET DieRolled = " + dieRolled.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -342,7 +361,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE Player_has_Cell SET HotelCount = " + hotelcount.ToString() + ", HouseCount = " + housecount.ToString() + " WHERE CellId = " + cellid.ToString() + " AND GameSessionId = 1";
+                    string sql = "UPDATE Player_has_Cell SET HotelCount = " + hotelcount.ToString() + ", HouseCount = " + housecount.ToString() + " WHERE CellId = " + cellid.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -405,13 +424,13 @@ namespace TTOS0300_UI_Programming_Collaboration
         }
 
         //20180425 HO
-        public static void SetNewGameIdToMySQL(int gamesessionid)
+        public static void SetNewGameIdToMySQL(int gamesessionid, int playerid)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "INSERT INTO GameSession (GameSessionId) VALUES (" + gamesessionid + ")";
+                    string sql = "INSERT INTO GameSession (GameSessionId, CurrentPlayerId) VALUES (" + gamesessionid + "," + playerid + ")";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();

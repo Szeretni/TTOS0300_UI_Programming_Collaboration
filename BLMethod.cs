@@ -93,12 +93,12 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         //20180425
         //create new game to db
-        static public void NewGame(NewGame newGame)
+        static public void NewGame(NewGame newGame, int playerid)
         {
             try
             {
                 //new gamesessionid to db
-                BLLayer.SetNewGameIdToMySQL(newGame.GameId);
+                BLLayer.SetNewGameIdToMySQL(newGame.GameId, playerid);
                 //players to gamesession
                 foreach (Player p in newGame.NewPlayers)
                 {

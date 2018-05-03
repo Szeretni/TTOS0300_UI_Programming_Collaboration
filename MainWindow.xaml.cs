@@ -35,6 +35,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Point> hoverPoints = new List<Point>();
         List<Image> buildings = new List<Image>();
         List<Player> newplayers = new List<Player>(); //20180425 HO used to manage new game's players
+        List<int> games = new List<int>();
+        List<TextBlock> cards = new List<TextBlock>();
         NewGame newgame = new NewGame(); //20180425 HO used to manage new game
 
         int[] rents =
@@ -63,6 +65,16 @@ namespace TTOS0300_UI_Programming_Collaboration
             200 ,600    ,1400   ,1700   ,2000,
         };
 
+        string[] chance =
+        {
+            "Maksa koulumaksuja 50$",
+        };
+
+        string[] communitychest =
+        {
+           "Lääkärinpalkkio maksa 50$",
+        };
+
         int[] buildingcosts = { 50, 50, 100, 100, 150, 150, 200, 200 };
 
         int bordernumber = 0;
@@ -75,11 +87,16 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         public MainWindow()
         {
+            //Properties.Settings.Default.settingsCurrentGameId = 1;
+            //MessageBox.Show(Properties.Settings.Default.settingsCurrentGameId.ToString());
             //MessageBox.Show(Properties.Settings.Default.settingsCurrentGameId.ToString());
             //Properties.Settings.Default.settingsCurrentGameId = 1;
+
+            LoadPlayers();
+
             InitializeComponent();
             //20180422
-            LoadPlayers();
+            
 
             //20180422
             if (players.Count() != 0)
@@ -101,10 +118,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void LoadPlayers()
         {
             try
-            {
+            {   
                 //players = BLLayer.GetAllPlayersFromDt(); obsoleted 20180503
                 players = BLLayer.GetGamesPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
+                games = BLLayer.GetGameSessionsFromDt();
 
                 //init more player data todo 
                 for (int i = 0; i < players.Count(); i++)
@@ -114,10 +132,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId); //20180426 dynamic gamesessionid
                     players[i].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[i].Id, Properties.Settings.Default.settingsCurrentGameId);
                 }
-
-                //temp antin
-                //cells[1].Owner = 5;
-                //cells[3].Owner = 5;
             }
             catch (Exception ex)
             {
@@ -148,13 +162,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             for (int i = 0; i < bordernumber; i++)
             {
                 borders[i].Child.MouseEnter += Child_MouseEnter;
-                borders[i].Child.MouseLeave += Child_MouseLeave;
             }
-        }
-
-        private void Child_MouseLeave (object sender, MouseEventArgs e)
-        {
-            RecreateCanvas();
         }
 
         //20180424
@@ -422,7 +430,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             else
             {
                 players[currentPlayer].JailTime++;
-                EndTurn("Your dice result: " + firstDice.ToString() + ", " + scndDice.ToString());
+                EndTurn("Your dice result: " + firstDice.ToString() + ", " + scndDice.ToString() + " ");
             }
         }
 
@@ -465,13 +473,13 @@ namespace TTOS0300_UI_Programming_Collaboration
                     {
                         StackPanel stack = new StackPanel
                         {
-                            Orientation = Orientation.Horizontal
+                            Orientation = Orientation.Vertical
                         };
 
                         Button btnJailDice = new Button
                         {
-                            Height = windowHeight * 0.03,
-                            Width = windowWidth * 0.2,
+                            Height = windowHeight * 0.05,
+                            Width = windowWidth * 0.25,
                             FontSize = 14,
                             Content = "Roll Dice",
                         };
@@ -479,8 +487,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                         Button btnPayBail = new Button
                         {
-                            Height = windowHeight * 0.03,
-                            Width = windowWidth * 0.2,
+                            Height = windowHeight * 0.05,
+                            Width = windowWidth * 0.25,
                             FontSize = 14,
                             Content = "Pay 50$ bail",
                         };
@@ -489,8 +497,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                         stack.Children.Add(btnJailDice);
                         stack.Children.Add(btnPayBail);
 
-                        Canvas.SetLeft(stack, windowWidth * 0.4);
-                        Canvas.SetTop(stack, windowHeight * 0.4);
+                        Canvas.SetLeft(stack, windowWidth * 0.37);
+                        Canvas.SetTop(stack, windowHeight * 0.35);
                         canvasObj.Children.Add(stack);
                     }
                 }
@@ -499,7 +507,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Random rnd = new Random();
 
-                    MoveToken(rnd.Next(2, 12));
+                    //MoveToken(rnd.Next(2, 12));
+                    MoveToken(1);
                 }
             }
             catch (Exception ex)
@@ -662,35 +671,164 @@ namespace TTOS0300_UI_Programming_Collaboration
         //if cell has no owner call for buyproperty method
         private void ActionAfterMove()
         {
-            if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
+            try
             {
-                //20180426rent
-                //prevent unlimited rent issue by clickin roll
-                if (players[currentPlayer].RentPaid)
+
+                if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
                 {
-                    lblNotification.Content = "You've already moved and paid rent.";
-                }
-                else
-                {
-                    players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
-                    players[currentPlayer].RentPaid = true; //20180426 HO
-                    foreach (Player p in players)
+                    //20180426rent
+                    //prevent unlimited rent issue by clickin roll
+                    if (players[currentPlayer].RentPaid)
                     {
-                        if (cells[players[currentPlayer].Position].Owner == p.Id)
+                        lblNotification.Content = "You've already moved and paid rent.";
+                    }
+                    else
+                    {
+                        players[currentPlayer].Cash -= cells[players[currentPlayer].Position].Rent;
+                        players[currentPlayer].RentPaid = true; //20180426 HO
+                        foreach (Player p in players)
                         {
-                            p.Cash += cells[players[currentPlayer].Position].Rent;
-                            //db update
-                            BLLayer.DynamicSetPlayerCashToMySQL(p.Id, p.Cash, Properties.Settings.Default.settingsCurrentGameId);
-                            lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
+                            if (cells[players[currentPlayer].Position].Owner == p.Id)
+                            {
+                                p.Cash += cells[players[currentPlayer].Position].Rent;
+                                //db update
+                                BLLayer.DynamicSetPlayerCashToMySQL(p.Id, p.Cash, Properties.Settings.Default.settingsCurrentGameId);
+                                lblNotification.Content = "You paid " + cells[players[currentPlayer].Position].Rent + "$ to " + p.Name;
+                            }
                         }
                     }
-                }                
-            }
+                }
 
-            else if (cells[players[currentPlayer].Position].Owner == 0 && cells[players[currentPlayer].Position].Price != 0 )
-            {
-                BuyProperty();
+                else if (cells[players[currentPlayer].Position].Owner == 0 && cells[players[currentPlayer].Position].Price != 0)
+                {
+                    BuyProperty();
+                }
+
+                else if (cells[players[currentPlayer].Position].Name == "Chance")
+                {
+                    cards.Add( new TextBlock
+                    {
+                        Background = Brushes.Coral,
+                        FontSize = 1,
+                        FontWeight = FontWeights.UltraBold,
+                        Width = 1,
+                        Text = chance[0],
+                        TextAlignment = TextAlignment.Center,
+                        Name = "Chance"
+                    });
+
+                    canvasObj.RegisterName(cards[0].Name, cards[0]);
+
+                    Canvas.SetLeft(cards[0], windowWidth * 0.2);
+                    Canvas.SetTop(cards[0], windowHeight * 0.4);
+                    canvasObj.Children.Add(cards[0]);
+
+                    CardAnimation(cards[0], windowHeight * 0.1, 1, windowWidth * 0.6, 1, 1, 20);
+                }
+
+                else if (cells[players[currentPlayer].Position].Name == "Community Chest")
+                {
+                    cards.Add(new TextBlock
+                    {
+                        Background = Brushes.Coral,
+                        FontSize = 1,
+                        FontWeight = FontWeights.UltraBold,
+                        Width = 1,
+                        Text = communitychest[0],
+                        TextAlignment = TextAlignment.Center,
+                        Name = "Community"
+                    });
+
+                    canvasObj.RegisterName(cards[0].Name, cards[0]);
+
+                    Canvas.SetLeft(cards[0], windowWidth * 0.2);
+                    Canvas.SetTop(cards[0], windowHeight * 0.4);
+                    canvasObj.Children.Add(cards[0]);
+
+                    CardAnimation(cards[0], windowHeight * 0.1, 1, windowWidth * 0.6, 1, 1, 20);
+                }
+
+                
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Action after move");
+            }
+        }
+
+        private void CardAnimation(TextBlock t, double toh, double fromh, double tow, double fromw, int fromFsize, int toFsize)
+        {
+            Storyboard cardstory = new Storyboard();
+
+            cardstory.Completed += new EventHandler(CardStory_Completed);
+
+            DoubleAnimation animHeight = new DoubleAnimation();
+
+            animHeight.From = fromh;
+            animHeight.To = toh;
+
+            animHeight.Duration = new Duration(TimeSpan.FromMilliseconds(600));
+
+            DoubleAnimation animWidth = new DoubleAnimation();
+
+            animWidth.From = fromw;
+            animWidth.To = tow;
+
+            animWidth.Duration = new Duration(TimeSpan.FromMilliseconds(600));
+
+            DoubleAnimation animFontSize = new DoubleAnimation();
+
+            animFontSize.From = 1;
+            animFontSize.To = 20;
+
+            animFontSize.Duration = new Duration(TimeSpan.FromMilliseconds(600));
+
+            cardstory.Children.Add(animHeight);
+            Storyboard.SetTargetName(animHeight, t.Name);
+            Storyboard.SetTargetProperty(animHeight, new PropertyPath(HeightProperty));
+
+            cardstory.Children.Add(animWidth);
+            Storyboard.SetTargetName(animWidth, t.Name);
+            Storyboard.SetTargetProperty(animWidth, new PropertyPath((WidthProperty)));
+
+            cardstory.Children.Add(animFontSize);
+            Storyboard.SetTargetName(animFontSize, t.Name);
+            Storyboard.SetTargetProperty(animFontSize, new PropertyPath(FontSizeProperty));
+
+            cardstory.Begin(t);
+        }
+
+        private void CardStory_Completed(object sender, EventArgs e)
+        {
+            Button bCloseCard = new Button
+            {
+                Background = Brushes.Coral,
+                FontSize = 14,
+                FontWeight = FontWeights.UltraBold,
+                Height = windowHeight * 0.05,
+                Width = windowWidth * 0.25,
+                Content = "Ok"
+            };
+
+            bCloseCard.Click += new RoutedEventHandler(OnbCloseCard_Click);
+
+            Canvas.SetLeft(bCloseCard, windowWidth * 0.37);
+            Canvas.SetTop(bCloseCard, (windowHeight * 0.35) + (windowHeight * 0.1));
+            canvasObj.Children.Add(bCloseCard);
+        }
+
+        private void OnbCloseCard_Click(object sender, RoutedEventArgs e)
+        {
+            players[currentPlayer].Cash -= 50;
+            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+
+            canvasObj.UnregisterName(cards[0].Name);
+
+            cards.Clear();
+
+            RecreateCanvas();
+
+            lblNotification.Content = "You paid 50$";
         }
 
         private void BuyProperty()
@@ -1526,9 +1664,48 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void OnbtnLoadGame_Click(object sender, RoutedEventArgs e)
         {
-            Properties.Settings.Default.settingsCurrentGameId = 1;
-            LoadPlayers();
-            RecreateCanvas();
+            ListBox list = new ListBox();
+            list.Width = windowWidth * 0.2;
+            list.Height = windowHeight * 0.2;
+            list.SelectionMode = SelectionMode.Single;
+
+            foreach (int game in games)
+            {
+                list.Items.Add(game.ToString());
+            }
+
+            list.SelectionChanged += new SelectionChangedEventHandler(OnListSelectionChanged);
+
+            Canvas.SetLeft(list, windowWidth * 0.4);
+            Canvas.SetTop(list, windowHeight * 0.4);
+            canvasObj.Children.Add(list);
+        }
+
+        private void OnListSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                string text = e.AddedItems[0].ToString();
+
+                MessageBox.Show(text);
+                int gamesession = 1;
+                bool result = int.TryParse(text, out int i);
+
+                if (result)
+                {
+                    gamesession = i;
+                }
+
+                Properties.Settings.Default.settingsCurrentGameId = gamesession;
+
+                LoadPlayers();
+                RecreateCanvas();
+            }
+
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "List selection");
+            }
         }
 
         //20180425 HO
@@ -1629,7 +1806,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 newgame.NewPlayers = newplayers;
                 //newgame to db
-                BLMethod.NewGame(newgame);
+                BLMethod.NewGame(newgame, newplayers[0].Id);
                 //clear newplayers for new new game
                 newplayers = new List<Player>();
                 MessageBox.Show("New Game Id: " + newgame.GameId.ToString());

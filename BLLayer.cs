@@ -42,6 +42,25 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        public static List<int> GetGameSessionsFromDt()
+        {
+            try
+            {
+                List<int> games = new List<int>();
+                DataTable dt = DBLayer.GetGameSessionsFromMySQL();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    games.Add(int.Parse(dr[0].ToString()));
+                }
+                return games;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public static List<Player> GetGamesPlayersFromDt()
         {
             try
@@ -364,11 +383,11 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         //20180425 HO
         //set new game id to db
-        public static void SetNewGameIdToMySQL(int gamesessionid)
+        public static void SetNewGameIdToMySQL(int gamesessionid, int playerid)
         {
             try
             {
-                DBLayer.SetNewGameIdToMySQL(gamesessionid);
+                DBLayer.SetNewGameIdToMySQL(gamesessionid, playerid);
             }
             catch
             {
