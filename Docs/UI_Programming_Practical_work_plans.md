@@ -14,6 +14,8 @@ Opettajalle ja työnantajille.
 
 Windows. C# ja Tietokannat kurssin harjoitustyöksi suunniteltu MySQL tietokanta MySQL-palvelimella.
 
+![er](/Images/monopolifinal.PNG)
+
 🔖 Lista toteutettavista toiminnoista (käyttäjän näkökulmasta), tästä kannattaa pirtää UML:n Käyttötapaus-kaavio
 
 ![use case](/Images/ttos0300_use_case.png)
@@ -28,8 +30,6 @@ Windows. C# ja Tietokannat kurssin harjoitustyöksi suunniteltu MySQL tietokanta
 * Rahan lainaaminen pankilta
 * Rahan maksaminen/saaminen
 * Lainan maksu
-
-![er](/Images/monopolifinal.PNG)
 
 🔖 Työnjako, kuinka työnjako aiotaan hoitaa eli vastuut eri tehtäville
 
