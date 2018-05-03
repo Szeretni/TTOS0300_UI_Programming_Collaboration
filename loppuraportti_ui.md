@@ -34,12 +34,12 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
   9. Pelaaja saa rahaa kun ohittaa lähtöruudun kulkematta vankilan kautta.
   10. Pelaaja joutuu vankilaan, jos joutuu "Go to Jail"-ruutuun.
   11. Pitämällä kursoria tonttien nimen tai hinnan päällä näkee kuka omistaa tontin.
+  12. Toisen pelin voi ladata valikosta.
+  13. Sattumakorteille yksinkertainen toiminnallisuus.
 
 * Listaa toteuttamatta jääneet toiminnalliset vaatimukset
 
   1. Toistaiseksi puuttuu uuden pelin luonnin käyttöliittymä. Koodi on olemassa.
-  2. Toistaiseksi ei voi ladata peliä tietokannasta käyttöliittymän kautta.
-  3. Toistaiseksi uusi animaatio aiheuttaa kaatumisen, jos pelaajan nappula menisi lähtöruutuun ja sen ohi.
   4. Toistaiseksi pelaaja ei voi valita pelinappulaa.
   5. Uuden pelaajan luonti.
 
@@ -79,12 +79,14 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
 
 ### 5. Tiedossa olevat ongelmat ja bugit sekä jatkokehitysideat
 
-* Kaatuu tällä hetkellä, kun nappulan pitäisi mennä lähtöruudun kautta.
 * Toteuttaa toteuttamatta jääneet toiminnallisuudet.
 * Nettimoninpeli eri koneilla.
 * Entity Frameworkin käyttöönotto.
 * Koodia pitäisi aliohjelmoida enemmän.
 * Koodia pitäisi siirtää main:sta enemmän muualle.
+* Taloja pitäisi pystyä rakentamaan vain tasaisesti saman värin tonteille.
+* Go to Jail animaatio toimii, mutta ei niin kuin pitäisi.
+* Lähtöruudun ohikulku heittää yhdellä ruudulla.
 
 ### 6. Mitä opittu, mitkä olivat suurimmat haasteet, mitä kannattaisi tutkia/opiskella lisää jne
 
