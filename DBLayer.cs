@@ -31,6 +31,26 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
+
+        public static DataTable GetGamesPlayersFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT Player.PlayerId,PlayerName FROM Player INNER JOIN GameSession_has_player ON GameSession_has_player.PlayerId = Player.PlayerId WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
         public static DataTable GetCellsFromMySQL()
         {
             try
@@ -254,7 +274,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CurrentPlayerId FROM GameSession WHERE GameSessionId = 1";
+                    string sql = "SELECT CurrentPlayerId FROM GameSession WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;

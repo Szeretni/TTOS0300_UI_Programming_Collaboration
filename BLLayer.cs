@@ -12,6 +12,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         // !!!
         // Only Db methods
         // !!!
+
         public static List<Player> GetAllPlayersFromDt()
         {
             try
@@ -30,6 +31,31 @@ namespace TTOS0300_UI_Programming_Collaboration
                         Name = dr[1].ToString()
                         //Cash = int.Parse(dr[2].ToString()), 20180425T2000
                         //Position = int.Parse(dr[3].ToString()) 20180425T2000
+                    };
+                    players.Add(player);
+                }
+                return players;
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static List<Player> GetGamesPlayersFromDt()
+        {
+            try
+            {
+                List<Player> players = new List<Player>();
+                DataTable dt = DBLayer.GetGamesPlayersFromMySQL();
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    Player player = new Player
+                    {
+                        //PlayerId,PlayerName
+                        Id = int.Parse(dr[0].ToString()),
+                        Name = dr[1].ToString()
                     };
                     players.Add(player);
                 }

@@ -76,7 +76,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         public MainWindow()
         {
             //MessageBox.Show(Properties.Settings.Default.settingsCurrentGameId.ToString());
-            Properties.Settings.Default.settingsCurrentGameId = 1;
+            //Properties.Settings.Default.settingsCurrentGameId = 1;
             InitializeComponent();
             //20180422
             LoadPlayers();
@@ -102,14 +102,9 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                players = BLLayer.GetAllPlayersFromDt();
+                //players = BLLayer.GetAllPlayersFromDt(); obsoleted 20180503
+                players = BLLayer.GetGamesPlayersFromDt();
                 cells = BLLayer.GetAllCellsFromDt();
-
-                //owner debugging 
-                //string hannutest = players.Find(x => x.Id == 1).Name;
-                //MessageBox.Show(cells[0].Owner.ToString());
-                //MessageBox.Show(cells[1].Owner.ToString() + cells[1].Name + hannutest);
-                //MessageBox.Show(cells[2].Owner.ToString());
 
                 //init more player data todo 
                 for (int i = 0; i < players.Count(); i++)
@@ -1531,7 +1526,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 
         private void OnbtnLoadGame_Click(object sender, RoutedEventArgs e)
         {
-
+            Properties.Settings.Default.settingsCurrentGameId = 1;
+            LoadPlayers();
+            RecreateCanvas();
         }
 
         //20180425 HO
@@ -1547,7 +1544,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             StackPanel stack = new StackPanel();
 
-            foreach (Player p in players)
+            foreach (Player p in BLLayer.GetAllPlayersFromDt()) //20180503 players
             {
                 Button btnSelectPlayer = new Button
                 {
@@ -1603,7 +1600,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 Button b = (Button)sender;
 
-                var p = players.Find(x => x.Name.Contains(b.Content.ToString()));
+                var p = BLLayer.GetAllPlayersFromDt().Find(x => x.Name.Contains(b.Content.ToString())); //20180503 players
 
                 bool alreadySelected = newplayers.Exists(x => x.Id.ToString().Contains(p.Id.ToString()));
 
@@ -1636,6 +1633,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //clear newplayers for new new game
                 newplayers = new List<Player>();
                 MessageBox.Show("New Game Id: " + newgame.GameId.ToString());
+                LoadPlayers();
+                RecreateCanvas();
             }
             catch (Exception ex)
             {

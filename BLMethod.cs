@@ -106,6 +106,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
                 //set first player as current player
                 BLLayer.DynamicSetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id, newGame.GameId);
+                Properties.Settings.Default.settingsCurrentGameId = newGame.GameId;
             }
             catch (Exception)
             {
