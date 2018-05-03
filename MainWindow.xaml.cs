@@ -507,8 +507,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     Random rnd = new Random();
 
-                    //MoveToken(rnd.Next(2, 12));
-                    MoveToken(1);
+                    MoveToken(rnd.Next(2, 12));
                 }
             }
             catch (Exception ex)
