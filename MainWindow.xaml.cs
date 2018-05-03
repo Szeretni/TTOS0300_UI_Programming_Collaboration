@@ -33,9 +33,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Point> points = new List<Point>();
         List<Point> buildingPoints = new List<Point>();
         List<Point> hoverPoints = new List<Point>();
-        List<DoubleAnimation> da = new List<DoubleAnimation>();
         List<Image> buildings = new List<Image>();
-        List<Cell> cellserie = new List<Cell>();
         List<Player> newplayers = new List<Player>(); //20180425 HO used to manage new game's players
         NewGame newgame = new NewGame(); //20180425 HO used to manage new game
 
@@ -66,14 +64,11 @@ namespace TTOS0300_UI_Programming_Collaboration
         };
 
         int[] buildingcosts = { 50, 50, 100, 100, 150, 150, 200, 200 };
-        
-        //List<Cell> player0Cells = new List<Cell>();
+
         int bordernumber = 0;
         int currentPlayer; //20180422;
         int propertyId = 0;
-        int serieId = 0;
         bool ownsAll = false;
-        string pname = "No owner";
 
         public static double windowWidth = 0;
         public static double windowHeight = 0;
@@ -111,10 +106,10 @@ namespace TTOS0300_UI_Programming_Collaboration
                 cells = BLLayer.GetAllCellsFromDt();
 
                 //owner debugging 
-                string hannutest = players.Find(x => x.Id == 1).Name;
-                MessageBox.Show(cells[0].Owner.ToString());
-                MessageBox.Show(cells[1].Owner.ToString() + cells[1].Name + hannutest);
-                MessageBox.Show(cells[2].Owner.ToString());
+                //string hannutest = players.Find(x => x.Id == 1).Name;
+                //MessageBox.Show(cells[0].Owner.ToString());
+                //MessageBox.Show(cells[1].Owner.ToString() + cells[1].Name + hannutest);
+                //MessageBox.Show(cells[2].Owner.ToString());
 
                 //init more player data todo 
                 for (int i = 0; i < players.Count(); i++)
@@ -175,6 +170,8 @@ namespace TTOS0300_UI_Programming_Collaboration
             try
             {
                 List<TextBlock> txtBlocks = new List<TextBlock>();
+
+                string pname = "No owner";
 
                 Border b = new Border
                 {
@@ -418,13 +415,13 @@ namespace TTOS0300_UI_Programming_Collaboration
 
             if (firstDice == scndDice)
             {
-                players[currentPlayer].DieResult = firstDice + scndDice;
-
-                lblNotification.Content = "You were released from prison.";
+                lblNotification.Content = "You were released from prison with diceroll" + firstDice.ToString() + ", " + scndDice.ToString();
 
                 players[currentPlayer].JailTime = 0;
 
                 players[currentPlayer].InJail = false;
+
+                MoveToken(firstDice + scndDice);
             }
 
             else
@@ -438,6 +435,8 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void OnbtnPayBail_Click(object sender, RoutedEventArgs e)
         {
             players[currentPlayer].Cash -= 50;
+
+            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
 
             lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
 
@@ -458,6 +457,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                     {
                         players[currentPlayer].Cash -= 50;
 
+                        BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+
                         lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
 
                         players[currentPlayer].JailTime = 0;
@@ -474,8 +475,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                         Button btnJailDice = new Button
                         {
-                            Height = windowHeight * 0.05,
-                            Width = windowWidth * 0.16,
+                            Height = windowHeight * 0.03,
+                            Width = windowWidth * 0.2,
                             FontSize = 14,
                             Content = "Roll Dice",
                         };
@@ -483,8 +484,8 @@ namespace TTOS0300_UI_Programming_Collaboration
 
                         Button btnPayBail = new Button
                         {
-                            Height = windowHeight * 0.05,
-                            Width = windowWidth * 0.16,
+                            Height = windowHeight * 0.03,
+                            Width = windowWidth * 0.2,
                             FontSize = 14,
                             Content = "Pay 50$ bail",
                         };
@@ -494,59 +495,62 @@ namespace TTOS0300_UI_Programming_Collaboration
                         stack.Children.Add(btnPayBail);
 
                         Canvas.SetLeft(stack, windowWidth * 0.4);
-                        Canvas.SetTop(stack, windowHeight * 0.3);
+                        Canvas.SetTop(stack, windowHeight * 0.4);
                         canvasObj.Children.Add(stack);
                     }
                 }
 
                 else
                 {
-                    //if die rolled, cannot roll again
-                    if (players[currentPlayer].DieRolled != true)
-                    {
-                        Random rnd = new Random();
+                    Random rnd = new Random();
 
-                        //players[currentPlayer].DieResult = rnd.Next(2, 12);
-
-                        players[currentPlayer].DieResult = 1;
-
-                        TokenAnimation();
-
-                        //20180426 uncommented this, now position updates to db
-                        if (players[currentPlayer].Position + players[currentPlayer].DieResult == 27)
-                        {
-                            players[currentPlayer].Position = 9;
-                            EndTurn("You were sent to the prison! Current player: " + players[currentPlayer].Name);
-                        }
-
-                        else
-                        {
-                            players[currentPlayer].Position += players[currentPlayer].DieResult;
-                        }
-
-                        //20180422
-                        //sets player's new position to db
-                        BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
-
-                        //20180422
-                        players[currentPlayer].DieRolled = true;
-                        //20180423 HO
-                        //updates die rolled to db
-                        BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
-                    }
-
-                    //20180422
-                    else
-                    {
-                        //btnDice.IsHitTestVisible = false;
-                        lblNotification.Content = "You have already rolled the die.";
-                    }
+                    MoveToken(rnd.Next(2, 12));
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("buttonMoveToken_Click: " + ex.Message);
                 //throw;
+            }
+        }
+
+        private void MoveToken(int dieroll)
+        {
+            //if die rolled, cannot roll again
+            if (players[currentPlayer].DieRolled != true)
+            {
+                players[currentPlayer].DieResult = dieroll;
+
+                TokenAnimation();
+
+                //20180426 uncommented this, now position updates to db
+                if (players[currentPlayer].Position + players[currentPlayer].DieResult == 27)
+                {
+                    players[currentPlayer].Position = 9;
+                    EndTurn("You were sent to the prison!");
+                }
+
+                else
+                {
+                    players[currentPlayer].Position += players[currentPlayer].DieResult;
+                }
+
+                //20180422
+                //sets player's new position to db
+                BLLayer.SetPlayerPositionToMySQL(players[currentPlayer].Id, players[currentPlayer].Position);
+
+                //20180422
+                players[currentPlayer].DieRolled = true;
+                //20180423 HO
+                //updates die rolled to db
+                BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
+            }
+
+            //20180422
+            else
+            {
+                //btnDice.IsHitTestVisible = false;
+                lblNotification.Content = "You have already rolled the die.";
             }
         }
 
@@ -623,6 +627,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             ActionAfterMove();
         }
 
+        //animation for player token, 4 points per cell for tokens
         private void NewDoubleAnimation(double fromX, double toX, double fromY, double toY, int i, Storyboard story)
         {
             try
@@ -658,6 +663,8 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //if player moves to a cell that someone owns, cells rent is automatically removed from his cash
+        //if cell has no owner call for buyproperty method
         private void ActionAfterMove()
         {
             if (cells[players[currentPlayer].Position].Owner != 0 && cells[players[currentPlayer].Position].Owner != players[currentPlayer].Id && cells[players[currentPlayer].Position].Price != 0)
@@ -730,6 +737,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             canvasObj.Children.Add(buyStack);
         }
 
+        //if player buys a property set cells owner to currentplayer in game and to database
         private void OnbtnBuyProperty_Click(object sender, RoutedEventArgs e)
         {
             cells[players[currentPlayer].Position].Owner = players[currentPlayer].Id;
@@ -753,6 +761,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 borders.Add(new Border());
                 borders[bordernumber].BorderBrush = Brushes.Black;
 
+                //overlapping borders didn't quite work so this fixes them
                 if (bordernumber != 0 && bordernumber < 9)
                 {
                     borders[bordernumber].BorderThickness = new Thickness(0, 1, 1, 1);
@@ -1186,16 +1195,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 };
                 btnNewGame.Click += new RoutedEventHandler(OnbtnNewGame_Click);
 
-                Button btnConfirm = new Button
-                {
-                    Height = windowHeight * 0.05,
-                    Width = windowWidth * 0.16,
-                    FontSize = 14,
-                    Content = "Confirm",
-                    Background = Brushes.Coral
-                };
-                btnConfirm.Click += new RoutedEventHandler(OnbtnConfirm_Click);
-
                 Button btnLoadGame = new Button
                 {
                     Height = windowHeight * 0.05,
@@ -1206,12 +1205,22 @@ namespace TTOS0300_UI_Programming_Collaboration
                 };
                 btnLoadGame.Click += new RoutedEventHandler(OnbtnLoadGame_Click);
 
-                stack.Children.Add(btnNewGame);
-                stack.Children.Add(btnConfirm);
-                stack.Children.Add(btnLoadGame);
+                Button btnQuit = new Button
+                {
+                    Height = windowHeight * 0.05,
+                    Width = windowWidth * 0.16,
+                    FontSize = 14,
+                    Content = "Quit",
+                    Background = Brushes.Coral
+                };
+                btnQuit.Click += new RoutedEventHandler(OnbtnQuit_Click);
 
-                Canvas.SetLeft(stack, windowWidth * 0.18 + (btnConfirm.Width * 3));
-                Canvas.SetTop(stack, windowHeight * 0.18 + btnConfirm.Height);
+                stack.Children.Add(btnNewGame);
+                stack.Children.Add(btnLoadGame);
+                stack.Children.Add(btnQuit);
+
+                Canvas.SetLeft(stack, windowWidth * 0.18 + (btnLoadGame.Width * 3));
+                Canvas.SetTop(stack, windowHeight * 0.18 + btnLoadGame.Height);
                 canvasObj.Children.Add(stack);
             }
 
@@ -1221,7 +1230,11 @@ namespace TTOS0300_UI_Programming_Collaboration
                 menuClickFlag = true;
             }
         }
-
+        private void OnbtnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+        
         //20180422
         private void OnbtnNextPlayer_Click(object sender, RoutedEventArgs e)
         {
@@ -1237,7 +1250,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 
                 try
                 {
-                    EndTurn("Current player: " + players[currentPlayer].Name);
+                    EndTurn("");
                 }
                 catch (Exception ex)
                 {
@@ -1246,13 +1259,15 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        private void EndTurn(string notification)
+        private void EndTurn(string message)
         {
             BLMethod.NextTurn(ref currentPlayer, ref players);
 
             RecreateCanvas();
 
-            lblNotification.Content = notification;
+            string notification = "Current player: " + players[currentPlayer].Name;
+
+            lblNotification.Content = message + notification;
         }
 
         private void OnbtnBuyBuildings_Click(object sender, RoutedEventArgs e)
@@ -1274,8 +1289,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                         {
                             Button btn = new Button
                             {
-                                Height = 20,
-                                Width = 200,
+                                Height = windowHeight * 0.03,
+                                Width = windowWidth * 0.2,
                                 Content = c.Name,
                                 Background = Brushes.White
                             };
@@ -1298,8 +1313,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
 
                 g.Children.Add(stack);
-                Canvas.SetLeft(g, 250);
-                Canvas.SetTop(g, 250);
+                Canvas.SetLeft(g, windowWidth * 0.4);
+                Canvas.SetTop(g, windowHeight * 0.4);
                 canvasObj.Children.Add(g);
 
             }
@@ -1315,7 +1330,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 RecreateCanvas();
 
-                List<Button> buttons = new List<Button>();
                 Grid g = new Grid();
                 StackPanel stack = new StackPanel();
 
@@ -1339,13 +1353,16 @@ namespace TTOS0300_UI_Programming_Collaboration
                     if (cells[propertyId].HouseCount == 4)
                     {
                         lblNotification.Content = "Property has 4 houses";
-                        buttons.Add(new Button());
-                        buttons[0].Height = 20;
-                        buttons[0].Width = 200;
-                        buttons[0].Content = "Buy a Hotel";
-                        buttons[0].Background = Brushes.White;
-                        buttons[0].Click += new RoutedEventHandler(OnbtnBuyHotel_Click);
-                        stack.Children.Add(buttons[0]);
+                        Button btnBuyHotel = new Button
+                        {
+                            Height = windowHeight * 0.03,
+                            Width = windowWidth * 0.2,
+                            Content = "Buy a Hotel",
+                            Background = Brushes.White
+                        };
+
+                        btnBuyHotel.Click += new RoutedEventHandler(OnbtnBuyHotel_Click);
+                        stack.Children.Add(btnBuyHotel);
                     }
                     else if (cells[propertyId].HotelCount == 1)
                     {
@@ -1354,18 +1371,21 @@ namespace TTOS0300_UI_Programming_Collaboration
                     else
                     {
                         lblNotification.Content = "Property has " + cells[propertyId].HouseCount + " houses";
-                        buttons.Add(new Button());
-                        buttons[0].Height = 20;
-                        buttons[0].Width = 200;
-                        buttons[0].Content = "Buy a House";
-                        buttons[0].Background = Brushes.White;
-                        buttons[0].Click += new RoutedEventHandler(OnbtnBuyHouse_Click);
-                        stack.Children.Add(buttons[0]);
+                        Button btnBuyHouse = new Button
+                        {
+                            Height = windowHeight * 0.03,
+                            Width = windowWidth * 0.2,
+                            Content = "Buy a House",
+                            Background = Brushes.White
+                        };
+
+                        btnBuyHouse.Click += new RoutedEventHandler(OnbtnBuyHouse_Click);
+                        stack.Children.Add(btnBuyHouse);
                     }
                     g.Children.Add(stack);
-                    Canvas.SetZIndex(g, 1000);
-                    Canvas.SetLeft(g, 250);
-                    Canvas.SetTop(g, 250);
+
+                    Canvas.SetLeft(g, windowWidth * 0.4);
+                    Canvas.SetTop(g, windowHeight * 0.4);
                     canvasObj.Children.Add(g);
                 }
 
@@ -1382,10 +1402,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //player must own every property with same color to build
         private void CheckIfPlayerOwnsAllOfSameColorProperties(int serie)
         {
+            List<Cell> cellserie = new List<Cell>();
             cellserie = cells.FindAll(x => x.SerieId.Equals(serie));
             int i = 0;
+
+            int serieId = 0;
 
             foreach (Cell c in cellserie)
             {
@@ -1438,8 +1462,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 }
 
                 BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
-
-                //lblCash.Content = "Cash: " + BLLayer.DynamicGetPlayerCashFromMySQL(players[currentPlayer].Id, Properties.Settings.Default.settingsCurrentGameId);
             }
             catch (Exception ex)
             {
@@ -1461,6 +1483,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             canvasObj.Children.Add(image);
         }
 
+        //set cells housecount to 0 and add a hotel image on cell
         private void OnbtnBuyHotel_Click(object sender, RoutedEventArgs e)
         {
             cells[propertyId].HouseCount = 0;
@@ -1476,6 +1499,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             SetPlayerCashAndCellRent();
         }
 
+        //add a house image on cell, possible to build 4 houses
         private void OnbtnBuyHouse_Click(object sender, RoutedEventArgs e)
         {
             CheckIfPlayerOwnsAllOfSameColorProperties(cells[propertyId].SerieId);
@@ -1521,40 +1545,84 @@ namespace TTOS0300_UI_Programming_Collaboration
             //  Destroy elemenents after players selected
             //  All info to one class and one db insert using that class
 
+            StackPanel stack = new StackPanel();
+
+            foreach (Player p in players)
+            {
+                Button btnSelectPlayer = new Button
+                {
+                    Height = windowHeight * 0.03,
+                    Width = windowWidth * 0.2,
+                    DataContext = p,
+                    Content = p.Name,
+                    Background = Brushes.White
+                };
+                btnSelectPlayer.Click += new RoutedEventHandler(OnbtnSelectPlayer_Click);
+
+                stack.Children.Add(btnSelectPlayer);
+            }
+
+            Button btnConfirm = new Button
+            {
+                Height = windowHeight * 0.03,
+                Width = windowWidth * 0.2,
+                Content = "Confirm",
+                Background = Brushes.White
+            };
+            btnConfirm.Click += new RoutedEventHandler(OnbtnConfirm_Click);
+            stack.Children.Add(btnConfirm);
+
+            Button btnCancel = new Button
+            {
+                Height = windowHeight * 0.03,
+                Width = windowWidth * 0.2,
+                Content = "Cancel",
+                Background = Brushes.White
+            };
+            btnCancel.Click += new RoutedEventHandler(OnbtnCancel_Click);
+
+            stack.Children.Add(btnCancel);
+
+            Canvas.SetLeft(stack, windowWidth* 0.4);
+            Canvas.SetTop(stack, windowHeight* 0.4);
+            canvasObj.Children.Add(stack);
+
             //generate new game id
             newgame.GameId = BLMethod.NewGameId();
-
-            //get players from db
-            dgCellTest.ItemsSource = BLMethod.ShowPlayers();
         }
 
-        //new players
-        //IMPROVEMENT IDEAS
-        //if (alreadySelected) change bgcolor or something
-        private void OndgCellTest_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnbtnCancel_Click(object sender, RoutedEventArgs e)
         {
-            //get selected player
-            if (dgCellTest.SelectedItem is Player selected)
+            newplayers.Clear();
+            RecreateCanvas();
+        }
+
+        private void OnbtnSelectPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                //is player already selected? -check
-                int selId = selected.Id;
-                bool alreadySelected = newplayers.Exists(x => x.Id.ToString().Contains(selId.ToString()));
+                Button b = (Button)sender;
+
+                var p = players.Find(x => x.Name.Contains(b.Content.ToString()));
+
+                bool alreadySelected = newplayers.Exists(x => x.Id.ToString().Contains(p.Id.ToString()));
+
                 //player already selected for new game
                 if (alreadySelected)
                 {
-                    string allselected = null;
-                    foreach (Player p in newplayers)
-                    {
-                        allselected += p.Name + " ";
-                    }
-                    MessageBox.Show("Already selected players: " + allselected);
+                    lblNotification.Content = "Player " + p.Name + " has already been selected";
                 }
+
                 //add player to new game
                 else
                 {
-                    lblNotification.Content = "Player " + selected.Name + " added to new game";
-                    newplayers.Add(selected);
+                    lblNotification.Content = "Player " + p.Name + " added to new game";
+                    newplayers.Add(p);
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "btnConfirm_Click");
             }
         }
 
@@ -1574,21 +1642,5 @@ namespace TTOS0300_UI_Programming_Collaboration
                 MessageBox.Show("btnConfirm_Click: " + ex.Message);
             }
         }
-
-        private void OnbtnNameChange_Click(object sender, RoutedEventArgs e)
-        {
-            players[0].Name = "Veijo";
-        }
-
-        //var gr = sender as Grid;
-        //var grch = gr.Children;
-        //var tb = grch[2] as TextBlock; // this child contains cell's name
-        //var tbValueName = tb.Text;
-        //Cell cellCopy = cells.Find(x => x.Name.Contains(tbValueName)); // gain access to Cell properties at hovered cell
-        //lblNotification.Content = cellCopy.Id;
-        //List<Cell> tempCellList = new List<Cell>();
-        //tempCellList.Add(cellCopy);
-        //dgCellTest.ItemsSource = tempCellList; // temp, just to verify
-
     }
 }

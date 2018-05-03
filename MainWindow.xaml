@@ -13,7 +13,6 @@
             <Label x:Name="lblNotification" Content="Notifications" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-1,-1,0,0" FontSize="16" FontWeight="Bold"/>
         </Border>
         <Canvas x:Name="canvasObj" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <DataGrid x:Name="dgCellTest" Margin="667,232,72,462" SelectionChanged="OndgCellTest_SelectionChanged" Visibility="Hidden"/>
         <Border x:Name="brInfo"  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="54" Margin="134,296,0,0" VerticalAlignment="Top" Width="167">
             <Grid Margin="0,0,78,0">
                 <Grid.ColumnDefinitions>
