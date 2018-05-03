@@ -16,7 +16,7 @@ Windows. C# ja Tietokannat kurssin harjoitustyöksi suunniteltu MySQL tietokanta
 
 ![er](/Images/monopolifinal.PNG)
 
-🔖 Lista toteutettavista toiminnoista (käyttäjän näkökulmasta), tästä kannattaa pirtää UML:n Käyttötapaus-kaavio
+🔖 Lista toteutettavista toiminnoista
 
 ![use case](/Images/ttos0300_use_case.png)
 
@@ -31,7 +31,7 @@ Windows. C# ja Tietokannat kurssin harjoitustyöksi suunniteltu MySQL tietokanta
 * Rahan maksaminen/saaminen
 * Lainan maksu
 
-🔖 Työnjako, kuinka työnjako aiotaan hoitaa eli vastuut eri tehtäville
+🔖 Työnjako
 
 Työtehtävät:
 
