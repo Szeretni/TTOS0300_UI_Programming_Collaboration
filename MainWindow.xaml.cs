@@ -34,10 +34,10 @@ namespace TTOS0300_UI_Programming_Collaboration
         List<Point> buildingPoints = new List<Point>();
         List<Point> hoverPoints = new List<Point>();
         List<Image> buildings = new List<Image>();
-        List<Player> newplayers = new List<Player>(); //used to manage new game's players
+        List<Player> newplayers = new List<Player>();
         List<int> games = new List<int>();
         List<TextBlock> cards = new List<TextBlock>();
-        NewGame newgame = new NewGame(); //used to manage new game
+        NewGame newgame = new NewGame();
 
         int[] rents =
         {
@@ -93,9 +93,9 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 int currentPlayerId = BLLayer.GetCurrentPlayerIdFromMySQL();
                 int i = 0;
-                foreach (Player pl in players)
+                foreach (Player p in players)
                 {
-                    if (currentPlayerId == pl.Id)
+                    if (currentPlayerId == p.Id)
                     {
                         currentPlayer = i;
                         break;
@@ -119,8 +119,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     players[i].DieRolled = BLLayer.GetDieRolledFlagFromMySQL(players[i].Id);
                     players[i].RentPaid = BLLayer.GetPlayerRentPaidFromMySQL(players[i].Id);
-                    players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id,Properties.Settings.Default.settingsCurrentGameId);
-                    players[i].Cash = BLLayer.DynamicGetPlayerCashFromMySQL(players[i].Id, Properties.Settings.Default.settingsCurrentGameId);
+                    players[i].Position = BLLayer.GetPlayerPositionFromMySQL(players[i].Id);
+                    players[i].Cash = BLLayer.GetPlayerCashFromMySQL(players[i].Id);
                 }
             }
             catch (Exception ex)
@@ -419,7 +419,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             players[currentPlayer].Cash -= 50;
 
-            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+            BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
 
             lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
 
@@ -439,7 +439,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     {
                         players[currentPlayer].Cash -= 50;
 
-                        BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+                        BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
 
                         lblNotification.Content = "You paid 50$ in bail, you're free to roll the dice";
 
@@ -505,7 +505,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 if (players[currentPlayer].Position + players[currentPlayer].DieResult == 27)
                 {
                     players[currentPlayer].Position = 9;
-                    EndTurn("You were sent to the prison!");
+                    EndTurn("You were sent to the prison! ");
                 }
 
                 else
@@ -550,7 +550,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                             players[currentPlayer].Position = 0;
 
                             players[currentPlayer].Cash += 200;
-                            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+                            BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
                             lblNotification.Content = "You collected 200$ in income by passing start";
                             i = 0;
                         }
@@ -783,7 +783,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         private void OnbCloseCard_Click(object sender, RoutedEventArgs e)
         {
             players[currentPlayer].Cash -= 50;
-            BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash, Properties.Settings.Default.settingsCurrentGameId);
+            BLLayer.SetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash);
 
             canvasObj.UnregisterName(cards[0].Name);
 
@@ -1542,8 +1542,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                     players[currentPlayer].Cash -= buildingcosts[cells[propertyId].SerieId - 1];
                     cells[propertyId].Rent = rents[propertyId * 5 + 4];
                 }
-
-                BLLayer.DynamicSetPlayerCashToMySQL(players[currentPlayer].Id, players[currentPlayer].Cash,Properties.Settings.Default.settingsCurrentGameId);
             }
             catch (Exception ex)
             {

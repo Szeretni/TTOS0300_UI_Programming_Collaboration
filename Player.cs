@@ -70,7 +70,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     //updates cash and db
                     cash = value;
-                    BLLayer.DynamicSetPlayerCashToMySQL(Id, cash, Properties.Settings.Default.settingsCurrentGameId);
+                    BLLayer.SetPlayerCashToMySQL(Id, cash);
                     // Call Changed whenever the property is updated
                     Changed("cash");
                 }

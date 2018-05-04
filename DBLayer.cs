@@ -56,7 +56,27 @@ namespace TTOS0300_UI_Programming_Collaboration
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT Cell.CellId,Name,Rent,Price,SerieId,CellTypeId,Player_has_Cell.PlayerId AS Owner FROM Cell LEFT OUTER JOIN Player_has_Cell ON Cell.CellId = Player_has_Cell.CellId";
+                    //string sql = "SELECT Cell.CellId,Name,Rent,Price,SerieId,CellTypeId,Player_has_Cell.PlayerId AS Owner FROM Cell LEFT OUTER JOIN Player_has_Cell ON Cell.CellId = Player_has_Cell.CellId WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
+                    string sql = "SELECT CellId,Name,Rent,Price,SerieId,CellTypeId FROM Cell";
+                    MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
+                    da.Fill(dt);
+                    return dt;
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        public static DataTable GetCellOwnerFromMySQL()
+        {
+            try
+            {
+                DataTable dt = new DataTable();
+                using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
+                {
+                    string sql = "SELECT PlayerId,CellId FROM Player_has_Cell WHERE GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId;
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -87,14 +107,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static DataTable GetPlayerPositionFromMySQL(int playerid,int gameSessionId)
+        public static DataTable GetPlayerPositionFromMySQL(int playerid)
         {
             try
             {
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
+                    string sql = "SELECT CellId FROM GameSession_has_player WHERE PlayerId=" + playerid.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId .ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -106,13 +126,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static void SetPlayerPositionToMySQL(int playerid,int position, int gameSessionId)
+        public static void SetPlayerPositionToMySQL(int playerid,int position)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
+                    string sql = "UPDATE GameSession_has_player SET CellId = " + position.ToString() + " WHERE PlayerId = " + playerid.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -173,14 +193,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static DataTable DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
+        public static DataTable GetPlayerCashFromMySQL(int playerId)
         {
             try
             {
                 DataTable dt = new DataTable();
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
+                    string sql = "SELECT PlayerCash FROM GameSession_has_player WHERE PlayerId=" + playerId.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlDataAdapter da = new MySqlDataAdapter(sql, conn);
                     da.Fill(dt);
                     return dt;
@@ -192,13 +212,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static void DynamicSetPlayerCashToMySQL(int playerId, int cash, int gameSessionId)
+        public static void SetPlayerCashToMySQL(int playerId, int cash)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession_has_player SET PlayerCash = " + cash.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + gameSessionId.ToString();
+                    string sql = "UPDATE GameSession_has_player SET PlayerCash = " + cash.ToString() + " WHERE PlayerId = " + playerId.ToString() + " AND GameSessionId = " + Properties.Settings.Default.settingsCurrentGameId.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();
@@ -240,13 +260,14 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static void DynamicSetCurrentPlayerIdToMySQL(int playerid, int gamesessionid)
+        //this is used for new games (needs new gameid)
+        public static void SetCurrentPlayerIdToMySQL(int playerid, int gamesessionid)
         {
             try
             {
                 using (MySqlConnection conn = new MySqlConnection(GetConnectionString()))
                 {
-                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = " + gamesessionid;
+                    string sql = "UPDATE GameSession SET CurrentPlayerId = " + playerid.ToString() + " WHERE GameSessionId = " + gamesessionid.ToString();
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
                     MySqlDataReader mysqldr;
                     conn.Open();

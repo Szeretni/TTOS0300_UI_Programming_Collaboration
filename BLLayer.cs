@@ -85,29 +85,32 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 List<Cell> cells = new List<Cell>();
                 DataTable dt = DBLayer.GetCellsFromMySQL();
+                //create all cells for board
                 foreach (DataRow dr in dt.Rows)
                 {
-                    int i = 0;
-                    //checks is cell owner is null
-                    bool ownerNotNull = int.TryParse(dr[6].ToString(), out i);
                     Cell cell = new Cell
                     {
                         //CellId,Name,Rent,Price,SerieId,CellTypeId
-                        Id = int.Parse(dr[0].ToString())-1, //cellId=1 is position[0], therefore -1
+                        Id = int.Parse(dr[0].ToString()) - 1, //cellId=1 is position[0], therefore -1
                         Name = dr[1].ToString(),
                         Rent = int.Parse(dr[2].ToString()),
                         Price = int.Parse(dr[3].ToString()),
                         SerieId = int.Parse(dr[4].ToString()),
                         CellTypeId = int.Parse(dr[5].ToString()),
                     };
-                    if (i != 0)
-                    {
-                        //cell has owner, adds data to object
-                        cell.Owner = i;
-                    }
                     cells.Add(cell);
                 }
-                return cells;
+
+                //add owner information to cells, if applicable,  by gameid
+                dt = DBLayer.GetCellOwnerFromMySQL();
+                foreach (DataRow dr in dt.Rows)
+                {
+                    //PlayerId,CellId
+                    int pid = int.Parse(dr[0].ToString());
+                    int cid = int.Parse(dr[1].ToString());
+                    cells[cid - 1].Owner = pid;
+                }                             
+            return cells;
             }
             catch
             {
@@ -115,11 +118,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static int GetPlayerPositionFromMySQL(int playerid, int gameSessionId)
+        public static int GetPlayerPositionFromMySQL(int playerid)
         {
             try
             {
-                DataTable dt = DBLayer.GetPlayerPositionFromMySQL(playerid,gameSessionId);
+                DataTable dt = DBLayer.GetPlayerPositionFromMySQL(playerid);
                 int position = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -137,7 +140,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetPlayerPositionToMySQL(playerid, position+1,Properties.Settings.Default.settingsCurrentGameId); //position[0] is cellId=1, therefore +1
+                DBLayer.SetPlayerPositionToMySQL(playerid, position+1); //position[0] is cellId=1, therefore +1
             }
             catch (Exception)
             {
@@ -145,11 +148,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
         
-        public static int DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
+        public static int GetPlayerCashFromMySQL(int playerId)
         {
             try
             {
-                DataTable dt = DBLayer.DynamicGetPlayerCashFromMySQL(playerId,gameSessionId);
+                DataTable dt = DBLayer.GetPlayerCashFromMySQL(playerId);
                 int cash = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
@@ -163,11 +166,11 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        public static void DynamicSetPlayerCashToMySQL(int playerid, int cash, int gameSessionId)
+        public static void SetPlayerCashToMySQL(int playerid, int cash)
         {
             try
             {
-                DBLayer.DynamicSetPlayerCashToMySQL(playerid, cash,gameSessionId);
+                DBLayer.SetPlayerCashToMySQL(playerid, cash);
             }
             catch
             {
@@ -207,12 +210,12 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //set current player id to db
-        public static void DynamicSetCurrentPlayerIdToMySQL(int playerid, int gamesessionid)
+        //this is used for new games (needs new gameid)
+        public static void SetCurrentPlayerIdToMySQL(int playerid, int gamesessionid)
         {
             try
             {
-                DBLayer.DynamicSetCurrentPlayerIdToMySQL(playerid, gamesessionid);
+                DBLayer.SetCurrentPlayerIdToMySQL(playerid, gamesessionid);
             }
             catch
             {

@@ -44,15 +44,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //get game id's from db
                 List<int> gameIds = BLLayer.GetGameIdsFromMySQL();
                 //generates new gameid
-                int i = 1;
-                //loops in case of discontinous gameIds
-                foreach (int id in gameIds)
-                {
-                    if (id == i)
-                    {
-                        i++;
-                    }
-                }
+                int i = gameIds.Last()+1;
                 return i;
             }
             catch (Exception)
@@ -89,8 +81,8 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     BLLayer.SetPlayerToNewGameToMySQL(p.Id, newGame.GameId);
                 }
-                //sets first player as current player
-                BLLayer.DynamicSetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id, newGame.GameId);
+                //sets first player as current player to new game (needs new gameid)
+                BLLayer.SetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id, newGame.GameId);
                 //sets new game id to local program instance 
                 Properties.Settings.Default.settingsCurrentGameId = newGame.GameId;
             }
