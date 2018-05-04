@@ -36,12 +36,17 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
   11. Pitämällä kursoria tonttien nimen tai hinnan päällä näkee kuka omistaa tontin.
   12. Toisen pelin voi ladata valikosta.
   13. Sattumakorteille yksinkertainen toiminnallisuus.
+  14. Voi luoda uuden pelin.
+  15. Voi ladata vanhan pelin.
+  16. Voi sulkea ohjelman.
 
 * Listaa toteuttamatta jääneet toiminnalliset vaatimukset
 
-  1. Toistaiseksi puuttuu uuden pelin luonnin käyttöliittymä. Koodi on olemassa.
+  1. Toistaiseksi puuttuu pelin poistaminen.
   4. Toistaiseksi pelaaja ei voi valita pelinappulaa.
-  5. Uuden pelaajan luonti.
+  5. Toistaiseksi puuttuu uuden pelaajan luonti.
+  6. Toistaiseksi puuttuu pelaajan poistaminen.
+  7. Toistaiseksi puuttuu pelin päättymislogiikka.
 
 * Listaa toiminnallisuus joka toteuttiin ohi/yli alkuperäisten vaatimusten
 
@@ -87,15 +92,17 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
 * Taloja pitäisi pystyä rakentamaan vain tasaisesti saman värin tonteille.
 * Go to Jail animaatio toimii, mutta ei niin kuin pitäisi.
 * Lähtöruudun ohikulku heittää yhdellä ruudulla.
+* Jos esim. tontin ostamisen valikko on esillä ja hover peliruutuja, niin ostovalikko katoaa.
+* Harvoin uuden pelin lataamisen jälkeen tulee RecreateCanvas:n Out of Index -virhe.
 
 ### 6. Mitä opittu, mitkä olivat suurimmat haasteet, mitä kannattaisi tutkia/opiskella lisää jne
 
 * Opittu käyttöliittymän piirtämään elementtejä koodissa.
 * Opittu monikerrosarkkitehtuurin käyttöä ja havaittu siihen liittyviä etuja, kuten jäsentyneempi koodi. Osittain tämä on keksen, main:ssa on vielä paljon mitä voisi siirtää business layer:lle.
 * Opittu käyttämään tietokantaa ohjelmassa.
-* Opittu yksinkertaista Data Binding:a.
+* Opittu Data Binding.
 * Opittu kuinka monimutkainen ja monipuolinen suhteellisen yksinkertainenkin sovellus voi olla.
-* Opittu poimimaan useamman kerroksen alla olevaa informaatiota sender:a käyttämällä.
+* Opittu poimimaan useamman kerroksen alla olevaa informaatiota käyttämällä sender.
 * Opittu jatkuvasti havaitsemaan miten asiat voisi tehdä paremmin.
 * Haasteet liittyivät oikeastaan kaikki käyttöliittymän piirtämiseen.
 * Haaste oli myös miten työstää yhdessä samanaikaisesti ja välttää merge conflict versionhallinnassa.
@@ -113,4 +120,4 @@ Hannu Oksman L2912 ja Antti Tarvainen L4623
 
 ### 8. Tekijöiden ehdotus arvosanaksi, ja perustelut sille
 
-5. Työ on monipuolinen, kattava, käyttää ulkopuolista dataa sekä käsittelee ja näyttää sitä eri tavoin ohjelman sisällä. Työssä on käytetty monikerrosarkkitehtuuria ja useita luokkia selkeyttämään ja helpottamaan tiedon käsittelyä. Koodia on myös kommentoitu. Käyttöliittymä on selkeä ja skaalautuva. Tunnemme hyvin työmme ja pystymme keskustelemaan siitä, joka kertoo paneutumisesta ja suuresta työmäärästä. Lisäksi työssä on käytetty mm. settings.settings, App.xaml ja App.xaml.cs -tiedostoja hyödyksi. Olemme käyttäneet GitHub-palvelua versionhallinnassa, joka osoittautui erittäin hyväksi ratkaisuksi. Tekijät saavat helposti git bash -ohjelman avulla hallittua paikallisia versioita ja työ on valmiiksi työnantajien nähtävillä. Tämä projekti on opettanut paljon ja antaa näkemystä miten seuraavan lukuvuoden projekteja voi tehdä tehokkaammin ja paremmin. Kiitettävää on myös se, että työssä on käytetty muilta opintojaksoilta opittua ja käytetty omaa tietokantapalvelinta.
+5. Työ on monipuolinen, kattava, käyttää ulkopuolista dataa sekä käsittelee ja näyttää sitä eri tavoin ohjelman sisällä. Työssä on käytetty monikerrosarkkitehtuuria ja useita luokkia selkeyttämään ja helpottamaan tiedon käsittelyä. Koodia on myös kommentoitu. Käyttöliittymä on selkeä ja skaalautuva. Tunnemme hyvin työmme ja pystymme keskustelemaan siitä, joka kertoo paneutumisesta ja suuresta työmäärästä. Lisäksi työssä on käytetty mm. settings.settings, App.xaml ja App.xaml.cs -tiedostoja hyödyksi. Olemme käyttäneet GitHub-palvelua versionhallinnassa, joka osoittautui erittäin hyväksi ratkaisuksi. Tekijät saavat helposti git bash -ohjelman avulla hallittua paikallisia versioita ja työ on valmiiksi työnantajien nähtävillä. Tämä projekti on opettanut paljon ja antaa näkemystä miten seuraavan lukuvuoden projekteja voi tehdä tehokkaammin ja paremmin. Kiitettävää on myös se, että työssä on käytetty muilta opintojaksoilta opittua ja käytetty omaa tietokantapalvelinta. Hyvää on myös puutteiden ja jatkokehitysideoiden tunnistaminen ja tunnustaminen.
