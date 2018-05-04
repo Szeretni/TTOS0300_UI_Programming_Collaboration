@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TTOS0300_UI_Programming_Collaboration
 {
-    class Cell : IGameObject
+    class Cell
     {
         public int Id { get; set; }
         public string Name { get; set; }

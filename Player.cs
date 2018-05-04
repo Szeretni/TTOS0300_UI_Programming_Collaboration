@@ -14,15 +14,19 @@ namespace TTOS0300_UI_Programming_Collaboration
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public int Id { get; set; }
+        public int dieResult;
+        
         public string name;
         public bool InJail = false;
         public int JailTime = 0;
-        private int cash = 0;
-        private bool rentPaid = false; //20180426rent
         public int position = 0;
+        private int cash = 0;
+        private bool rentPaid = false;
+
         public bool DieRolled { get; set; }
-        public bool RentPaid //20180426rent
+        public int Id { get; set; }
+
+        public bool RentPaid
         {
             get
             {
@@ -34,7 +38,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                 BLLayer.SetRentPaidToMySQL(Id, rentPaid);
             }
         }
-        public int dieResult;
 
         public string Name
         {
@@ -65,7 +68,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 if (cash != value)
                 {
-                    //updates cash and db 20180426
+                    //updates cash and db
                     cash = value;
                     BLLayer.DynamicSetPlayerCashToMySQL(Id, cash, Properties.Settings.Default.settingsCurrentGameId);
                     // Call Changed whenever the property is updated
@@ -78,7 +81,6 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             get
             {
-                //cellid1 = cell[0]
                 return position; 
             }
 
@@ -86,7 +88,8 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 if (position != value)
                 {
-                    position = value; //20180426T1300
+                    //updates position and db
+                    position = value;
                     BLLayer.SetPlayerPositionToMySQL(Id, position);
                     // Call Changed whenever the property is updated
                     Changed("position");

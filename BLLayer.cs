@@ -9,9 +9,7 @@ namespace TTOS0300_UI_Programming_Collaboration
 {
     class BLLayer
     {
-        // !!!
-        // Only Db methods
-        // !!!
+        // For db methods
 
         public static List<Player> GetAllPlayersFromDt()
         {
@@ -19,18 +17,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 List<Player> players = new List<Player>();
                 DataTable dt = DBLayer.GetPlayersFromMySQL();
-
                 foreach (DataRow dr in dt.Rows)
                 {
                     Player player = new Player
                     {
-                        //PlayerId,PlayerName,SUM(Value) as TotalCash 20180425T2000
-                        //20180425T2000
                         //PlayerId,PlayerName
                         Id = int.Parse(dr[0].ToString()),
                         Name = dr[1].ToString()
-                        //Cash = int.Parse(dr[2].ToString()), 20180425T2000
-                        //Position = int.Parse(dr[3].ToString()) 20180425T2000
                     };
                     players.Add(player);
                 }
@@ -48,9 +41,9 @@ namespace TTOS0300_UI_Programming_Collaboration
             {
                 List<int> games = new List<int>();
                 DataTable dt = DBLayer.GetGameSessionsFromMySQL();
-
                 foreach (DataRow dr in dt.Rows)
                 {
+                    //gameSessionId
                     games.Add(int.Parse(dr[0].ToString()));
                 }
                 return games;
@@ -61,13 +54,13 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
+        //current game's players
         public static List<Player> GetGamesPlayersFromDt()
         {
             try
             {
                 List<Player> players = new List<Player>();
                 DataTable dt = DBLayer.GetGamesPlayersFromMySQL();
-
                 foreach (DataRow dr in dt.Rows)
                 {
                     Player player = new Player
@@ -95,11 +88,12 @@ namespace TTOS0300_UI_Programming_Collaboration
                 foreach (DataRow dr in dt.Rows)
                 {
                     int i = 0;
+                    //checks is cell owner is null
                     bool ownerNotNull = int.TryParse(dr[6].ToString(), out i);
                     Cell cell = new Cell
                     {
                         //CellId,Name,Rent,Price,SerieId,CellTypeId
-                        Id = int.Parse(dr[0].ToString())-1, //20180604position
+                        Id = int.Parse(dr[0].ToString())-1, //cellId=1 is position[0], therefore -1
                         Name = dr[1].ToString(),
                         Rent = int.Parse(dr[2].ToString()),
                         Price = int.Parse(dr[3].ToString()),
@@ -108,6 +102,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                     };
                     if (i != 0)
                     {
+                        //cell has owner, adds data to object
                         cell.Owner = i;
                     }
                     cells.Add(cell);
@@ -120,8 +115,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180426 HO dynamic gamesessionid
-        //20180422
         public static int GetPlayerPositionFromMySQL(int playerid, int gameSessionId)
         {
             try
@@ -130,7 +123,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 int position = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
-                    position = int.Parse(dr[0].ToString())-1; //20180604position -1 bc return cellid 1-36, should draw cell[0-35]
+                    position = int.Parse(dr[0].ToString())-1; //cellId=1 is position[0], therefore -1
                 }
                 return position;
             }
@@ -144,16 +137,14 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetPlayerPositionToMySQL(playerid, position+1,Properties.Settings.Default.settingsCurrentGameId); //20180604position +1 cell[0-35] => cellid 1-35
+                DBLayer.SetPlayerPositionToMySQL(playerid, position+1,Properties.Settings.Default.settingsCurrentGameId); //position[0] is cellId=1, therefore +1
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
         
-        //20180425
         public static int DynamicGetPlayerCashFromMySQL(int playerId,int gameSessionId)
         {
             try
@@ -172,20 +163,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
-        //public static void SetPlayerCashToMySQL(int playerid, int cash)
-        //{
-        //    try
-        //    {
-        //        DBLayer.SetPlayerCashToMySQL(playerid, cash);
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        //20180426 HO
         public static void DynamicSetPlayerCashToMySQL(int playerid, int cash, int gameSessionId)
         {
             try
@@ -198,8 +175,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
-        //gets current player id from db
         public static int GetCurrentPlayerIdFromMySQL()
         {
             try
@@ -208,6 +183,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 int pid = 0;
                 foreach (DataRow dr in dt.Rows)
                 {
+                    //playerId
                     pid = int.Parse(dr[0].ToString());
                 }
                 return pid;
@@ -218,7 +194,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
         //set current player id to db
         public static void SetCurrentPlayerIdToMySQL(int playerid)
         {
@@ -232,7 +207,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
         //set current player id to db
         public static void DynamicSetCurrentPlayerIdToMySQL(int playerid, int gamesessionid)
         {
@@ -246,7 +220,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
         //gets players die rolled status from db
         public static bool GetDieRolledFlagFromMySQL(int playerid)
         {
@@ -266,8 +239,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180423 HO
-        //set players die rolled status to db
+        //sets player's die rolled status to db
         public static void SetDieRolledFlagToMySQL(int playerid, bool dieRolled)
         {
             try
@@ -280,7 +252,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180426rent 
+        //gets player's rent paid status
         public static bool GetPlayerRentPaidFromMySQL(int playerid)
         {
             try
@@ -299,7 +271,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180426rent
+        //sets player's rent paid status
         public static void SetRentPaidToMySQL(int playerid, bool dieRolled)
         {
             try
@@ -328,7 +300,7 @@ namespace TTOS0300_UI_Programming_Collaboration
         {
             try
             {
-                DBLayer.SetCellOwnerToMySQL(playerid, cellid+1); //20180604position +1 bc cell[x] = cellid x+1
+                DBLayer.SetCellOwnerToMySQL(playerid, cellid+1); //position[0] is cellId=1, therefore +1
             }
             catch
             {
@@ -336,7 +308,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180425 HO
         //gets gameid from db
         public static List<int> GetGameIdsFromMySQL()
         {
@@ -381,7 +352,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180425 HO
         //set new game id to db
         public static void SetNewGameIdToMySQL(int gamesessionid, int playerid)
         {
@@ -395,7 +365,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        
         public static void SetPlayerToNewGameToMySQL(int newPlayerId, int gameSessionId)
         {
             try
@@ -407,67 +376,5 @@ namespace TTOS0300_UI_Programming_Collaboration
                 throw;
             }
         }
-
-        //20180426 HO INPROGRESS is this necessary?
-        //public static List<Cell> GetCellOwnerFromMySQL()
-        //{
-        //    try
-        //    {
-        //        List<Player> players = new List<Player>();
-        //        DataTable dt = DBLayer.GetCellOwnerFromMySQL();
-
-        //        foreach (DataRow dr in dt.Rows)
-        //        {
-        //            Cell cell = new Cell
-        //            {
-        //                //PlayerId,CellId
-        //                Id = int.Parse(dr[0].ToString()),
-        //                Name = int.Parse(dr[1].ToString())
-        //            };
-        //            players.Add(player);
-        //        }
-        //        return players;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        //obsoleted 20180426
-        //20180422
-        //public static int GetPlayerCashFromMySQL(int playerid)
-        //{
-        //    try
-        //    {
-        //        DataTable dt = DBLayer.GetPlayerCashFromMySQL(playerid);
-        //        int cash = 0;
-        //        foreach (DataRow dr in dt.Rows)
-        //        {
-        //            cash = int.Parse(dr[0].ToString());
-        //        }
-        //        return cash;
-        //    }
-        //    catch
-        //    {
-        //        throw;
-        //    }
-        //}
-
-        /* list-style obsolete
-        public static List<Player> GetPlayerList()
-        {
-            try
-            {
-                List<Player> players = new List<Player>();
-                players = DBLayer.GetPlayerListsFromMySQL();
-                return players;
-            }
-            catch
-            {
-                throw;
-            }
-        }
-        */
     }
 }

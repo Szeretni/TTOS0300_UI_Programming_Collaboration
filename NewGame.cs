@@ -8,13 +8,6 @@ namespace TTOS0300_UI_Programming_Collaboration
 {
     class NewGame
     {
-        //this manages new game information
-        //used to avoid many db connections
-        //only one db connection when committed
-        public NewGame()
-        {
-            
-        }
         public int GameId { get; set; }
         public List<Player> NewPlayers { get; set; }
     }

@@ -8,9 +8,9 @@ namespace TTOS0300_UI_Programming_Collaboration
 {
     class BLMethod
     {
-        // !!!
-        // Founded this class in order to avoid cluttering BLLayer.cs and MainWindows.xaml.cs
-        // !!!
+        // When time allows, refactor code to here in order to avoid cluttering BLLayer.cs and MainWindows.xaml.cs
+
+        //next turn logic
         static public void NextTurn(ref int currentPlayer,ref List<Player> players)
         {
             //in case of 0 players
@@ -25,7 +25,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 //reset die roll for next turn
                 players[currentPlayer].DieRolled = false;
                 BLLayer.SetDieRolledFlagToMySQL(players[currentPlayer].Id, players[currentPlayer].DieRolled);
-                //20180426rent reset rent paid for next turn
+                //reset rent paid for next turn
                 players[currentPlayer].RentPaid = false;
                 //update next player to db
                 BLLayer.SetCurrentPlayerIdToMySQL(players[currentPlayer].Id);
@@ -36,9 +36,7 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180425 HO
         //generate new game id
-        //insted of loop get last
         static public int NewGameId()
         {
             try
@@ -47,6 +45,7 @@ namespace TTOS0300_UI_Programming_Collaboration
                 List<int> gameIds = BLLayer.GetGameIdsFromMySQL();
                 //generates new gameid
                 int i = 1;
+                //loops in case of discontinous gameIds
                 foreach (int id in gameIds)
                 {
                     if (id == i)
@@ -54,17 +53,6 @@ namespace TTOS0300_UI_Programming_Collaboration
                         i++;
                     }
                 }
-                //while (true)
-                //{
-                //    if ((i != (gameIds[0]-1)))
-                //    {
-                //        break;
-                //    }
-                //    else
-                //    {
-                //        i++;
-                //    }
-                //}
                 return i;
             }
             catch (Exception)
@@ -74,7 +62,6 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
         }
 
-        //20180425 HO
         //show players from db
         static public List<Player> ShowPlayers()
         {
@@ -86,12 +73,10 @@ namespace TTOS0300_UI_Programming_Collaboration
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
 
-        //20180425
         //create new game to db
         static public void NewGame(NewGame newGame, int playerid)
         {
@@ -104,15 +89,15 @@ namespace TTOS0300_UI_Programming_Collaboration
                 {
                     BLLayer.SetPlayerToNewGameToMySQL(p.Id, newGame.GameId);
                 }
-                //set first player as current player
+                //sets first player as current player
                 BLLayer.DynamicSetCurrentPlayerIdToMySQL(newGame.NewPlayers.First().Id, newGame.GameId);
+                //sets new game id to local program instance 
                 Properties.Settings.Default.settingsCurrentGameId = newGame.GameId;
             }
             catch (Exception)
             {
                 throw;
             }
-            
         }
     }
 }
