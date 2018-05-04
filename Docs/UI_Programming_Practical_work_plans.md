@@ -24,6 +24,18 @@ Opettajalle ja työnantajille.
 
 ![use case](/Images/ttos0300_use_case.png)
 
+* Kortin veto pelaajan tullessa sattuma tai yhteismaaruutuun
+* Lopetus-nappi
+* Uuden pelin luonti
+* Pelin lataus
+* Nopan heitto
+* Katujen yms. ostaminen
+* Rakennusten rakentaminen tonteille (Taloja 4, hotelleita 1 jos taloja on jo 4 tontilla)
+* Rahan lainaaminen pankilta
+* Rahan maksaminen/saaminen
+* Lainan maksu
+* Omistettujen tonttien katselu.
+
 🔖 Sovelluksen keskeiset käsitteet ja niiden väliset suhteet.
 
 ![er](/Images/monopolifinal.PNG)
