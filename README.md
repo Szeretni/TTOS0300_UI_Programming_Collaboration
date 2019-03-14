@@ -1,10 +1,13 @@
-# TTOS0300_UI_Programming_Collaboration
+# .NET WPF game project with an external MySQL server
 
-## User Interface Programming and Data Structure's courses' project. We're going to model Monopoly-boardgame.
+User Interface Programming and Databases courses' project. We created a Monopoly-boardgame clone.
 
-### [Tietokannat loppuraportti](/Docs/loppuraportti.md)
+Front is a C# .NET WPF UI with several layers. Game data is maintained in MySQL database which is on Raspberry Pi in an external network. Internet connection is required. The database is no longer running, so the game cannot be played.
 
-### [Käyttöliittymäohjelmointi suunnitelma](/Docs/UI_Programming_Practical_work_plans.md)
-### [Käyttöliittymäohjelmointi loppuraportti](/loppuraportti_ui.md)
+### [Closing report, user interface programming](/loppuraportti_ui.md)
+
+### [Closing report, databases](/Docs/loppuraportti.md)
+
+### [Plan, user interface programming](/Docs/UI_Programming_Practical_work_plans.md)
 
 Project members: [Szeretni](https://github.com/Szeretni), [atarvainen](https://github.com/atarvainen) and [Paanane](https://github.com/Paanane).
