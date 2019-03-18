@@ -10,4 +10,4 @@ Front is a C# .NET WPF UI with several layers. Game data is maintained in MySQL 
 
 ### [Plan, user interface programming](/Docs/UI_Programming_Practical_work_plans.md)
 
-Project members: [Szeretni](https://github.com/Szeretni), [atarvainen](https://github.com/atarvainen) and [Paanane](https://github.com/Paanane).
+Project members: [Hannu Oksman](https://student.labranet.jamk.fi/~L2912/) ([GitHub](https://github.com/Szeretni)), [atarvainen](https://github.com/atarvainen) and [Paanane](https://github.com/Paanane).
